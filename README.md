@@ -19,3 +19,16 @@
 4. 결제
    * 외부 결제 시스템을 사용한다
    * 해당 프로젝트에서는 호출 시 0.01% 확률로 에러가 발생하는 Mock 결제 시스템을 연동할 예정
+    
+## Aggregate
+
+![img.png](설계/img/Overall%20Aggregate.png)
+
+### 구현 방식
+
+* 기본적으로 TDD 방식으로 작성한다
+* 사용해보고 싶은 모든 프레임워크, 언어를 모두 구현한다
+    * Spring(Java)
+    * Spring(Kotlin)
+    * Go
+    * node.js (nestjs)
