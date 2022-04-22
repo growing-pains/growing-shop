@@ -21,5 +21,15 @@ CREATE TABLE user (
     grade VARCHAR(20) NOT NULL DEFAULT 'NORMAL' COMMENT 'NORMAL|VIP|VVIP|MASTER',
 
     PRIMARY KEY (id),
-    CONSTRAINT company FOREIGN KEY (company) REFERENCES company(id)
+    CONSTRAINT user_company FOREIGN KEY (company) REFERENCES company(id)
+);
+
+CREATE TABLE product (
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    price int NOT NULL,
+    company bigint(20) NOT NULL,
+    status VARCHAR(20) NOT NULL COMMENT 'NORMAL|UNDER_REVIEW|DELETED',
+
+    PRIMARY KEY (id),
+    CONSTRAINT product_company FOREIGN KEY (company) REFERENCES company(id)
 );

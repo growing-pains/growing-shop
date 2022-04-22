@@ -8,7 +8,5 @@ import java.io.Serializable;
 @Getter
 @Embeddable
 public class CompanyId implements Serializable {
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 }
