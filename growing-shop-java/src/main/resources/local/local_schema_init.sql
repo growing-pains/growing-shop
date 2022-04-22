@@ -33,3 +33,39 @@ CREATE TABLE product (
     PRIMARY KEY (id),
     CONSTRAINT product_company FOREIGN KEY (company) REFERENCES company(id)
 );
+
+CREATE TABLE category (
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE product_category (
+    id bigint(20) NOT NULL AUTO_INCREMENT,
+    product bigint(20) NOT NULL,
+    category bigint(20) NOT NULL,
+
+    PRIMARY KEY (id),
+    CONSTRAINT product_category_product FOREIGN KEY (product) REFERENCES product(id),
+    CONSTRAINT product_category_category FOREIGN KEY (category) REFERENCES category(id)
+);
+
+CREATE TABLE "order" (
+    id varchar(255) NOT NULL AUTO_INCREMENT,
+    order_at datetime NOT NULL,
+    user bigint(20) NOT NULL,
+
+    PRIMARY KEY (id),
+    CONSTRAINT user_order FOREIGN KEY (user) REFERENCES user(id)
+);
+
+CREATE TABLE order_line (
+    "order" bigint(20) NOT NULL,
+    product bigint(20) NOT NULL,
+    price int NOT NULL,
+    quantity int NOT NULL,
+
+    CONSTRAINT order_line_order FOREIGN KEY ("order") REFERENCES "order"(id),
+    CONSTRAINT order_line_product FOREIGN KEY (product) REFERENCES product(id)
+);

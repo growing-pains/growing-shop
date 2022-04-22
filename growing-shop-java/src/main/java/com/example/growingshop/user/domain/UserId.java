@@ -1,14 +1,12 @@
-package com.example.growingshop.product.domain;
+package com.example.growingshop.user.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Getter
-@Setter
 @Embeddable
-public class ProductId implements Serializable {
+public class UserId implements Serializable {
     private Long id;
 }
