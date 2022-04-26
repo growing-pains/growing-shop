@@ -2,27 +2,42 @@ package com.example.growingshop.user.domain;
 
 import com.example.growingshop.company.domain.CompanyId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class User {
     @EmbeddedId
     private UserId id;
 
     @Column(nullable = false)
+    @NotBlank
+    @Size(max = 30)
+    @Pattern(regexp = "[a-zA-Z가-힣'-.]*")
     private String name;
 
     @Column(nullable = false)
+    @Size(max = 13, min = 9)
+    @NotBlank
+    @Pattern(regexp = "^[0-9]{2,3}-?[0-9]{3,4}-?[0-9]{4}$")
     private String mobile;
 
     @Column(nullable = false)
+    @Email
+    @NotBlank
     private String email;
 
+    @Size(max = 30)
+    @Pattern(regexp = "[a-zA-Z\\d-_]*")
     @Column(nullable = false)
     private String loginId;
 
