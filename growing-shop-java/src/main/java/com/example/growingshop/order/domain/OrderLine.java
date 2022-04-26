@@ -5,19 +5,22 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Embeddable
 public class OrderLine {
     @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "product", nullable = false)))
+    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "product", nullable = false)))
     private ProductId product;
 
     @Column(nullable = false)
+    @NotNull
     @Min(1)
     private Integer price;
 
     @Column(nullable = false)
+    @NotNull
     @Min(1)
     private Integer quantity;
 

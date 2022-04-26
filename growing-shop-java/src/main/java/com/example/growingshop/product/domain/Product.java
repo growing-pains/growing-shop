@@ -32,7 +32,7 @@ public class Product {
     private Integer price;
 
     @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "company", nullable = false)))
+    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "company", nullable = false)))
     private CompanyId company;
 
     @Enumerated(EnumType.STRING)

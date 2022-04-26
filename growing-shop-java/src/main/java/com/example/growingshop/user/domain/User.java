@@ -46,7 +46,7 @@ public class User {
     private String password;
 
     @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "id", column = @Column(name = "company")))
+    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "company")))
     private CompanyId company;
 
     @Enumerated(EnumType.STRING)
