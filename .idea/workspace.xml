@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="726f381e-faa4-43e0-b9f0-e29a4a789855" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/CategoryId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/CategoryId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/CompanyId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/CompanyId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/ProductId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/ProductId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserId.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
