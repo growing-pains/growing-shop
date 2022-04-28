@@ -1,12 +1,12 @@
 package com.example.growingshop.company.domain;
 
+import com.example.growingshop.validator.StringContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,7 +19,7 @@ public class Company {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 30)
-    @Pattern(regexp = "[a-zA-Z\\d\\-\\.()\\[\\]]*")
+    @StringContain(checkLowerEn = true, checkUpperEn = true, checkNumber = true, hasSpecialCharacter = "-.()[]")
     private String name;
 
     @Column(nullable = false)

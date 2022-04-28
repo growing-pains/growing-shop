@@ -1,6 +1,7 @@
 package com.example.growingshop.category.domain;
 
 import com.example.growingshop.product.domain.ProductId;
+import com.example.growingshop.validator.StringContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -22,6 +22,6 @@ public class Category {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 100)
-    @Pattern(regexp = "[a-zA-Z가-힣\\d-.\"']*")
+    @StringContain(checkLowerEn = true, checkUpperEn = true, checkKo = true, checkNumber = true, hasSpecialCharacter = "-.\"'")
     private String name;
 }

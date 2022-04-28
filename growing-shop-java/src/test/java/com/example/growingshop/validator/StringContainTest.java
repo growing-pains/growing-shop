@@ -6,19 +6,18 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.*;
-import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StringContainTest {
-    private final static int NUMBER_START_NUMBER = 48;
-    private final static int NUMBER_END_NUMBER = 58;
-    private final static int UPPER_EN_START_NUMBER = 65;
-    private final static int UPPER_EN_END_NUMBER = 90;
-    private final static int LOWER_EN_START_NUMBER = 97;
-    private final static int LOWER_EN_END_NUMBER = 122;
-    private final static int KO_START_NUMBER = 44032;
-    private final static int KO_END_NUMBER = 55203;
+    private final static int NUMBER_START_NUMBER = 48;      // 0
+    private final static int NUMBER_END_NUMBER = 57;        // 9
+    private final static int UPPER_EN_START_NUMBER = 65;    // A
+    private final static int UPPER_EN_END_NUMBER = 90;      // Z
+    private final static int LOWER_EN_START_NUMBER = 97;    // a
+    private final static int LOWER_EN_END_NUMBER = 122;     // z
+    private final static int KO_START_NUMBER = 44032;       // 가
+    private final static int KO_END_NUMBER = 55203;         // 힣
     private final static String SPECIAL_CHARACTER = "[]()-_.";
 
     private final static String NUMBER_CONTAIN_MESSAGE = "숫자";
@@ -28,13 +27,7 @@ class StringContainTest {
     private final static String SPECIAL_CHARACTER_CONTAIN_MESSAGE = "특정 특수문자";
 
     private final static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
-    private Random random = new Random();
-
-    @Test
-    void test() {
-        System.out.println(Pattern.compile("[\\[\\]\\(\\)\\-\\_\\.]", Pattern.DOTALL).matcher("_(댁)CsKfYvdH(X.h(R컴)먴pD_쓜)좚텚팅쁽gw꼶ae땓RGQ-").find());
-    }
+    private final static Random random = new Random();
 
     @Test
     void StringContain_Custom_Validation_동작_테스트() {
