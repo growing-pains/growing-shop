@@ -1,8 +1,8 @@
-package com.example.growingshop.product.domain;
+package com.example.growingshop.domain.product.domain;
 
-import com.example.growingshop.category.domain.CategoryId;
-import com.example.growingshop.company.domain.CompanyId;
-import com.example.growingshop.validator.StringContain;
+import com.example.growingshop.domain.category.domain.CategoryId;
+import com.example.growingshop.domain.company.domain.CompanyId;
+import com.example.growingshop.global.validator.StringContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;

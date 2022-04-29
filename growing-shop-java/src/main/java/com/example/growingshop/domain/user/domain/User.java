@@ -1,7 +1,7 @@
-package com.example.growingshop.user.domain;
+package com.example.growingshop.domain.user.domain;
 
-import com.example.growingshop.company.domain.CompanyId;
-import com.example.growingshop.validator.StringContain;
+import com.example.growingshop.domain.company.domain.CompanyId;
+import com.example.growingshop.global.validator.StringContain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;

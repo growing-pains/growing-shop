@@ -3,10 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="726f381e-faa4-43e0-b9f0-e29a4a789855" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/Company.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/category/domain/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/category/domain/CategoryId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/category/domain/CategoryId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/company/domain/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/CompanyGrade.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/company/domain/CompanyGrade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/CompanyId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/company/domain/CompanyId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/company/domain/CompanyStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/company/domain/CompanyStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/order/domain/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/order/domain/OrderId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/order/domain/OrderLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/order/domain/OrderLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/product/domain/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/ProductId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/product/domain/ProductId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/product/domain/ProductStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/product/domain/ProductStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/user/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserGrade.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/user/domain/UserGrade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserId.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/user/domain/UserId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/user/domain/UserStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/user/domain/UserType.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/domain/user/domain/UserType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/validator/StringContain.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/global/validator/StringContain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/validator/StringContainValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/main/java/com/example/growingshop/global/validator/StringContainValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/growing-shop-java/src/test/java/com/example/growingshop/validator/StringContainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/growing-shop-java/src/test/java/com/example/growingshop/validator/StringContainTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +95,7 @@
       <workItem from="1650246890345" duration="180000" />
       <workItem from="1650441063785" duration="1556000" />
       <workItem from="1650517725041" duration="3552000" />
-      <workItem from="1650968722101" duration="609000" />
+      <workItem from="1650968722101" duration="1210000" />
     </task>
     <task id="LOCAL-00001" summary="#1-유저 도메인 요구사항 정리">
       <created>1649152613823</created>

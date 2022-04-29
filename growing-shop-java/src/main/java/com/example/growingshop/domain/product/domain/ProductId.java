@@ -1,4 +1,4 @@
-package com.example.growingshop.product.domain;
+package com.example.growingshop.domain.product.domain;
 
 import lombok.Getter;
 import lombok.Setter;

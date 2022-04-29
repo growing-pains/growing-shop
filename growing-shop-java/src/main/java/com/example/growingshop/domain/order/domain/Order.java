@@ -1,6 +1,6 @@
-package com.example.growingshop.order.domain;
+package com.example.growingshop.domain.order.domain;
 
-import com.example.growingshop.user.domain.UserId;
+import com.example.growingshop.domain.user.domain.UserId;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

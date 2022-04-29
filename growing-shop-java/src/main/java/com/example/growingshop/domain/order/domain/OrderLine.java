@@ -1,6 +1,6 @@
-package com.example.growingshop.order.domain;
+package com.example.growingshop.domain.order.domain;
 
-import com.example.growingshop.product.domain.ProductId;
+import com.example.growingshop.domain.product.domain.ProductId;
 import lombok.Getter;
 
 import javax.persistence.*;

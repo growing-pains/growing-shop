@@ -1,5 +1,6 @@
 package com.example.growingshop.validator;
 
+import com.example.growingshop.global.validator.StringContain;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;

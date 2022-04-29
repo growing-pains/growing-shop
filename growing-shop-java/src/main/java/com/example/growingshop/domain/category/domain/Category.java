@@ -1,7 +1,7 @@
-package com.example.growingshop.category.domain;
+package com.example.growingshop.domain.category.domain;
 
-import com.example.growingshop.product.domain.ProductId;
-import com.example.growingshop.validator.StringContain;
+import com.example.growingshop.domain.product.domain.ProductId;
+import com.example.growingshop.global.validator.StringContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

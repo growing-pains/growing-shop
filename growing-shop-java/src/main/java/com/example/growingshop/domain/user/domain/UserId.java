@@ -1,14 +1,15 @@
-package com.example.growingshop.company.domain;
+package com.example.growingshop.domain.user.domain;
 
 import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Embeddable
-public class CompanyId implements Serializable {
+public class UserId implements Serializable {
     @Column(name = "id")
     private Long value;
 
@@ -16,8 +17,8 @@ public class CompanyId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CompanyId companyId = (CompanyId) o;
-        return Objects.equals(value, companyId.value);
+        UserId userId = (UserId) o;
+        return Objects.equals(value, userId.value);
     }
 
     @Override

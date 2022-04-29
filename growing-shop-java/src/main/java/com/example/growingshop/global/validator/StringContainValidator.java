@@ -1,4 +1,4 @@
-package com.example.growingshop.validator;
+package com.example.growingshop.global.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

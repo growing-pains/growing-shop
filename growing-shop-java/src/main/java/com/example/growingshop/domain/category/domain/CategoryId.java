@@ -1,4 +1,4 @@
-package com.example.growingshop.order.domain;
+package com.example.growingshop.domain.category.domain;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Embeddable
-public class OrderId implements Serializable {
+public class CategoryId implements Serializable {
     @Column(name = "id")
     private Long value;
 
@@ -17,8 +17,8 @@ public class OrderId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderId orderId = (OrderId) o;
-        return Objects.equals(value, orderId.value);
+        CategoryId that = (CategoryId) o;
+        return Objects.equals(value, that.value);
     }
 
     @Override
