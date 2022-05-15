@@ -20,4 +20,8 @@ spring:
     path: /h2-console
   sql.init:
     mode: always
-    schema-locations: classpath:local/*_schema_init.sql
+    schema-locations: classpath:local/*_init.sql
+
+jwt:
+  secret-key: local-secret
+  expiration: 600
