@@ -15,6 +15,8 @@ public class JwtTokenProvider {
     private static String JWT_SECRET;
     private static int JWT_EXPIRATION;
 
+    private JwtTokenProvider() {}
+
     @Value("${jwt.secret-key}")
     public void setJwtSecret(String jwtSecret) {
         JWT_SECRET = jwtSecret;
@@ -37,32 +39,28 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public static String getUserIdFromJWT(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(JWT_SECRET)
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject();
-    }
-
-    public static boolean validateToken(String token) {
+    public static String getUserIdFromJwt(String token) throws IllegalAccessException {
         try {
-            Jwts.parser()
+            return Jwts.parser()
                     .setSigningKey(JWT_SECRET)
-                    .parseClaimsJws(token);
-            return true;
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
         } catch (SignatureException e) {
-            log.error("Invalid JWT signature");
-        } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
+            log.error("Invalid JWT signature.", e);
+            throw new IllegalAccessException("Invalid JWT signature.");
+        } catch (MalformedJwtException e) {
+            log.error("Invalid JWT token.", e);
+            throw new IllegalAccessException("Invalid JWT token.");
+        } catch (ExpiredJwtException e) {
+            log.error("Expired JWT token.", e);
+            throw new IllegalAccessException("Expired JWT token.");
+        } catch (UnsupportedJwtException e) {
+            log.error("Unsupported JWT token.", e);
+            throw new IllegalAccessException("Unsupported JWT token.");
+        } catch (IllegalArgumentException e) {
+            log.error("JWT claims string is empty.", e);
+            throw new IllegalAccessException("JWT claims string is empty..");
         }
-        return false;
     }
 }
