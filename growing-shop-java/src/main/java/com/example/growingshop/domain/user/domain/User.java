@@ -3,9 +3,7 @@ package com.example.growingshop.domain.user.domain;
 import com.example.growingshop.domain.company.domain.CompanyId;
 import com.example.growingshop.global.validator.StringContain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,8 +12,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class User {
     @EmbeddedId
     private UserId id;
@@ -60,5 +60,5 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade grade = UserGrade.NORMAL;
+    private UserGrade grade;
 }

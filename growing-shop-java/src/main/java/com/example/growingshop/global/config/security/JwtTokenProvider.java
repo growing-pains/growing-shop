@@ -1,21 +1,25 @@
 package com.example.growingshop.global.config.security;
 
+import com.example.growingshop.domain.auth.dto.AuthRequest;
+import com.example.growingshop.domain.auth.dto.AuthResponse;
+import com.example.growingshop.domain.auth.service.AuthService;
+import com.example.growingshop.global.util.TimeUtil;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
-
     private static String JWT_SECRET;
     private static int JWT_EXPIRATION;
 
-    private JwtTokenProvider() {}
+    private final AuthService authService;
 
     @Value("${jwt.secret-key}")
     public void setJwtSecret(String jwtSecret) {
@@ -27,16 +31,24 @@ public class JwtTokenProvider {
         JWT_EXPIRATION = value;
     }
 
-    public static String generateToken(Authentication authentication) {
-        Date now = new Date();
-        Date expiredTime = new Date(now.getTime() + JWT_EXPIRATION * 1000L);
+    public AuthResponse.TokenRes generateToken(AuthRequest.LoginReq login) throws IllegalAccessException {
+        if (authService.matchUser(login)) {
+            Date now = new Date();
+            Date expiredTime = new Date(now.getTime() + JWT_EXPIRATION * 1000L);
+            String token = Jwts.builder()
+                    .setSubject(login.getLoginId())
+                    .setIssuedAt(now)
+                    .setExpiration(expiredTime)
+                    .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+                    .compact();
 
-        return Jwts.builder()
-                .setSubject((String) authentication.getPrincipal())
-                .setIssuedAt(now)
-                .setExpiration(expiredTime)
-                .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
-                .compact();
+            return AuthResponse.TokenRes.builder()
+                    .token(token)
+                    .expiredAt(TimeUtil.convertDateToLocalDateTime(expiredTime))
+                    .build();
+        }
+
+        throw new IllegalAccessException("Account information not found.");
     }
 
     public static String getUserIdFromJwt(String token) throws IllegalAccessException {
