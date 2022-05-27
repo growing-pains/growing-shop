@@ -32,7 +32,7 @@ public class JwtTokenProvider {
     }
 
     public AuthResponse.TokenRes generateToken(AuthRequest.LoginReq login) throws IllegalAccessException {
-        if (authService.matchUser(login)) {
+        if (authService.matchLoginUser(login)) {
             Date now = new Date();
             Date expiredTime = new Date(now.getTime() + JWT_EXPIRATION * 1000L);
             String token = Jwts.builder()

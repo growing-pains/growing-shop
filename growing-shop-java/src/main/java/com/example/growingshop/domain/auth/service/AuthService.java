@@ -15,9 +15,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public boolean matchUser(AuthRequest.LoginReq login) throws IllegalAccessException {
+    public boolean matchLoginUser(AuthRequest.LoginReq login) throws IllegalAccessException {
         String encodedPassword = passwordEncoder.encode(login.getPassword());
-        Optional<User> user = userRepository.findUsersByLoginIdAndPassword(login.getLoginId(), encodedPassword);
+        Optional<User> user = userRepository.findUsersByLoginId(login.getLoginId());
 
         if (user.isPresent()) {
             return passwordEncoder.matches(encodedPassword, user.get().getPassword());

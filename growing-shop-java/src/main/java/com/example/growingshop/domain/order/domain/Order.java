@@ -1,6 +1,5 @@
 package com.example.growingshop.domain.order.domain;
 
-import com.example.growingshop.domain.user.domain.UserId;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,9 +24,8 @@ public class Order {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderAt;
 
-    @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "user", nullable = false)))
-    private UserId user;
+    @Column(name = "user")
+    private Long userId;
 
     @ElementCollection
     @CollectionTable(name = "order_line", joinColumns = {@JoinColumn(name = "`order`")})
@@ -40,9 +38,9 @@ public class Order {
     }
 
     @Builder
-    public Order(LocalDateTime orderAt, UserId user, List<OrderLine> orderLines) {
+    public Order(LocalDateTime orderAt, Long userId, List<OrderLine> orderLines) {
         this.orderAt = orderAt;
-        this.user = user;
+        this.userId = userId;
         this.orderLines = orderLines;
     }
 }

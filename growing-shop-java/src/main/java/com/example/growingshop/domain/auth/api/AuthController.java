@@ -29,7 +29,7 @@ public class AuthController {
         User joinResult = userService.joinUser(join);
 
         return AuthResponse.JoinRes.builder()
-                .state(joinResult.getId().isPersist())
+                .state(joinResult.isPersist())
                 .build();
     }
 }

@@ -17,8 +17,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class User {
-    @EmbeddedId
-    private UserId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     @NotBlank
@@ -61,4 +62,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserGrade grade;
+
+    public boolean isPersist() {
+        return this.id > 0;
+    }
 }
