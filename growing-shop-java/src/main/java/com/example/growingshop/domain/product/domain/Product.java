@@ -2,7 +2,7 @@ package com.example.growingshop.domain.product.domain;
 
 import com.example.growingshop.domain.category.domain.CategoryId;
 import com.example.growingshop.domain.company.domain.CompanyId;
-import com.example.growingshop.global.validator.StringContain;
+import com.example.growingshop.global.validator.StringAnyContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class Product {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 100)
-    @StringContain(checkLowerEn = true, checkUpperEn = true, checkKo = true, checkNumber = true, hasSpecialCharacter = "!@#$%^&*\"'-,.<>?:[]()")
+    @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainKo = true, checkContainNumber = true, hasContainSpecialCharacter = "!@#$%^&*\"'-,.<>?:[]()")
     private String name;
 
     @Column(nullable = false)

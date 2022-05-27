@@ -1,7 +1,7 @@
 package com.example.growingshop.domain.user.domain;
 
 import com.example.growingshop.domain.company.domain.CompanyId;
-import com.example.growingshop.global.validator.StringContain;
+import com.example.growingshop.global.validator.StringAnyContain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -23,7 +23,7 @@ public class User {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 30)
-    @StringContain(checkLowerEn = true, checkUpperEn = true, checkKo = true, hasSpecialCharacter = "'-.")
+    @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainKo = true, hasContainSpecialCharacter = "'-.")
     private String name;
 
     @Column(nullable = false)
@@ -38,7 +38,7 @@ public class User {
     private String email;
 
     @Size(max = 30)
-    @StringContain(checkLowerEn = true, checkUpperEn = true, checkNumber = true, hasSpecialCharacter = "-_")
+    @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainNumber = true, hasContainSpecialCharacter = "-_")
     @Column(nullable = false)
     private String loginId;
 

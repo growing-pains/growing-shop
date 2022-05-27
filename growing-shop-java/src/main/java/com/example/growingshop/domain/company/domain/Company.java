@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.company.domain;
 
-import com.example.growingshop.global.validator.StringContain;
+import com.example.growingshop.global.validator.StringAnyContain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class Company {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 30)
-    @StringContain(checkLowerEn = true, checkUpperEn = true, checkNumber = true, hasSpecialCharacter = "-.()[]")
+    @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainNumber = true, hasContainSpecialCharacter = "-.()[]")
     private String name;
 
     @Column(nullable = false)
