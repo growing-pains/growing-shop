@@ -11,16 +11,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({FIELD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = StringContainValidator.class)
+@Constraint(validatedBy = StringCheckerValidator.class)
 @Documented
-public @interface StringAnyContain {
+public @interface StringChecker {
     String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
-    boolean checkContainUpperEn() default false;
-    boolean checkContainLowerEn() default false;
-    boolean checkContainKo() default false;
-    boolean checkContainNumber() default false;
-    String hasContainSpecialCharacter() default "";
+    boolean includeUpperEn() default false;
+    boolean includeLowerEn() default false;
+    boolean includeKo() default false;
+    boolean includeNumber() default false;
+    String includeSpecialCharacter() default "";
 }

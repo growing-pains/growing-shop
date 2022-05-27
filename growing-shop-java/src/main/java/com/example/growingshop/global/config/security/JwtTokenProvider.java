@@ -48,7 +48,7 @@ public class JwtTokenProvider {
                     .build();
         }
 
-        throw new IllegalAccessException("Account information not found.");
+        throw new IllegalAccessException("Invalid account information.");
     }
 
     public static String getUserIdFromJwt(String token) throws IllegalAccessException {

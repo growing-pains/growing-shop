@@ -43,7 +43,7 @@ class AuthServiceTest {
     private final String encodeSuffix = "_encode";
 
     @Test
-    void 시큐리티에_사용한_패스워드_인코더의_encode_는_정상_동작해야_한다() {
+    void 시큐리티에_사용하는_패스워드_인코더의_encode_는_정상_동작해야_한다() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedString = passwordEncoder.encode(password);
 

@@ -5,7 +5,7 @@ import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.domain.UserGrade;
 import com.example.growingshop.domain.user.domain.UserStatus;
 import com.example.growingshop.domain.user.domain.UserType;
-import com.example.growingshop.global.validator.StringAnyContain;
+import com.example.growingshop.global.validator.StringChecker;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ public class AuthRequest {
     @AllArgsConstructor
     @Builder
     public static class LoginReq {
-        @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainNumber = true, hasContainSpecialCharacter = "-_")
+        @StringChecker(includeLowerEn = true, includeUpperEn = true, includeNumber = true, includeSpecialCharacter = "-_")
         @Column(nullable = false)
         private String loginId;
 
@@ -31,11 +31,12 @@ public class AuthRequest {
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
+    @Getter
     @Builder
     public static class JoinReq {
         @NotBlank
         @Size(max = 30)
-        @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainKo = true, hasContainSpecialCharacter = "'-.")
+        @StringChecker(includeLowerEn = true, includeUpperEn = true, includeKo = true, includeSpecialCharacter = "'-.")
         private String name;
 
         @Size(max = 13, min = 9)
@@ -47,7 +48,7 @@ public class AuthRequest {
         @NotBlank
         private String email;
 
-        @StringAnyContain(checkContainLowerEn = true, checkContainUpperEn = true, checkContainNumber = true, hasContainSpecialCharacter = "-_")
+        @StringChecker(includeLowerEn = true, includeUpperEn = true, includeNumber = true, includeSpecialCharacter = "-_")
         @Column(nullable = false)
         private String loginId;
 
