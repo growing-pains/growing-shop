@@ -48,9 +48,9 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
                 checkKo(value, result),
                 checkNumber(value, result),
                 checkSpecialCharacter(value, result)
-        ).anyMatch(validate -> validate);
+        ).allMatch(validate -> validate);
 
-        if (!result.isEmpty()) {
+        if (!validateResult && !result.isEmpty()) {
             String message = INVALIDATION_PREFIX_MESSAGE + String.join(", ", result);
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
 
@@ -65,7 +65,7 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
             result.add(UPPER_EN_INVALIDATION_MESSAGE);
             return false;
         }
-        return checkContainUpperEn;
+        return true;
     }
 
     private boolean checkLowerEn(String value, List<String> result) {
@@ -73,7 +73,7 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
             result.add(LOWER_EN_INVALIDATION_MESSAGE);
             return false;
         }
-        return checkContainLowerEn;
+        return true;
     }
 
     private boolean checkKo(String value, List<String> result) {
@@ -81,7 +81,7 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
             result.add(KO_INVALIDATION_MESSAGE);
             return false;
         }
-        return checkContainKo;
+        return true;
     }
 
     private boolean checkNumber(String value, List<String> result) {
@@ -89,7 +89,7 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
             result.add(NUMBER_INVALIDATION_MESSAGE);
             return false;
         }
-        return checkContainNumber;
+        return true;
     }
 
     private boolean checkSpecialCharacter(String value, List<String> result) {
@@ -97,7 +97,7 @@ public class StringContainValidator implements ConstraintValidator<StringAnyCont
             result.add(SPECIAL_CHARACTER_INVALIDATION_MESSAGE.replace("{0}", hasContainSpecialCharacter));
             return false;
         }
-        return hasContainSpecialCharacter.isEmpty();
+        return true;
     }
 
     private boolean checkSpecialCharacterContain(String value) {
