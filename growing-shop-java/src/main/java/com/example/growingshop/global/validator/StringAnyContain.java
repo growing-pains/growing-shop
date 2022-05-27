@@ -13,14 +13,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = StringContainValidator.class)
 @Documented
-public @interface StringContain {
+public @interface StringAnyContain {
     String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
-    boolean checkUpperEn() default false;
-    boolean checkLowerEn() default false;
-    boolean checkKo() default false;
-    boolean checkNumber() default false;
-    String hasSpecialCharacter() default "";
+    boolean checkContainUpperEn() default false;
+    boolean checkContainLowerEn() default false;
+    boolean checkContainKo() default false;
+    boolean checkContainNumber() default false;
+    String hasContainSpecialCharacter() default "";
 }
