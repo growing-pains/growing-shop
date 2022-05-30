@@ -6,6 +6,8 @@ import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.service.UserService;
 import com.example.growingshop.global.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +22,16 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public AuthResponse.TokenRes login(@RequestBody @Validated AuthRequest.LoginReq login) throws IllegalAccessException {
-        return jwtTokenProvider.generateToken(login);
+    public ResponseEntity<AuthResponse.TokenRes> login(@RequestBody @Validated AuthRequest.LoginReq login) throws IllegalAccessException {
+        return new ResponseEntity<>(jwtTokenProvider.generateToken(login), HttpStatus.OK);
     }
 
     @PostMapping("/join")
-    public AuthResponse.JoinRes join(@RequestBody @Validated AuthRequest.JoinReq join) {
+    public ResponseEntity<AuthResponse.JoinRes> join(@RequestBody @Validated AuthRequest.JoinReq join) {
         User joinResult = userService.joinUser(join);
 
-        return AuthResponse.JoinRes.builder()
-                .state(joinResult.isPersist())
-                .build();
+        return new ResponseEntity<>(
+                AuthResponse.JoinRes.builder().state(joinResult.isPersist()).build(), HttpStatus.CREATED
+        );
     }
 }

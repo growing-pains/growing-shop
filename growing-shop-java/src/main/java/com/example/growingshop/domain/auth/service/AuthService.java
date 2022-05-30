@@ -15,14 +15,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public boolean matchLoginUser(AuthRequest.LoginReq login) throws IllegalAccessException {
-        String encodedPassword = passwordEncoder.encode(login.getPassword());
+    public boolean matchLoginUser(AuthRequest.LoginReq login) {
         Optional<User> user = userRepository.findUsersByLoginId(login.getLoginId());
 
-        if (user.isPresent()) {
-            return passwordEncoder.matches(encodedPassword, user.get().getPassword());
-        }
-
-        throw new IllegalAccessException("Account information not found.");
+        return user.filter(value -> passwordEncoder.matches(login.getPassword(), value.getPassword())).isPresent();
     }
 }

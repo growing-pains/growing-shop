@@ -39,6 +39,7 @@ public class JwtTokenProvider {
                     .setSubject(login.getLoginId())
                     .setIssuedAt(now)
                     .setExpiration(expiredTime)
+                    .setHeaderParam("typ", Header.JWT_TYPE)
                     .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                     .compact();
 
