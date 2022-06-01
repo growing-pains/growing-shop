@@ -1,6 +1,6 @@
 package com.example.growingshop.validator;
 
-import com.example.growingshop.global.validator.StringAnyContain;
+import com.example.growingshop.global.validator.StringChecker;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
@@ -10,7 +10,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StringAnyContainTest {
+class StringCheckerTest {
     private final static int NUMBER_START_NUMBER = 48;      // 0
     private final static int NUMBER_END_NUMBER = 57;        // 9
     private final static int UPPER_EN_START_NUMBER = 65;    // A
@@ -34,11 +34,7 @@ class StringAnyContainTest {
     void 대문자_포함_여부_테스트() {
         ContainUpper validObject = new ContainUpper(
                 combineAndShuffle(
-                        generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
-                        generateRandomNumber(),
-                        generateRandomSpecialCharacter()
+                        generateRandomUpperEn()
                 )
         );
         ContainUpper invalidObject = new ContainUpper(
@@ -55,18 +51,14 @@ class StringAnyContainTest {
 
         assertThat(validResult.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> assertThat(value.getMessage()).contains(UPPER_EN_CONTAIN_MESSAGE));
+        invalidResult.forEach((value) -> assertThat(value.getMessage()).doesNotContain(UPPER_EN_CONTAIN_MESSAGE));
     }
 
     @Test
     void 소문자_포함_여부_테스트() {
         ContainLower validObject = new ContainLower(
                 combineAndShuffle(
-                        generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
-                        generateRandomNumber(),
-                        generateRandomSpecialCharacter()
+                        generateRandomLowerEn()
                 )
         );
         ContainLower invalidObject = new ContainLower(
@@ -83,18 +75,14 @@ class StringAnyContainTest {
 
         assertThat(validResult.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> assertThat(value.getMessage()).contains(LOWER_EN_CONTAIN_MESSAGE));
+        invalidResult.forEach((value) -> assertThat(value.getMessage()).doesNotContain(LOWER_EN_CONTAIN_MESSAGE));
     }
 
     @Test
     void 한글_포함_여부_테스트() {
         ContainKo validObject = new ContainKo(
                 combineAndShuffle(
-                        generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
-                        generateRandomNumber(),
-                        generateRandomSpecialCharacter()
+                        generateRandomKo()
                 )
         );
         ContainKo invalidObject = new ContainKo(
@@ -111,18 +99,14 @@ class StringAnyContainTest {
 
         assertThat(validResult.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> assertThat(value.getMessage()).contains(KO_CONTAIN_MESSAGE));
+        invalidResult.forEach((value) -> assertThat(value.getMessage()).doesNotContain(KO_CONTAIN_MESSAGE));
     }
 
     @Test
     void 숫자_포함_여부_테스트() {
         ContainNumber validObject = new ContainNumber(
                 combineAndShuffle(
-                        generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
-                        generateRandomNumber(),
-                        generateRandomSpecialCharacter()
+                        generateRandomNumber()
                 )
         );
         ContainNumber invalidObject = new ContainNumber(
@@ -139,17 +123,13 @@ class StringAnyContainTest {
 
         assertThat(validResult.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> assertThat(value.getMessage()).contains(NUMBER_CONTAIN_MESSAGE));
+        invalidResult.forEach((value) -> assertThat(value.getMessage()).doesNotContain(NUMBER_CONTAIN_MESSAGE));
     }
 
     @Test
     void 특수문자_포함_여부_테스트() {
         ContainSpecialCharacter validObject = new ContainSpecialCharacter(
                 combineAndShuffle(
-                        generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
-                        generateRandomNumber(),
                         generateRandomSpecialCharacter()
                 )
         );
@@ -167,18 +147,34 @@ class StringAnyContainTest {
 
         assertThat(validResult.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> assertThat(value.getMessage()).contains(SPECIAL_CHARACTER_CONTAIN_MESSAGE));
+        invalidResult.forEach((value) -> assertThat(value.getMessage()).doesNotContain(SPECIAL_CHARACTER_CONTAIN_MESSAGE));
     }
 
     @Test
     void 복합_문자_포함_테스트() {
-        ContainAnyComplexString validObject = new ContainAnyComplexString(
+        ContainAnyComplexString validObject1 = new ContainAnyComplexString(
                 combineAndShuffle(
                         generateRandomUpperEn(),
-                        generateRandomLowerEn(),
-                        generateRandomKo(),
                         generateRandomNumber(),
                         generateRandomSpecialCharacter()
+                )
+        );
+        ContainAnyComplexString validObject2 = new ContainAnyComplexString(
+                combineAndShuffle(
+                        generateRandomNumber(),
+                        generateRandomSpecialCharacter()
+                )
+        );
+        ContainAnyComplexString validObject3 = new ContainAnyComplexString(
+                combineAndShuffle(
+                        generateRandomUpperEn(),
+                        generateRandomSpecialCharacter()
+                )
+        );
+        ContainAnyComplexString validObject4 = new ContainAnyComplexString(
+                combineAndShuffle(
+                        generateRandomUpperEn(),
+                        generateRandomNumber()
                 )
         );
         ContainAnyComplexString invalidObject = new ContainAnyComplexString(
@@ -188,19 +184,17 @@ class StringAnyContainTest {
                 )
         );
 
-
-        Set<ConstraintViolation<ContainAnyComplexString>> validResult = validator.validate(validObject);
+        Set<ConstraintViolation<ContainAnyComplexString>> validResult1 = validator.validate(validObject1);
+        Set<ConstraintViolation<ContainAnyComplexString>> validResult2 = validator.validate(validObject2);
+        Set<ConstraintViolation<ContainAnyComplexString>> validResult3 = validator.validate(validObject3);
+        Set<ConstraintViolation<ContainAnyComplexString>> validResult4 = validator.validate(validObject4);
         Set<ConstraintViolation<ContainAnyComplexString>> invalidResult = validator.validate(invalidObject);
 
-        assertThat(validResult.size()).isEqualTo(0);
+        assertThat(validResult1.size()).isEqualTo(0);
+        assertThat(validResult2.size()).isEqualTo(0);
+        assertThat(validResult3.size()).isEqualTo(0);
+        assertThat(validResult4.size()).isEqualTo(0);
         assertThat(invalidResult.size()).isEqualTo(1);
-        invalidResult.forEach((value) -> {
-            List<String> messages = Arrays.asList(UPPER_EN_CONTAIN_MESSAGE, NUMBER_CONTAIN_MESSAGE, SPECIAL_CHARACTER_CONTAIN_MESSAGE);
-
-            for (String message : messages) {
-                assertThat(value.getMessage()).contains(message);
-            }
-        });
     }
 
     private String generateRandomNumber() {
@@ -245,7 +239,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainUpper {
-        @StringAnyContain(checkContainUpperEn = true)
+        @StringChecker(includeUpperEn = true)
         private final String containUpperEn;
 
         public ContainUpper(String containUpperEn) {
@@ -254,7 +248,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainLower {
-        @StringAnyContain(checkContainLowerEn = true)
+        @StringChecker(includeLowerEn = true)
         private final String containLowerEn;
 
         public ContainLower(String containLowerEn) {
@@ -263,7 +257,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainKo {
-        @StringAnyContain(checkContainKo = true)
+        @StringChecker(includeKo = true)
         private final String containKo;
 
         public ContainKo(String containKo) {
@@ -272,7 +266,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainNumber {
-        @StringAnyContain(checkContainNumber = true)
+        @StringChecker(includeNumber = true)
         private final String containNumber;
 
         public ContainNumber(String containNumber) {
@@ -281,7 +275,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainSpecialCharacter {
-        @StringAnyContain(hasContainSpecialCharacter = SPECIAL_CHARACTER)
+        @StringChecker(includeSpecialCharacter = SPECIAL_CHARACTER)
         private final String containSpecialCharacter;
 
         public ContainSpecialCharacter(String containSpecialCharacter) {
@@ -290,7 +284,7 @@ class StringAnyContainTest {
     }
 
     private static class ContainAnyComplexString {
-        @StringAnyContain(checkContainUpperEn = true, checkContainNumber = true, hasContainSpecialCharacter = SPECIAL_CHARACTER)
+        @StringChecker(includeUpperEn = true, includeNumber = true, includeSpecialCharacter = SPECIAL_CHARACTER)
         private final String complexValue;
 
         private ContainAnyComplexString(String complexValue) {

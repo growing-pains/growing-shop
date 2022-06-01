@@ -32,13 +32,14 @@ public class JwtTokenProvider {
     }
 
     public AuthResponse.TokenRes generateToken(AuthRequest.LoginReq login) throws IllegalAccessException {
-        if (authService.matchUser(login)) {
+        if (authService.matchLoginUser(login)) {
             Date now = new Date();
             Date expiredTime = new Date(now.getTime() + JWT_EXPIRATION * 1000L);
             String token = Jwts.builder()
                     .setSubject(login.getLoginId())
                     .setIssuedAt(now)
                     .setExpiration(expiredTime)
+                    .setHeaderParam("typ", Header.JWT_TYPE)
                     .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                     .compact();
 
@@ -48,7 +49,7 @@ public class JwtTokenProvider {
                     .build();
         }
 
-        throw new IllegalAccessException("Account information not found.");
+        throw new IllegalAccessException("Invalid account information.");
     }
 
     public static String getUserIdFromJwt(String token) throws IllegalAccessException {
