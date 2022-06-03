@@ -1,7 +1,6 @@
 package com.example.growingshop.acceptance.auth;
 
 import com.example.growingshop.acceptance.helper.AuthRequestHelper;
-import com.example.growingshop.domain.auth.dto.AuthRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -32,16 +31,16 @@ public class AuthAcceptanceTest {
     @Test
     void 새로_회원가입하면_정상_가입되어야_한다() {
         // given
-        AuthRequest.JoinReq request = AuthRequest.JoinReq.builder()
-                .name("신규유저")
-                .mobile("01000000000")
-                .email("newbie@test.com")
-                .loginId("newbie")
-                .password("1234")
-                .build();
+        String name = "신규유저";
+        String mobile = "01000000000";
+        String email = "newbie@test.com";
+        String loginId = "newbie";
+        String password = "1234";
 
         // when
-        ExtractableResponse<Response> response = AuthRequestHelper.joinRequest(request);
+        ExtractableResponse<Response> response = AuthRequestHelper.joinRequest(
+                name, mobile, email, loginId, password
+        );
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
@@ -51,25 +50,18 @@ public class AuthAcceptanceTest {
     @Test
     void 존재하는_아이디로_중복_회원가입_시_회원가입에_실패해야_한다() {
         // given
+        String name = "신규유저";
+        String mobile = "01000000000";
+        String email = "newbie@test.com";
+        String loginId = "newbie2";
+        String password = "1234";
         AuthRequestHelper.joinRequest(
-                AuthRequest.JoinReq.builder()
-                        .name("신규유저")
-                        .mobile("01000000000")
-                        .email("newbie@test.com")
-                        .loginId("newbie")
-                        .password("1234")
-                        .build()
+                name, mobile, email, loginId, password
         );
 
         // when
         ExtractableResponse<Response> response = AuthRequestHelper.joinRequest(
-                AuthRequest.JoinReq.builder()
-                        .name("신규유저")
-                        .mobile("01000000000")
-                        .email("newbie@test.com")
-                        .loginId("newbie")
-                        .password("1234")
-                        .build()
+                name, mobile, email, loginId, password
         );
 
         // then
@@ -80,22 +72,17 @@ public class AuthAcceptanceTest {
     @Test
     void 등록된_사용자로_정상_로그인_시_토큰이_발급되어야_한다() {
         // given
+        String name = "신규유저";
+        String mobile = "01000000000";
+        String email = "newbie@test.com";
+        String loginId = "newbie3";
+        String password = "1234";
         AuthRequestHelper.joinRequest(
-                AuthRequest.JoinReq.builder()
-                        .name("신규유저")
-                        .mobile("01000000000")
-                        .email("newbie@test.com")
-                        .loginId("newbie")
-                        .password("1234")
-                        .build()
+                name, mobile, email, loginId, password
         );
-        AuthRequest.LoginReq request = AuthRequest.LoginReq.builder()
-                .loginId("newbie")
-                .password("1234")
-                .build();
 
         // when
-        ExtractableResponse<Response> response = AuthRequestHelper.loginRequest(request);
+        ExtractableResponse<Response> response = AuthRequestHelper.loginRequest(loginId, password);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
@@ -105,27 +92,20 @@ public class AuthAcceptanceTest {
     @Test
     void 존재하지_않는_회원이나_잘못된_패스워드로_로그인을_시도하면_인증이_실패되어야_한다() {
         // given
+        String name = "신규유저";
+        String mobile = "01000000000";
+        String email = "newbie@test.com";
+        String loginId = "newbie4";
+        String password = "1234";
         AuthRequestHelper.joinRequest(
-                AuthRequest.JoinReq.builder()
-                        .name("신규유저")
-                        .mobile("01000000000")
-                        .email("newbie@test.com")
-                        .loginId("newbie")
-                        .password("1234")
-                        .build()
+                name, mobile, email, loginId, password
         );
-        AuthRequest.LoginReq loginByInvalidPassword = AuthRequest.LoginReq.builder()
-                .loginId("newbie")
-                .password("12345")
-                .build();
-        AuthRequest.LoginReq loginByNonexistentUser = AuthRequest.LoginReq.builder()
-                .loginId("newbie1")
-                .password("1234")
-                .build();
 
         // when
-        ExtractableResponse<Response> invalidPasswordResponse = AuthRequestHelper.loginRequest(loginByInvalidPassword);
-        ExtractableResponse<Response> nonexistentUserResponse = AuthRequestHelper.loginRequest(loginByInvalidPassword);
+        ExtractableResponse<Response> invalidPasswordResponse = AuthRequestHelper
+                .loginRequest(loginId, password + "other");
+        ExtractableResponse<Response> nonexistentUserResponse = AuthRequestHelper
+                .loginRequest(loginId + "other", password);
 
         // then
         assertThat(invalidPasswordResponse.statusCode()).isEqualTo(HttpStatus.SC_UNAUTHORIZED);

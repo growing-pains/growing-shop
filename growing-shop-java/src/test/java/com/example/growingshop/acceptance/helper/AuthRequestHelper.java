@@ -11,11 +11,30 @@ public class AuthRequestHelper {
 
     private AuthRequestHelper() {}
 
-    public static ExtractableResponse<Response> joinRequest(AuthRequest.JoinReq req) {
-        return RequestHelper.postRequest(PATH + "/join", new HashMap<>(), req);
+    public static ExtractableResponse<Response> joinRequest(
+            String name, String mobile, String email, String loginId, String password
+    ) {
+        return RequestHelper.postRequest(
+                PATH + "/join",
+                new HashMap<>(),
+                AuthRequest.JoinReq.builder()
+                .name(name)
+                .mobile(mobile)
+                .email(email)
+                .loginId(loginId)
+                .password(password)
+                .build()
+        );
     }
 
-    public static ExtractableResponse<Response> loginRequest(AuthRequest.LoginReq req) {
-        return RequestHelper.postRequest(PATH + "/login", new HashMap<>(), req);
+    public static ExtractableResponse<Response> loginRequest(String loginId, String password) {
+        return RequestHelper.postRequest(
+                PATH + "/login",
+                new HashMap<>(),
+                AuthRequest.LoginReq.builder()
+                .loginId(loginId)
+                .password(password)
+                .build()
+        );
     }
 }
