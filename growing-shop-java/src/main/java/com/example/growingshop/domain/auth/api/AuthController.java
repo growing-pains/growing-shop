@@ -28,10 +28,12 @@ public class AuthController {
 
     @PostMapping("/join")
     public ResponseEntity<AuthResponse.JoinRes> join(@RequestBody @Validated AuthRequest.JoinReq join) {
+        // TODO - controllerAdvice 적용 필요
         User joinResult = userService.joinUser(join);
 
         return new ResponseEntity<>(
-                AuthResponse.JoinRes.builder().state(joinResult.isPersist()).build(), HttpStatus.CREATED
+                AuthResponse.JoinRes.builder().state(joinResult.isPersist()).build(),
+                joinResult.isPersist() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST
         );
     }
 }

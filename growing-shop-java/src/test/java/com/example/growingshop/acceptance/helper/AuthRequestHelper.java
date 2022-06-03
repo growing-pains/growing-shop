@@ -14,4 +14,8 @@ public class AuthRequestHelper {
     public static ExtractableResponse<Response> joinRequest(AuthRequest.JoinReq req) {
         return RequestHelper.postRequest(PATH + "/join", new HashMap<>(), req);
     }
+
+    public static ExtractableResponse<Response> loginRequest(AuthRequest.LoginReq req) {
+        return RequestHelper.postRequest(PATH + "/login", new HashMap<>(), req);
+    }
 }
