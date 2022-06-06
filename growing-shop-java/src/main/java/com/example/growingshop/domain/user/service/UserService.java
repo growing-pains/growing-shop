@@ -16,6 +16,11 @@ public class UserService {
 
     @Transactional
     public User joinUser(AuthRequest.JoinReq join) {
+        if (userRepository.findUsersByLoginId(join.getLoginId()).isPresent()) {
+//            throw new IllegalArgumentException("이미 가입된 회원입니다.");
+            return User.builder().build();
+        }
+
         return userRepository.save(
                 join.toEntity(passwordEncoder.encode(join.getJoinPassword()))
         );
