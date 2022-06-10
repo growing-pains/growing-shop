@@ -1,0 +1,21 @@
+=== 로그인
+
+존재하는 회원으로 로그인 요청 시 토큰이 발급된다
+
+==== Request Body Sample
+include::{snippets}/auth/login/request-body.adoc[]
+
+==== Http Request Sample
+include::{snippets}/auth/login/http-request.adoc[]
+
+==== Response Body Sample
+include::{snippets}/auth/login/response-body.adoc[]
+
+==== Http Response Sample
+정상 응답
+include::{snippets}/auth/login/http-response.adoc[]
+로그인 실패 응답
+include::{snippets}/auth/login/fail/http-response.adoc[]
+
+==== Curl Test Sample
+include::{snippets}/auth/login/curl-request.adoc[]

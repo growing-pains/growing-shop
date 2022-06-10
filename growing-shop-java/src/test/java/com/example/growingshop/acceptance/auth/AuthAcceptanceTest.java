@@ -1,7 +1,6 @@
 package com.example.growingshop.acceptance.auth;
 
 import com.example.growingshop.acceptance.AcceptanceTest;
-import com.example.growingshop.acceptance.helper.AuthRequestHelper;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -18,13 +17,13 @@ class AuthAcceptanceTest extends AcceptanceTest {
         // given
         String name = "신규유저";
         String mobile = "01000000000";
-        String email = "newbie@test.com";
-        String loginId = "newbie";
+        String email = "growing-ship@growing.shop";
+        String loginId = "growing-ship";
         String password = "1234";
 
         // when
-        ExtractableResponse<Response> response = AuthRequestHelper.joinRequest(
-                name, mobile, email, loginId, password
+        ExtractableResponse<Response> response = AuthRestDocsRequestHelper.joinRequest(
+                defaultSpec, name, mobile, email, loginId, password
         );
 
         // then
@@ -45,8 +44,8 @@ class AuthAcceptanceTest extends AcceptanceTest {
         );
 
         // when
-        ExtractableResponse<Response> response = AuthRequestHelper.joinRequest(
-                name, mobile, email, loginId, password
+        ExtractableResponse<Response> response = AuthRestDocsRequestHelper.joinRequest(
+                failResponseSpec, name, mobile, email, loginId, password
         );
 
         // then
@@ -62,12 +61,12 @@ class AuthAcceptanceTest extends AcceptanceTest {
         String email = "newbie@test.com";
         String loginId = "newbie3";
         String password = "1234";
-        AuthRequestHelper.joinRequest(
-                name, mobile, email, loginId, password
+        AuthRestDocsRequestHelper.joinRequest(
+                defaultSpec, name, mobile, email, loginId, password
         );
 
         // when
-        ExtractableResponse<Response> response = AuthRequestHelper.loginRequest(loginId, password);
+        ExtractableResponse<Response> response = AuthRestDocsRequestHelper.loginRequest(defaultSpec, loginId, password);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_OK);
@@ -87,10 +86,10 @@ class AuthAcceptanceTest extends AcceptanceTest {
         );
 
         // when
-        ExtractableResponse<Response> invalidPasswordResponse = AuthRequestHelper
-                .loginRequest(loginId, password + "other");
-        ExtractableResponse<Response> nonexistentUserResponse = AuthRequestHelper
-                .loginRequest(loginId + "other", password);
+        ExtractableResponse<Response> invalidPasswordResponse = AuthRestDocsRequestHelper
+                .loginRequest(failResponseSpec, loginId, password + "other");
+        ExtractableResponse<Response> nonexistentUserResponse = AuthRestDocsRequestHelper
+                .loginRequest(failResponseSpec, loginId + "other", password);
 
         // then
         assertThat(invalidPasswordResponse.statusCode()).isEqualTo(HttpStatus.SC_UNAUTHORIZED);
