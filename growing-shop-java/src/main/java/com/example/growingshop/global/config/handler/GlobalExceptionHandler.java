@@ -14,4 +14,10 @@ public class GlobalExceptionHandler {
     public ErrorResponse notFoundUserException(NotFoundUserException exception) {
         return new ErrorResponse(exception.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse illegalArgumentException(IllegalArgumentException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
 }
