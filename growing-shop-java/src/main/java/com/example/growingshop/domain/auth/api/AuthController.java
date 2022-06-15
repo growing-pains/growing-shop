@@ -28,10 +28,9 @@ public class AuthController {
 
     @PostMapping("/join")
     public ResponseEntity<AuthResponse.JoinRes> join(@RequestBody @Validated AuthRequest.JoinReq join) {
-        User joinResult = userService.joinUser(join);
-
         return new ResponseEntity<>(
-                AuthResponse.JoinRes.builder().state(joinResult.isPersist()).build(), HttpStatus.CREATED
+                AuthResponse.JoinRes.builder().state(userService.joinUser(join).isPersist()).build(),
+                HttpStatus.CREATED
         );
     }
 }

@@ -1,0 +1,10 @@
+= Growing Shop Api
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+include::auth/join.adoc[]
+include::auth/login.adoc[]

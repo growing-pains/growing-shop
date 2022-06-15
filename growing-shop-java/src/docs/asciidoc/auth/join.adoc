@@ -1,0 +1,23 @@
+=== 회원가입
+
+회원가입시 아래와 같은 정보로 요청을 하면 회원가입을 할 수 있다.
+
+같은 계정으로 중복 회원가입은 불가능하다.
+
+==== Request Body Sample
+include::{snippets}/auth/join/request-body.adoc[]
+
+==== Http Request Sample
+include::{snippets}/auth/join/http-request.adoc[]
+
+==== Response Body Sample
+include::{snippets}/auth/join/response-body.adoc[]
+
+==== Http Response Sample
+정상 응답
+include::{snippets}/auth/join/http-response.adoc[]
+중복 계정으로 가입 요청 시
+include::{snippets}/auth/join/fail/http-response.adoc[]
+
+==== Curl Test Sample
+include::{snippets}/auth/join/curl-request.adoc[]

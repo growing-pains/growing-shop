@@ -2,6 +2,7 @@ package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.auth.dto.AuthResponse;
+import com.example.growingshop.domain.auth.error.NotFoundUserException;
 import com.example.growingshop.domain.auth.service.AuthService;
 import com.example.growingshop.global.util.TimeUtil;
 import io.jsonwebtoken.*;
@@ -31,7 +32,7 @@ public class JwtTokenProvider {
         JWT_EXPIRATION = value;
     }
 
-    public AuthResponse.TokenRes generateToken(AuthRequest.LoginReq login) throws IllegalAccessException {
+    public AuthResponse.TokenRes generateToken(AuthRequest.LoginReq login) {
         if (authService.matchLoginUser(login)) {
             Date now = new Date();
             Date expiredTime = new Date(now.getTime() + JWT_EXPIRATION * 1000L);
@@ -49,7 +50,7 @@ public class JwtTokenProvider {
                     .build();
         }
 
-        throw new IllegalAccessException("Invalid account information.");
+        throw new NotFoundUserException("Invalid account information.");
     }
 
     public static String getUserIdFromJwt(String token) throws IllegalAccessException {

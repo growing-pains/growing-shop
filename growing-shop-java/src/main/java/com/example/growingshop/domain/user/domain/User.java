@@ -64,6 +64,6 @@ public class User {
     private UserGrade grade;
 
     public boolean isPersist() {
-        return this.id > 0;
+        return this.id != null && this.id > 0;
     }
 }
