@@ -1,11 +1,13 @@
 package com.example.growingshop.acceptance;
 
+import com.example.growingshop.acceptance.helper.DatabaseCleanup;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.Filter;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -28,6 +30,9 @@ public class AcceptanceTest {
     @LocalServerPort
     int port;
 
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
+
     public static RequestSpecification defaultSpec;
     public static RequestSpecification failResponseSpec;
 
@@ -36,6 +41,8 @@ public class AcceptanceTest {
         if (RestAssured.port == RestAssured.UNDEFINED_PORT) {
             RestAssured.port = port;
         }
+
+        databaseCleanup.execute();
 
         defaultSpec = new RequestSpecBuilder()
                 .addFilter(defaultAssuredFilter(restDocumentation))
