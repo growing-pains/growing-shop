@@ -35,8 +35,8 @@ class AuthAcceptanceTest extends AcceptanceTest {
         // given
         String name = "신규유저";
         String mobile = "01000000000";
-        String email = "newbie@test.com";
-        String loginId = "newbie2";
+        String email = "growing-ship@growing.shop";
+        String loginId = "growing-ship";
         String password = "1234";
         AuthRequestHelper.joinRequest(
                 name, mobile, email, loginId, password
@@ -56,8 +56,8 @@ class AuthAcceptanceTest extends AcceptanceTest {
         // given
         String name = "신규유저";
         String mobile = "01000000000";
-        String email = "newbie@test.com";
-        String loginId = "newbie3";
+        String email = "growing-ship@growing.shop";
+        String loginId = "growing-ship";
         String password = "1234";
         AuthRestDocsRequestHelper.joinRequest(
                 defaultSpec, name, mobile, email, loginId, password
@@ -76,8 +76,8 @@ class AuthAcceptanceTest extends AcceptanceTest {
         // given
         String name = "신규유저";
         String mobile = "01000000000";
-        String email = "newbie@test.com";
-        String loginId = "newbie4";
+        String email = "growing-ship@growing.shop";
+        String loginId = "growing-ship";
         String password = "1234";
         AuthRequestHelper.joinRequest(
                 name, mobile, email, loginId, password
