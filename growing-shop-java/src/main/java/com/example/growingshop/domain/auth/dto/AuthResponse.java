@@ -14,12 +14,4 @@ public class AuthResponse {
         private String token;
         private LocalDateTime expiredAt;
     }
-
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    public static class JoinRes {
-        private boolean state;
-    }
 }

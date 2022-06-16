@@ -28,7 +28,6 @@ class AuthAcceptanceTest extends AcceptanceTest {
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_CREATED);
-        assertThat(response.jsonPath().getBoolean("state")).isTrue();
     }
 
     @Test
@@ -50,7 +49,6 @@ class AuthAcceptanceTest extends AcceptanceTest {
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        assertThat(response.jsonPath().getBoolean("state")).isFalse();
     }
 
     @Test
