@@ -1,14 +1,11 @@
 package com.example.growingshop.domain.category.domain;
 
-import com.example.growingshop.domain.product.domain.ProductId;
 import com.example.growingshop.global.validator.StringChecker;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -16,8 +13,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Category {
-    @EmbeddedId
-    private ProductId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     @NotBlank
