@@ -62,8 +62,4 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserGrade grade;
-
-    public boolean isPersist() {
-        return this.id != null && this.id > 0;
-    }
 }
