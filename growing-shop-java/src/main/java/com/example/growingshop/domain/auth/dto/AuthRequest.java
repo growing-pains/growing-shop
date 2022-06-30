@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.auth.dto;
 
-import com.example.growingshop.domain.company.domain.CompanyId;
+import com.example.growingshop.domain.company.domain.Company;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.domain.UserGrade;
 import com.example.growingshop.domain.user.domain.UserStatus;
@@ -55,13 +55,13 @@ public class AuthRequest {
         @Column(nullable = false)
         private String password;
 
-        private CompanyId company;
+        private Long company;
 
         public String getJoinPassword() {
             return this.password;
         }
 
-        public User toEntity(String hashedPassword) {
+        public User toEntity(String hashedPassword, Company company) {
             return User.builder()
                     .name(this.name)
                     .mobile(this.mobile)

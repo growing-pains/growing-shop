@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.order.domain;
 
-import com.example.growingshop.domain.product.domain.ProductId;
+import com.example.growingshop.domain.product.domain.Product;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -8,11 +8,17 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Embeddable
+@Entity
 public class OrderLine {
-    @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "product", nullable = false)))
-    private ProductId product;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Order order;
+
+    @ManyToOne
+    private Product product;
 
     @Column(nullable = false)
     @NotNull

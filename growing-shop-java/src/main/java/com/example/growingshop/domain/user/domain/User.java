@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.user.domain;
 
-import com.example.growingshop.domain.company.domain.CompanyId;
+import com.example.growingshop.domain.company.domain.Company;
 import com.example.growingshop.global.validator.StringChecker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(name = "`user`")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +48,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Embedded
-    @AttributeOverrides(@AttributeOverride(name = "value", column = @Column(name = "company")))
-    private CompanyId company;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -62,8 +62,4 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserGrade grade;
-
-    public boolean isPersist() {
-        return this.id != null && this.id > 0;
-    }
 }

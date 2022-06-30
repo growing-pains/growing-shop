@@ -18,8 +18,9 @@ import java.util.List;
 @Getter
 @Table(name = "`order`")
 public class Order {
-    @EmbeddedId
-    private OrderId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderAt;
@@ -27,10 +28,9 @@ public class Order {
     @Column(name = "user")
     private Long userId;
 
-    @ElementCollection
-    @CollectionTable(name = "order_line", joinColumns = {@JoinColumn(name = "`order`")})
     @Valid
     @NotEmpty
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<OrderLine> orderLines = new ArrayList<>();
 
     public Long totalAmounts() {

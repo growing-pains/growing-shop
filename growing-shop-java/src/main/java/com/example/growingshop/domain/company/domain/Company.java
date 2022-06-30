@@ -13,8 +13,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Company {
-    @EmbeddedId
-    private CompanyId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     @NotBlank

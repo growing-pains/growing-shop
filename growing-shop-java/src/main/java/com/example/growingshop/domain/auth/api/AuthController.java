@@ -2,7 +2,6 @@ package com.example.growingshop.domain.auth.api;
 
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.auth.dto.AuthResponse;
-import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.service.UserService;
 import com.example.growingshop.global.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +26,9 @@ public class AuthController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<AuthResponse.JoinRes> join(@RequestBody @Validated AuthRequest.JoinReq join) {
-        return new ResponseEntity<>(
-                AuthResponse.JoinRes.builder().state(userService.joinUser(join).isPersist()).build(),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity join(@RequestBody @Validated AuthRequest.JoinReq join) {
+        userService.joinUser(join);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
