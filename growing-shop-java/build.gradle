@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'com.google.guava:guava:31.0.1-jre'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 

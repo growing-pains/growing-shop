@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.regex.Pattern;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Privilege {
+    private static final Pattern PATH_REGEX = Pattern.compile("^([\\/\\w-]+)+(\\.){0,1}$", Pattern.DOTALL);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +20,22 @@ public class Privilege {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
-    private List<Role> roles;
+    @Column(nullable = false)
+    private String path;
+
+    private String description;
+
+    public Privilege(String name, String path, String description) {
+        validatePath(path);
+
+        this.name = name;
+        this.path = path;
+        this.description = description;
+    }
+
+    private void validatePath(String path) {
+        if (!PATH_REGEX.matcher(path).matches()) {
+            throw new IllegalArgumentException("유효하지 않은 url path 입니다.");
+        }
+    }
 }
