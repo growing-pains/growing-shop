@@ -5,6 +5,7 @@ import com.example.growingshop.domain.auth.domain.Privileges;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.domain.Roles;
 import com.example.growingshop.domain.auth.service.PrivilegeService;
+import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.domain.UserType;
 import com.example.growingshop.domain.user.repository.UserRepository;
@@ -35,6 +36,7 @@ class AccessiblePathTest {
 
     private UserRepository userRepository = mock(UserRepository.class);
     private PrivilegeService privilegeService = mock(PrivilegeService.class);
+    private RoleService roleService = mock(RoleService.class);
 
     private HttpServletRequest request = spy(HttpServletRequest.class);
     private Authentication authentication = spy(Authentication.class);
@@ -45,10 +47,13 @@ class AccessiblePathTest {
     private static final String adminAllowPath = "/admin";
     private static final String sellerAllowPath = "/seller";
     private static final String normalAllowPath = "/normal";
+    private static final String userTypeAllowPath = "/default";
+    private static final String allAllowPath = "/all";
 
     private static final Privilege adminPrivilege = new Privilege("admin", adminAllowPath, "");
     private static final Privilege sellerPrivilege = new Privilege("seller", sellerAllowPath, "");
     private static final Privilege normalPrivilege = new Privilege("normal", normalAllowPath, "");
+    private static final Privilege userTypePrivilege = new Privilege("default", userTypeAllowPath, "");
 
     private static final Roles adminRole = new Roles(Collections.singletonList(
             new Role("ADMIN", Arrays.asList(adminPrivilege, sellerPrivilege, normalPrivilege))
@@ -59,6 +64,7 @@ class AccessiblePathTest {
     private static final Roles normalRole = new Roles(Collections.singletonList(
             new Role("NORMAL", Collections.singletonList(normalPrivilege))
     ));
+    private static final Role userTypeRole = new Role("DEFAULT", Collections.singletonList(userTypePrivilege));
 
     private static final User admin = User.builder().type(UserType.ADMIN).roles(adminRole).build();
     private static final User seller = User.builder().type(UserType.NORMAL).roles(sellerRole).build();
@@ -71,12 +77,13 @@ class AccessiblePathTest {
 
         when(authentication.getPrincipal()).thenReturn("");
         when(privilegeService.findAll()).thenReturn(new Privileges(Arrays.asList(adminPrivilege, sellerPrivilege, normalPrivilege)));
+        when(roleService.findByName(any())).thenReturn(userTypeRole);
     }
 
     @Test
     void role_에_없는_경로_요청시_권한과_상관없이_접근이_가능해야_한다() {
         // given
-        when(request.getPathInfo()).thenReturn("/all");
+        when(request.getPathInfo()).thenReturn(allAllowPath);
 
         // when
         boolean result = accessiblePath.check(request, authentication);
@@ -97,6 +104,20 @@ class AccessiblePathTest {
 
         // then
         assertThat(resultBySeller).isFalse();
+    }
+
+    @ParameterizedTest
+    @MethodSource("allTestTargetUserParameterizedTestData")
+    void 유저의_타입에_의한_기본_권한의_path_로_접근하면_접근이_가능해야_한다(User user) {
+        // given
+        when(request.getPathInfo()).thenReturn(userTypeAllowPath);
+        when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
+
+        // when
+        boolean result = accessiblePath.check(request, authentication);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest
@@ -121,11 +142,19 @@ class AccessiblePathTest {
         );
     }
 
+    private static Stream<Arguments> allTestTargetUserParameterizedTestData() {
+        return Stream.of(
+                Arguments.of(admin),
+                Arguments.of(seller),
+                Arguments.of(normal)
+        );
+    }
+
     private static Stream<Arguments> allowPathParameterizedTestData() {
         return Stream.of(
-                Arguments.of(admin, Arrays.asList(adminAllowPath, sellerAllowPath, normalAllowPath)),
-                Arguments.of(seller, Arrays.asList(sellerAllowPath, normalAllowPath)),
-                Arguments.of(normal, Collections.singletonList(normalAllowPath))
+                Arguments.of(admin, Arrays.asList(adminAllowPath, sellerAllowPath, normalAllowPath, userTypeAllowPath, allAllowPath)),
+                Arguments.of(seller, Arrays.asList(sellerAllowPath, normalAllowPath, userTypeAllowPath, allAllowPath)),
+                Arguments.of(normal, Arrays.asList(normalAllowPath, userTypeAllowPath, allAllowPath))
         );
     }
 }

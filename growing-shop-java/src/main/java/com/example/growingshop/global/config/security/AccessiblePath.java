@@ -1,8 +1,10 @@
 package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.domain.Privileges;
+import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.error.NotFoundUserException;
 import com.example.growingshop.domain.auth.service.PrivilegeService;
+import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 public class AccessiblePath {
     private final UserRepository userRepository;
     private final PrivilegeService privilegeService;
+    private final RoleService roleService;
 
     public boolean check(HttpServletRequest request, Authentication authentication) {
         Privileges privileges = privilegeService.findAll();
 
         if (privileges.containPath(request.getPathInfo())) {
             User user = getUserByAuthentication(authentication);
+            Role userTypeRole = roleService.findByName(user.getType().name());
 
             return user.getRoles()
+                    .combineWithUserDefaultRole(userTypeRole)
                     .getGrantedAuthorities()
                     .isAllowAccessPath(request.getPathInfo());
         }
