@@ -83,7 +83,7 @@ class AccessiblePathTest {
     @Test
     void role_에_없는_경로_요청시_권한과_상관없이_접근이_가능해야_한다() {
         // given
-        when(request.getPathInfo()).thenReturn(allAllowPath);
+        when(request.getRequestURI()).thenReturn(allAllowPath);
 
         // when
         boolean result = accessiblePath.check(request, authentication);
@@ -96,7 +96,7 @@ class AccessiblePathTest {
     @MethodSource("notAllowPathParameterizedTestData")
     void path_에_대한_권한이_없는_사용자가_요청하면_접근이_불가능해야_한다(User user) {
         // given
-        when(request.getPathInfo()).thenReturn(adminAllowPath);
+        when(request.getRequestURI()).thenReturn(adminAllowPath);
         when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
 
         // when
@@ -110,7 +110,7 @@ class AccessiblePathTest {
     @MethodSource("allTestTargetUserParameterizedTestData")
     void 유저의_타입에_의한_기본_권한의_path_로_접근하면_접근이_가능해야_한다(User user) {
         // given
-        when(request.getPathInfo()).thenReturn(userTypeAllowPath);
+        when(request.getRequestURI()).thenReturn(userTypeAllowPath);
         when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
 
         // when
@@ -125,7 +125,7 @@ class AccessiblePathTest {
     void path_에_권한이_있는_사용자가_요청하면_접근이_가능해야_한다(User user, List<String> paths) {
         when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
         paths.forEach(path -> {
-            when(request.getPathInfo()).thenReturn(path);
+            when(request.getRequestURI()).thenReturn(path);
 
             // when
             boolean result = accessiblePath.check(request, authentication);

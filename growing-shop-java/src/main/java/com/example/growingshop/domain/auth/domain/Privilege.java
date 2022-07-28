@@ -1,8 +1,6 @@
 package com.example.growingshop.domain.auth.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.regex.Pattern;
@@ -10,6 +8,8 @@ import java.util.regex.Pattern;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Privilege {
     private static final Pattern PATH_REGEX = Pattern.compile("^([\\/\\w-]+)+(\\.){0,1}$", Pattern.DOTALL);
 
@@ -17,7 +17,7 @@ public class Privilege {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)

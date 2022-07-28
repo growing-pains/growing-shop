@@ -1,9 +1,7 @@
 package com.example.growingshop.domain.auth.domain;
 
 import com.example.growingshop.domain.auth.dto.Authority;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +9,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Role {
 
     @Id
@@ -29,6 +29,6 @@ public class Role {
     }
 
     public Authority getGrantedAuthorities() {
-        return new Authority(name, privileges.getAllAccessiblePath());
+        return new Authority(name, privileges.allAccessiblePath());
     }
 }

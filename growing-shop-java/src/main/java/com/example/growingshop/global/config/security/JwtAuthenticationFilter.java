@@ -17,7 +17,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String AUTH_HEADER_PREFIX = "Bearer ";
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
+    ) throws ServletException, IOException {
         try {
             String userId = getUserIdFromRequestInJwt(request);
             if (StringUtils.hasText(userId)) {
@@ -27,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            logger.error("Security context 에 유저 권한 정보가 없습니다.", ex);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         }
 
@@ -45,6 +47,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return bearerToken.substring(AUTH_HEADER_PREFIX.length());
         }
 
-        throw new IllegalAccessException("Need to Jwt Token with Bearer");
+        throw new IllegalAccessException("Bearer 에 JWT 토큰 정보가 없습니다.");
     }
 }

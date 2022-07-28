@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "`user`")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +49,7 @@ public class User {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company")
     private Company company;
 
     @Enumerated(EnumType.STRING)

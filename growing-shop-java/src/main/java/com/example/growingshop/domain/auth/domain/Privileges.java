@@ -1,5 +1,6 @@
 package com.example.growingshop.domain.auth.domain;
 
+import com.example.growingshop.domain.auth.dto.RoleResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +26,20 @@ public class Privileges {
         this.privileges.addAll(privileges);
     }
 
-    public List<String> getAllAccessiblePath() {
+    public List<String> allAccessiblePath() {
         return privileges.stream()
                 .map(Privilege::getPath)
                 .collect(Collectors.toList());
     }
 
     public boolean containPath(String path) {
-        return getAllAccessiblePath().stream()
+        return allAccessiblePath().stream()
                 .anyMatch(accessiblePath -> accessiblePath.equals(path));
+    }
+
+    public List<RoleResponse.PrivilegeRes> toResponse() {
+        return this.privileges.stream()
+                .map(RoleResponse.PrivilegeRes::from)
+                .collect(Collectors.toList());
     }
 }

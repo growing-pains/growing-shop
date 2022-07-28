@@ -1,6 +1,7 @@
 package com.example.growingshop.domain.auth.domain;
 
 import com.example.growingshop.domain.auth.dto.Authorities;
+import com.example.growingshop.domain.auth.dto.RoleResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,11 @@ public class Roles {
         result.add(userDefaultRole);
 
         return new Roles(result);
+    }
+
+    public List<RoleResponse.RoleRes> toResponse() {
+        return this.roles.stream()
+                .map(RoleResponse.RoleRes::from)
+                .collect(Collectors.toList());
     }
 }

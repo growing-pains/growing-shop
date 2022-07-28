@@ -23,14 +23,14 @@ public class AccessiblePath {
     public boolean check(HttpServletRequest request, Authentication authentication) {
         Privileges privileges = privilegeService.findAll();
 
-        if (privileges.containPath(request.getPathInfo())) {
+        if (privileges.containPath(request.getRequestURI())) {
             User user = getUserByAuthentication(authentication);
             Role userTypeRole = roleService.findByName(user.getType().name());
 
             return user.getRoles()
                     .combineWithUserDefaultRole(userTypeRole)
                     .getGrantedAuthorities()
-                    .isAllowAccessPath(request.getPathInfo());
+                    .isAllowAccessPath(request.getRequestURI());
         }
         return true;
     }
