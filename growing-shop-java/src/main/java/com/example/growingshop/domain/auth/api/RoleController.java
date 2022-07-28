@@ -28,4 +28,11 @@ public class RoleController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("/privileges")
+    public ResponseEntity changePrivileges(@RequestBody RoleRequest.changeRolePrivileges req) {
+        roleService.changePrivileges(req);
+
+        return ResponseEntity.noContent().build();
+    }
 }

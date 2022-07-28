@@ -31,4 +31,8 @@ public class Role {
     public Authority getGrantedAuthorities() {
         return new Authority(name, privileges.allAccessiblePath());
     }
+
+    public void changePrivileges(Privileges target) {
+        this.privileges = target;
+    }
 }

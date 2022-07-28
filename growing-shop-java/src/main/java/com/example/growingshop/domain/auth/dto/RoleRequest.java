@@ -16,12 +16,20 @@ public class RoleRequest {
     @Builder
     public static class CreateRole {
         private String name;
-
         private List<Long> privileges = new ArrayList<>();
 
         public Role toEntity(Privileges privileges) {
             return Role.builder().name(name).privileges(privileges).build();
         }
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class changeRolePrivileges {
+        private Long role;
+        private List<Long> privileges = new ArrayList<>();
     }
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)

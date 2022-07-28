@@ -21,6 +21,11 @@ public class RoleService {
         return new Roles(roleRepository.findAll());
     }
 
+    public Role getById(Long id) {
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(id + " 에 해당하는 role 을 찾을 수 없습니다."));
+    }
+
     public Role findByName(String name) {
         return roleRepository.getByName(name)
                 .orElseThrow(() -> new IllegalArgumentException(name + " 에 해당하는 role 을 찾을 수 없습니다."));
@@ -31,5 +36,13 @@ public class RoleService {
         Privileges privileges = new Privileges(privilegeRepository.findAllById(req.getPrivileges()));
 
         return roleRepository.save(req.toEntity(privileges));
+    }
+
+    @Transactional
+    public void changePrivileges(RoleRequest.changeRolePrivileges req) {
+        Role role = getById(req.getRole());
+        Privileges privileges = new Privileges(privilegeRepository.findAllById(req.getPrivileges()));
+
+        role.changePrivileges(privileges);
     }
 }

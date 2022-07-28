@@ -14,12 +14,14 @@ public class RoleResponse {
     @Builder
     @Getter
     public static class RoleRes {
+        private Long id;
         private String name;
         private List<PrivilegeRes> privileges = new ArrayList<>();
 
         public static RoleRes from(Role role) {
             RoleRes res = new RoleRes();
 
+            res.id = role.getId();
             res.name = role.getName();
             res.privileges.addAll(
                     role.getPrivileges().toResponse()
@@ -34,6 +36,7 @@ public class RoleResponse {
     @Builder
     @Getter
     public static class PrivilegeRes {
+        private Long id;
         private String name;
         private String path;
         private String description;
@@ -41,6 +44,7 @@ public class RoleResponse {
         public static PrivilegeRes from(Privilege privilege) {
             PrivilegeRes res = new PrivilegeRes();
 
+            res.id = privilege.getId();
             res.name = privilege.getName();
             res.path = privilege.getPath();
             res.description = privilege.getDescription();
