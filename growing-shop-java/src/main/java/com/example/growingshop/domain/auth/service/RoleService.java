@@ -1,10 +1,10 @@
 package com.example.growingshop.domain.auth.service;
 
-import com.example.growingshop.domain.auth.domain.Privileges;
+import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.domain.Roles;
 import com.example.growingshop.domain.auth.dto.RoleRequest;
-import com.example.growingshop.domain.auth.repository.PrivilegeRepository;
+import com.example.growingshop.domain.auth.repository.PolicyRepository;
 import com.example.growingshop.domain.auth.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class RoleService {
     private final RoleRepository roleRepository;
-    private final PrivilegeRepository privilegeRepository;
+    private final PolicyRepository policyRepository;
 
     public Roles findAll() {
         return new Roles(roleRepository.findAll());
@@ -33,16 +33,16 @@ public class RoleService {
 
     @Transactional
     public Role create(RoleRequest.CreateRole req) {
-        Privileges privileges = new Privileges(privilegeRepository.findAllById(req.getPrivileges()));
+        Policies policies = new Policies(policyRepository.findAllById(req.getPolicies()));
 
-        return roleRepository.save(req.toEntity(privileges));
+        return roleRepository.save(req.toEntity(policies));
     }
 
     @Transactional
-    public void changePrivileges(RoleRequest.ChangeRolePrivileges req) {
+    public void changePolicies(RoleRequest.ChangeRolePolicies req) {
         Role role = getById(req.getRole());
-        Privileges privileges = new Privileges(privilegeRepository.findAllById(req.getPrivileges()));
+        Policies policies = new Policies(policyRepository.findAllById(req.getPolicies()));
 
-        role.changePrivileges(privileges);
+        role.changePolicies(policies);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.growingshop.global.config.security;
 
-import com.example.growingshop.domain.auth.domain.Privilege;
-import com.example.growingshop.domain.auth.domain.Privileges;
+import com.example.growingshop.domain.auth.domain.Policy;
+import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.domain.Roles;
-import com.example.growingshop.domain.auth.service.PrivilegeService;
+import com.example.growingshop.domain.auth.service.PolicyService;
 import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.domain.UserType;
@@ -45,7 +45,7 @@ class JwtAuthenticationFilterTest {
     private static MockedStatic<JwtTokenProvider> jwtTokenProvider;
 
     private UserRepository userRepository = mock(UserRepository.class);
-    private PrivilegeService privilegeService = mock(PrivilegeService.class);
+    private PolicyService policyService = mock(PolicyService.class);
     private RoleService roleService = mock(RoleService.class);
 
     private HttpServletRequest request;
@@ -61,21 +61,21 @@ class JwtAuthenticationFilterTest {
     private static final String userTypeAllowPath = "/default";
     private static final String allAllowPath = "/all";
 
-    private static final Privilege adminPrivilege = new Privilege("admin", adminAllowPath, "");
-    private static final Privilege sellerPrivilege = new Privilege("seller", sellerAllowPath, "");
-    private static final Privilege normalPrivilege = new Privilege("normal", normalAllowPath, "");
-    private static final Privilege userTypePrivilege = new Privilege("default", userTypeAllowPath, "");
+    private static final Policy adminPolicy = new Policy("admin", adminAllowPath, "");
+    private static final Policy sellerPolicy = new Policy("seller", sellerAllowPath, "");
+    private static final Policy normalPolicy = new Policy("normal", normalAllowPath, "");
+    private static final Policy userTypePolicy = new Policy("default", userTypeAllowPath, "");
 
     private static final Roles adminRole = new Roles(Collections.singletonList(
-            new Role("ADMIN", Arrays.asList(adminPrivilege, sellerPrivilege, normalPrivilege))
+            new Role("ADMIN", Arrays.asList(adminPolicy, sellerPolicy, normalPolicy))
     ));
     private static final Roles sellerRole = new Roles(Collections.singletonList(
-            new Role("SELLER", Arrays.asList(sellerPrivilege, normalPrivilege))
+            new Role("SELLER", Arrays.asList(sellerPolicy, normalPolicy))
     ));
     private static final Roles normalRole = new Roles(Collections.singletonList(
-            new Role("NORMAL", Collections.singletonList(normalPrivilege))
+            new Role("NORMAL", Collections.singletonList(normalPolicy))
     ));
-    private static final Role userTypeRole = new Role("DEFAULT", Collections.singletonList(userTypePrivilege));
+    private static final Role userTypeRole = new Role("DEFAULT", Collections.singletonList(userTypePolicy));
 
     private static final User admin = User.builder().type(UserType.ADMIN).roles(adminRole).build();
     private static final User seller = User.builder().type(UserType.NORMAL).roles(sellerRole).build();
@@ -92,15 +92,14 @@ class JwtAuthenticationFilterTest {
     }
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         request = spy(HttpServletRequest.class);
         response = new MockHttpServletResponse();
 
         MockitoAnnotations.openMocks(this);
 
         lenient().when(request.getHeader("Authorization")).thenReturn(BEARER + "token");
-        when(privilegeService.findAll()).thenReturn(new Privileges(Arrays.asList(adminPrivilege, sellerPrivilege, normalPrivilege)));
+        when(policyService.findAll()).thenReturn(new Policies(Arrays.asList(adminPolicy, sellerPolicy, normalPolicy)));
         when(roleService.findByName(any())).thenReturn(userTypeRole);
     }
 

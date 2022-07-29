@@ -21,18 +21,18 @@ public class Role {
     private String name;
 
     @Embedded
-    private Privileges privileges = new Privileges();
+    private Policies policies = new Policies();
 
-    public Role(String name, List<Privilege> privileges) {
+    public Role(String name, List<Policy> policies) {
         this.name = name;
-        this.privileges = new Privileges(privileges);
+        this.policies = new Policies(policies);
     }
 
     public Authority getGrantedAuthorities() {
-        return new Authority(name, privileges.allAccessiblePath());
+        return new Authority(name, policies.allAccessiblePath());
     }
 
-    public void changePrivileges(Privileges target) {
-        this.privileges = target;
+    public void changePolicies(Policies target) {
+        this.policies = target;
     }
 }

@@ -13,22 +13,22 @@ import java.util.stream.Collectors;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Privileges {
+public class Policies {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "role_privilege",
+            name = "role_policy",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "policy_id", referencedColumnName = "id")
     )
-    private List<Privilege> privileges = new ArrayList<>();
+    private List<Policy> policies = new ArrayList<>();
 
-    public Privileges(List<Privilege> privileges) {
-        this.privileges.addAll(privileges);
+    public Policies(List<Policy> policies) {
+        this.policies.addAll(policies);
     }
 
     public List<String> allAccessiblePath() {
-        return privileges.stream()
-                .map(Privilege::getPath)
+        return policies.stream()
+                .map(Policy::getPath)
                 .collect(Collectors.toList());
     }
 
@@ -37,9 +37,9 @@ public class Privileges {
                 .anyMatch(accessiblePath -> accessiblePath.equals(path));
     }
 
-    public List<RoleResponse.PrivilegeRes> toResponse() {
-        return this.privileges.stream()
-                .map(RoleResponse.PrivilegeRes::from)
+    public List<RoleResponse.PoliciesRes> toResponse() {
+        return this.policies.stream()
+                .map(RoleResponse.PoliciesRes::from)
                 .collect(Collectors.toList());
     }
 }

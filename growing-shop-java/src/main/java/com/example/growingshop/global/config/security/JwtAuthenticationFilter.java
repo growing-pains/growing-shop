@@ -1,9 +1,9 @@
 package com.example.growingshop.global.config.security;
 
-import com.example.growingshop.domain.auth.domain.Privileges;
+import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.error.NotFoundUserException;
-import com.example.growingshop.domain.auth.service.PrivilegeService;
+import com.example.growingshop.domain.auth.service.PolicyService;
 import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.repository.UserRepository;
@@ -27,16 +27,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String AUTH_HEADER_PREFIX = "Bearer ";
 
     private final UserRepository userRepository;
-    private final PrivilegeService privilegeService;
+    private final PolicyService policyService;
     private final RoleService roleService;
 
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
-        Privileges privileges = privilegeService.findAll();
+        Policies policies = policyService.findAll();
 
-        if (privileges.containPath(request.getRequestURI())) {
+        if (policies.containPath(request.getRequestURI())) {
             setAuthentication(request, response);
         }
 

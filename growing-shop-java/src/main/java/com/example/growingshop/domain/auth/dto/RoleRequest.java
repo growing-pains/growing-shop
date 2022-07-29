@@ -1,7 +1,7 @@
 package com.example.growingshop.domain.auth.dto;
 
-import com.example.growingshop.domain.auth.domain.Privilege;
-import com.example.growingshop.domain.auth.domain.Privileges;
+import com.example.growingshop.domain.auth.domain.Policies;
+import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.domain.Role;
 import lombok.*;
 
@@ -16,10 +16,10 @@ public class RoleRequest {
     @Builder
     public static class CreateRole {
         private String name;
-        private List<Long> privileges = new ArrayList<>();
+        private List<Long> policies = new ArrayList<>();
 
-        public Role toEntity(Privileges privileges) {
-            return Role.builder().name(name).privileges(privileges).build();
+        public Role toEntity(Policies policies) {
+            return Role.builder().name(name).policies(policies).build();
         }
     }
 
@@ -27,22 +27,22 @@ public class RoleRequest {
     @AllArgsConstructor
     @Getter
     @Builder
-    public static class ChangeRolePrivileges {
+    public static class ChangeRolePolicies {
         private Long role;
-        private List<Long> privileges = new ArrayList<>();
+        private List<Long> policies = new ArrayList<>();
     }
 
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
     @Getter
     @Builder
-    public static class CreatePrivilege {
+    public static class CreatePolicies {
         private String name;
         private String path;
         private String description;
 
-        public Privilege toEntity() {
-            return Privilege.builder()
+        public Policy toEntity() {
+            return Policy.builder()
                     .name(name)
                     .path(path)
                     .description(description)

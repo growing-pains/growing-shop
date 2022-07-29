@@ -30,8 +30,8 @@ public class RoleController {
     }
 
     @PutMapping("/privileges")
-    public ResponseEntity changePrivileges(@RequestBody RoleRequest.ChangeRolePrivileges req) {
-        roleService.changePrivileges(req);
+    public ResponseEntity changePolicies(@RequestBody RoleRequest.ChangeRolePolicies req) {
+        roleService.changePolicies(req);
 
         return ResponseEntity.noContent().build();
     }

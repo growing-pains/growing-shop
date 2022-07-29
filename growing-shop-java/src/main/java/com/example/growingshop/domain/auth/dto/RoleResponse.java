@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.auth.dto;
 
-import com.example.growingshop.domain.auth.domain.Privilege;
+import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.domain.Role;
 import lombok.*;
 
@@ -16,15 +16,15 @@ public class RoleResponse {
     public static class RoleRes {
         private Long id;
         private String name;
-        private List<PrivilegeRes> privileges = new ArrayList<>();
+        private List<PoliciesRes> policies = new ArrayList<>();
 
         public static RoleRes from(Role role) {
             RoleRes res = new RoleRes();
 
             res.id = role.getId();
             res.name = role.getName();
-            res.privileges.addAll(
-                    role.getPrivileges().toResponse()
+            res.policies.addAll(
+                    role.getPolicies().toResponse()
             );
 
             return res;
@@ -35,19 +35,19 @@ public class RoleResponse {
     @AllArgsConstructor
     @Builder
     @Getter
-    public static class PrivilegeRes {
+    public static class PoliciesRes {
         private Long id;
         private String name;
         private String path;
         private String description;
 
-        public static PrivilegeRes from(Privilege privilege) {
-            PrivilegeRes res = new PrivilegeRes();
+        public static PoliciesRes from(Policy policy) {
+            PoliciesRes res = new PoliciesRes();
 
-            res.id = privilege.getId();
-            res.name = privilege.getName();
-            res.path = privilege.getPath();
-            res.description = privilege.getDescription();
+            res.id = policy.getId();
+            res.name = policy.getName();
+            res.path = policy.getPath();
+            res.description = policy.getDescription();
 
             return res;
         }

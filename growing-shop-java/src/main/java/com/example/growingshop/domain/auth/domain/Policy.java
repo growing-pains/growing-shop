@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Privilege {
+public class Policy {
     private static final Pattern PATH_REGEX = Pattern.compile("^[\\/]+[\\w-/]+$", Pattern.DOTALL);
 
     @Id
@@ -27,7 +27,7 @@ public class Privilege {
 
     private String description;
 
-    private Privilege(Long id, String name, String path, String description) {
+    private Policy(Long id, String name, String path, String description) {
         validatePath(path);
 
         this.id = id;
@@ -36,7 +36,7 @@ public class Privilege {
         this.description = description;
     }
 
-    public Privilege(String name, String path, String description) {
+    public Policy(String name, String path, String description) {
         this(null, name, path, description);
     }
 
@@ -46,10 +46,10 @@ public class Privilege {
         }
     }
 
-    public static class PrivilegeBuilder {
+    public static class PolicyBuilder {
         private String path;
 
-        public PrivilegeBuilder path(String path) {
+        public PolicyBuilder path(String path) {
             validatePath(path);
 
             this.path = path;
