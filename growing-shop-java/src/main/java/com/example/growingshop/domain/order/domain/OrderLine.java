@@ -15,9 +15,11 @@ public class OrderLine {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`order`", nullable = false)
     private Order order;
 
     @ManyToOne
+    @JoinColumn(name = "product", nullable = false)
     private Product product;
 
     @Column(nullable = false)

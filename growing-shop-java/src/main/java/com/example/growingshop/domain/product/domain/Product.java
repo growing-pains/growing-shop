@@ -32,6 +32,7 @@ public class Product {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company", nullable = false)
     private Company company;
 
     @Enumerated(EnumType.STRING)

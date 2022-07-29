@@ -21,7 +21,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse.TokenRes> login(@RequestBody @Validated AuthRequest.LoginReq login) throws IllegalAccessException {
+    public ResponseEntity<AuthResponse.TokenRes> login(@RequestBody @Validated AuthRequest.LoginReq login) {
         return new ResponseEntity<>(jwtTokenProvider.generateToken(login), HttpStatus.OK);
     }
 
