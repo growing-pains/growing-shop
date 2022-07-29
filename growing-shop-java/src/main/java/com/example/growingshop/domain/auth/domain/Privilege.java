@@ -1,6 +1,9 @@
 package com.example.growingshop.domain.auth.domain;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.regex.Pattern;
@@ -8,10 +11,9 @@ import java.util.regex.Pattern;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Builder
 public class Privilege {
-    private static final Pattern PATH_REGEX = Pattern.compile("^([\\/\\w-]+)+(\\.){0,1}$", Pattern.DOTALL);
+    private static final Pattern PATH_REGEX = Pattern.compile("^[\\/]+[\\w-/]+$", Pattern.DOTALL);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +27,34 @@ public class Privilege {
 
     private String description;
 
-    public Privilege(String name, String path, String description) {
+    private Privilege(Long id, String name, String path, String description) {
         validatePath(path);
 
+        this.id = id;
         this.name = name;
         this.path = path;
         this.description = description;
     }
 
-    private void validatePath(String path) {
+    public Privilege(String name, String path, String description) {
+        this(null, name, path, description);
+    }
+
+    private static void validatePath(String path) {
         if (!PATH_REGEX.matcher(path).matches()) {
             throw new IllegalArgumentException("유효하지 않은 url path 입니다.");
+        }
+    }
+
+    public static class PrivilegeBuilder {
+        private String path;
+
+        public PrivilegeBuilder path(String path) {
+            validatePath(path);
+
+            this.path = path;
+
+            return this;
         }
     }
 }

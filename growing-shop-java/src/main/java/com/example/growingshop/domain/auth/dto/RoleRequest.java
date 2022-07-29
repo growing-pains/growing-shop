@@ -27,7 +27,7 @@ public class RoleRequest {
     @AllArgsConstructor
     @Getter
     @Builder
-    public static class changeRolePrivileges {
+    public static class ChangeRolePrivileges {
         private Long role;
         private List<Long> privileges = new ArrayList<>();
     }

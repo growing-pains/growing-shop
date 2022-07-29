@@ -53,7 +53,7 @@ public class JwtTokenProvider {
         throw new NotFoundUserException("Invalid account information.");
     }
 
-    public static String getUserIdFromJwt(String token) throws IllegalAccessException {
+    public static String getUserIdFromJwt(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(JWT_SECRET)
@@ -62,19 +62,19 @@ public class JwtTokenProvider {
                     .getSubject();
         } catch (SignatureException e) {
             log.error("Invalid JWT signature.", e);
-            throw new IllegalAccessException("Invalid JWT signature.");
+            throw new NotFoundUserException("Invalid JWT signature.");
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token.", e);
-            throw new IllegalAccessException("Invalid JWT token.");
+            throw new NotFoundUserException("Invalid JWT token.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token.", e);
-            throw new IllegalAccessException("Expired JWT token.");
+            throw new NotFoundUserException("Expired JWT token.");
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token.", e);
-            throw new IllegalAccessException("Unsupported JWT token.");
+            throw new NotFoundUserException("Unsupported JWT token.");
         } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty.", e);
-            throw new IllegalAccessException("JWT claims string is empty..");
+            throw new NotFoundUserException("JWT claims string is empty..");
         }
     }
 }

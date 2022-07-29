@@ -39,7 +39,7 @@ public class RoleService {
     }
 
     @Transactional
-    public void changePrivileges(RoleRequest.changeRolePrivileges req) {
+    public void changePrivileges(RoleRequest.ChangeRolePrivileges req) {
         Role role = getById(req.getRole());
         Privileges privileges = new Privileges(privilegeRepository.findAllById(req.getPrivileges()));
 

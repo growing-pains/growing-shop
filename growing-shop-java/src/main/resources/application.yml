@@ -4,8 +4,7 @@ server:
 ---
 
 spring:
-  profiles:
-    active: local
+  config.activate.on-profile: local
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -13,7 +12,7 @@ spring:
     password: password
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: create-drop
     defer-datasource-initialization: true
     properties.hibernate.show_sql: true
   h2.console:
@@ -30,13 +29,12 @@ spring:
 
 jwt:
   secret-key: local-secret
-  expiration: 60 * 60 * 24
+  expiration: 86400
 
 ---
 
 spring:
-  profiles:
-    active: acceptance
+  config.activate.on-profile: acceptance
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -45,11 +43,8 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
+    defer-datasource-initialization: true
     properties.hibernate.show_sql: true
-  cache.type: redis
-  redis:
-    host: localhost
-    port: 6379
 
 jwt:
   secret-key: acceptance-secret

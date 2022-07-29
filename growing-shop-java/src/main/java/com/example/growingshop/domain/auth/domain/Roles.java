@@ -30,12 +30,14 @@ public class Roles {
 
     public Authorities getGrantedAuthorities() {
         return new Authorities(
-                roles.stream().map(Role::getGrantedAuthorities).collect(Collectors.toList())
+                roles.stream()
+                        .map(Role::getGrantedAuthorities)
+                        .collect(Collectors.toList())
         );
     }
 
     public Roles combineWithUserDefaultRole(Role userDefaultRole) {
-        List<Role> result = this.roles;
+        List<Role> result = new ArrayList<>(this.roles);
         result.add(userDefaultRole);
 
         return new Roles(result);
