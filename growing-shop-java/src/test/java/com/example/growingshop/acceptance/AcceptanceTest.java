@@ -1,6 +1,7 @@
 package com.example.growingshop.acceptance;
 
 import com.example.growingshop.acceptance.helper.DatabaseCleanup;
+import com.example.growingshop.acceptance.helper.Requester;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.Filter;
@@ -36,6 +37,10 @@ public class AcceptanceTest {
     public static RequestSpecification defaultSpec;
     public static RequestSpecification failResponseSpec;
 
+    protected Requester requester = new Requester();
+    protected Requester defaultRequester;
+    protected Requester failRequester;
+
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
         if (RestAssured.port == RestAssured.UNDEFINED_PORT) {
@@ -51,6 +56,9 @@ public class AcceptanceTest {
         failResponseSpec = new RequestSpecBuilder()
                 .addFilter(failAssuredFilter(restDocumentation))
                 .build();
+
+        defaultRequester = new Requester(defaultSpec);
+        failRequester = new Requester(failResponseSpec);
     }
 
     private Filter defaultAssuredFilter(RestDocumentationContextProvider restDocumentation) {
