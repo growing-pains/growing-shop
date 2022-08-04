@@ -2,14 +2,9 @@
 
 존재하는 회원으로 로그인 요청 시 토큰이 발급된다
 
-==== Request Body Sample
-include::{snippets}/auth/login/request-body.adoc[]
-
 ==== Http Request Sample
 include::{snippets}/auth/login/http-request.adoc[]
-
-==== Response Body Sample
-include::{snippets}/auth/login/response-body.adoc[]
+include::{snippets}/auth/login/request-fields.adoc[]
 
 ==== Http Response Sample
 정상 응답
