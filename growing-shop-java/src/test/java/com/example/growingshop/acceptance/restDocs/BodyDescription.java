@@ -1,7 +1,7 @@
 package com.example.growingshop.acceptance.restDocs;
 
-import io.restassured.filter.Filter;
 import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.restassured3.RestDocumentationFilter;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class BodyDescription implements Description {
     }
 
     @Override
-    public Filter addDescription() {
+    public RestDocumentationFilter addDescription() {
         return document(
                 name,
                 requestFields(generateDescription())

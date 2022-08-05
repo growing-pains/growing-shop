@@ -1,7 +1,7 @@
 package com.example.growingshop.acceptance.restDocs;
 
-import io.restassured.filter.Filter;
+import org.springframework.restdocs.restassured3.RestDocumentationFilter;
 
 public interface Description {
-    Filter addDescription();
+    RestDocumentationFilter addDescription();
 }
