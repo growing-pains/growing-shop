@@ -57,10 +57,6 @@ public class AuthRequest {
 
         private Long company;
 
-        public String getJoinPassword() {
-            return this.password;
-        }
-
         public User toEntity(String hashedPassword, Company company) {
             return User.builder()
                     .name(this.name)

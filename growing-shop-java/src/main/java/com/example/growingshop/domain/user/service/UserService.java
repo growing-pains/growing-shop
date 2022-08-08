@@ -30,7 +30,7 @@ public class UserService {
         }
 
         return userRepository.save(
-                join.toEntity(passwordEncoder.encode(join.getJoinPassword()), company)
+                join.toEntity(passwordEncoder.encode(join.getPassword()), company)
         );
     }
 }

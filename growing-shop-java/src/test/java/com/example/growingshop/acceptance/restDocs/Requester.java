@@ -44,8 +44,8 @@ public class Requester {
             return this;
         }
 
-        public RequesterBuilder description(Description description) {
-            requester.spec.filter(description.addDescription());
+        public RequesterBuilder description(DocsDescription docsDescription) {
+            requester.spec.filter(docsDescription.addDescription());
 
             return this;
         }
