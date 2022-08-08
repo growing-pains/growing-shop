@@ -49,7 +49,11 @@ public class AcceptanceTest {
         failResponseSpec = new RequestSpecBuilder()
                 .addFilter(failAssuredFilter(restDocumentation))
                 .build();
+
+        this.setUp();
     }
+
+    protected void setUp() {}
 
     private Filter defaultAssuredFilter(RestDocumentationContextProvider restDocumentation) {
         return prettySnippets(restDocumentation).and()

@@ -10,6 +10,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
 import static com.example.growingshop.acceptance.AcceptanceTest.defaultSpec;
+import static com.example.growingshop.acceptance.AcceptanceTest.failResponseSpec;
 
 public class JoinRequester extends BodyDocsDescription implements AcceptanceTestDocsRequest, AcceptanceTestRequest {
     private static final String PATH = "/auth";
@@ -20,17 +21,21 @@ public class JoinRequester extends BodyDocsDescription implements AcceptanceTest
             .add("email", "이메일")
             .add("loginId", "로그인 아이디")
             .add("password", "패스워드")
-            .addIgnore("company")
+            .add("company", "업체 id", "Long")
             .build();
 
     private final JoinValue joinValue = new JoinValue();
-    private final Requester requester = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
+    private final Requester successDocsRequester = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
             .spec(defaultSpec)
             .body(joinValue.getSuccessRequestValue())
             .description(this)
             .build();
+    private final Requester failDocsRequester = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
+            .spec(failResponseSpec)
+            .body(joinValue.getFailRequestValue())
+            .description(this)
+            .build();
     private final Requester defaultRequest = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
-            .spec(defaultSpec)
             .body(joinValue.getSuccessRequestValue())
             .build();
 
@@ -40,13 +45,13 @@ public class JoinRequester extends BodyDocsDescription implements AcceptanceTest
 
     @Override
     public ExtractableResponse<Response> successRequestWithDocs() {
-        return requester.request();
+        return successDocsRequester.request();
     }
 
     @Override
     public ExtractableResponse<Response> failRequestWithDocs() {
-        requester.request();
-        return requester.request();
+        defaultRequest.request();
+        return failDocsRequester.request();
     }
 
     @Override
