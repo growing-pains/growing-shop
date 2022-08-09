@@ -1,6 +1,5 @@
-package com.example.growingshop.acceptance.restDocs.request.auth;
+package com.example.growingshop.acceptance.restDocs.request.value;
 
-import com.example.growingshop.acceptance.restDocs.Value;
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 
 public class LoginValue implements Value<AuthRequest.LoginReq> {

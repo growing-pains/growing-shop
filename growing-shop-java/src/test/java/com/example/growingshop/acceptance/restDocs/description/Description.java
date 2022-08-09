@@ -1,4 +1,4 @@
-package com.example.growingshop.acceptance.restDocs;
+package com.example.growingshop.acceptance.restDocs.description;
 
 import org.springframework.restdocs.payload.FieldDescriptor;
 

@@ -1,5 +1,6 @@
-package com.example.growingshop.acceptance.restDocs;
+package com.example.growingshop.acceptance.restDocs.request;
 
+import com.example.growingshop.acceptance.restDocs.description.DocsDescription;
 import io.restassured.RestAssured;
 import io.restassured.http.Method;
 import io.restassured.response.ExtractableResponse;
@@ -28,9 +29,10 @@ public class Requester {
     }
 
     public static class RequesterBuilder {
-        private Requester requester = new Requester();
+        private Requester requester;
 
         public RequesterBuilder(String path, Method method) {
+            requester = new Requester();
             requester.path = path;
             requester.method = method;
         }

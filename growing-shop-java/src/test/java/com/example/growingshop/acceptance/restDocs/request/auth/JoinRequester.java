@@ -1,10 +1,11 @@
 package com.example.growingshop.acceptance.restDocs.request.auth;
 
-import com.example.growingshop.acceptance.restDocs.BodyDocsDescription;
-import com.example.growingshop.acceptance.restDocs.Description;
-import com.example.growingshop.acceptance.restDocs.Requester;
+import com.example.growingshop.acceptance.restDocs.description.BodyDocsDescription;
+import com.example.growingshop.acceptance.restDocs.description.Description;
+import com.example.growingshop.acceptance.restDocs.request.Requester;
 import com.example.growingshop.acceptance.restDocs.request.AcceptanceTestDocsRequest;
 import com.example.growingshop.acceptance.restDocs.request.AcceptanceTestRequest;
+import com.example.growingshop.acceptance.restDocs.request.value.JoinValue;
 import io.restassured.http.Method;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -13,7 +14,7 @@ import static com.example.growingshop.acceptance.AcceptanceTest.defaultSpec;
 import static com.example.growingshop.acceptance.AcceptanceTest.failResponseSpec;
 
 public class JoinRequester extends BodyDocsDescription implements AcceptanceTestDocsRequest, AcceptanceTestRequest {
-    private static final String PATH = "/auth";
+    private static final String PATH = "/auth/join";
     private static final String NAME = "auth/join";
     private static final Description DESCRIPTION = new Description.DescriptionBuilder()
             .add("name", "이름")
@@ -25,17 +26,16 @@ public class JoinRequester extends BodyDocsDescription implements AcceptanceTest
             .build();
 
     private final JoinValue joinValue = new JoinValue();
-    private final Requester successDocsRequester = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
+    private final Requester successDocsRequester = new Requester.RequesterBuilder(PATH, Method.POST)
             .spec(defaultSpec)
             .body(joinValue.getSuccessRequestValue())
             .description(this)
             .build();
-    private final Requester failDocsRequester = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
+    private final Requester failDocsRequester = new Requester.RequesterBuilder(PATH, Method.POST)
             .spec(failResponseSpec)
             .body(joinValue.getFailRequestValue())
-            .description(this)
             .build();
-    private final Requester defaultRequest = new Requester.RequesterBuilder(PATH + "/join", Method.POST)
+    private final Requester defaultRequest = new Requester.RequesterBuilder(PATH, Method.POST)
             .body(joinValue.getSuccessRequestValue())
             .build();
 
