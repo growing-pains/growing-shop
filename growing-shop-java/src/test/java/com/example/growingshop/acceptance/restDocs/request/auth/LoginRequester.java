@@ -4,7 +4,7 @@ import com.example.growingshop.acceptance.restDocs.description.BodyDocsDescripti
 import com.example.growingshop.acceptance.restDocs.description.Description;
 import com.example.growingshop.acceptance.restDocs.request.Requester;
 import com.example.growingshop.acceptance.restDocs.request.AcceptanceTestDocsRequest;
-import com.example.growingshop.acceptance.restDocs.request.value.LoginValue;
+import com.example.growingshop.acceptance.restDocs.value.auth.LoginValue;
 import io.restassured.http.Method;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

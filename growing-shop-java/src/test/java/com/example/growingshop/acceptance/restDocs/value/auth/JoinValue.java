@@ -1,5 +1,6 @@
-package com.example.growingshop.acceptance.restDocs.request.value;
+package com.example.growingshop.acceptance.restDocs.value.auth;
 
+import com.example.growingshop.acceptance.restDocs.value.Value;
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 
 public class JoinValue implements Value<AuthRequest.JoinReq> {
