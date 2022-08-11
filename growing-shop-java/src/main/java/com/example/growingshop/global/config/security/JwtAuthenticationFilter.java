@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            logger.error("인증 도중에 문제가 발생하였습니다.", ex);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         }
 
@@ -42,10 +42,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJwtTokenInRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTH_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX)) {
+        if (validBearerToken(bearerToken)) {
             return bearerToken.substring(AUTH_HEADER_PREFIX.length());
         }
 
-        throw new InvalidJwtTokenException("Need to Jwt Token with Bearer");
+        throw new InvalidJwtTokenException("헤더에 Bearer JWT 토큰 정보가 없습니다.");
+    }
+
+    private boolean validBearerToken(String bearerToken) {
+        return StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX);
     }
 }

@@ -51,7 +51,7 @@ public class JwtTokenProvider {
                     .build();
         }
 
-        throw new NotFoundUserException("Invalid account information.");
+        throw new NotFoundUserException("유효하지 않은 계정 정보입니다.");
     }
 
     public static String getUserIdFromJwt(String token) {
@@ -63,19 +63,19 @@ public class JwtTokenProvider {
                     .getSubject();
         } catch (SignatureException e) {
             log.error("Invalid JWT signature.", e);
-            throw new InvalidJwtTokenException("Invalid JWT signature.");
+            throw new InvalidJwtTokenException("JWT 서명이 유효하지 않습니다.");
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token.", e);
-            throw new InvalidJwtTokenException("Invalid JWT token.");
+            throw new InvalidJwtTokenException("JWT 토큰이 유효하지 않습니다.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token.", e);
-            throw new InvalidJwtTokenException("Expired JWT token.");
+            throw new InvalidJwtTokenException("JWT 토큰이 만료되었습니다.");
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token.", e);
-            throw new InvalidJwtTokenException("Unsupported JWT token.");
+            throw new InvalidJwtTokenException("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty.", e);
-            throw new InvalidJwtTokenException("JWT claims string is empty..");
+            throw new InvalidJwtTokenException("JWT claim 값이 없습니다.");
         }
     }
 }
