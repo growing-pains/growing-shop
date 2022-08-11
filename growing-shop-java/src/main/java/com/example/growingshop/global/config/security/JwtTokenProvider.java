@@ -2,7 +2,8 @@ package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.auth.dto.AuthResponse;
-import com.example.growingshop.domain.auth.error.NotFoundUserException;
+import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
+import com.example.growingshop.global.error.exception.NotFoundUserException;
 import com.example.growingshop.domain.auth.service.AuthService;
 import com.example.growingshop.global.util.TimeUtil;
 import io.jsonwebtoken.*;
@@ -53,7 +54,7 @@ public class JwtTokenProvider {
         throw new NotFoundUserException("Invalid account information.");
     }
 
-    public static String getUserIdFromJwt(String token) throws IllegalAccessException {
+    public static String getUserIdFromJwt(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(JWT_SECRET)
@@ -62,19 +63,19 @@ public class JwtTokenProvider {
                     .getSubject();
         } catch (SignatureException e) {
             log.error("Invalid JWT signature.", e);
-            throw new IllegalAccessException("Invalid JWT signature.");
+            throw new InvalidJwtTokenException("Invalid JWT signature.");
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token.", e);
-            throw new IllegalAccessException("Invalid JWT token.");
+            throw new InvalidJwtTokenException("Invalid JWT token.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token.", e);
-            throw new IllegalAccessException("Expired JWT token.");
+            throw new InvalidJwtTokenException("Expired JWT token.");
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token.", e);
-            throw new IllegalAccessException("Unsupported JWT token.");
+            throw new InvalidJwtTokenException("Unsupported JWT token.");
         } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty.", e);
-            throw new IllegalAccessException("JWT claims string is empty..");
+            throw new InvalidJwtTokenException("JWT claims string is empty..");
         }
     }
 }

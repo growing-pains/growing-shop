@@ -1,5 +1,6 @@
 package com.example.growingshop.global.config.security;
 
+import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
@@ -34,17 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getUserIdFromRequestInJwt(HttpServletRequest request) throws IllegalAccessException {
+    private String getUserIdFromRequestInJwt(HttpServletRequest request) {
         String token = getJwtTokenInRequest(request);
         return JwtTokenProvider.getUserIdFromJwt(token);
     }
 
-    private String getJwtTokenInRequest(HttpServletRequest request) throws IllegalAccessException {
+    private String getJwtTokenInRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTH_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX)) {
             return bearerToken.substring(AUTH_HEADER_PREFIX.length());
         }
 
-        throw new IllegalAccessException("Need to Jwt Token with Bearer");
+        throw new InvalidJwtTokenException("Need to Jwt Token with Bearer");
     }
 }
