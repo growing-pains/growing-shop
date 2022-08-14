@@ -1,5 +1,6 @@
 package com.example.growingshop.domain.user.domain;
 
+import com.example.growingshop.domain.auth.domain.Roles;
 import com.example.growingshop.domain.company.domain.Company;
 import com.example.growingshop.global.validator.StringChecker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,6 +50,7 @@ public class User {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company")
     private Company company;
 
     @Enumerated(EnumType.STRING)
@@ -62,4 +64,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserGrade grade;
+
+    @Embedded
+    private Roles roles;
 }
