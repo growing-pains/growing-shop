@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 
 import java.util.Map;
 
-import static com.example.growingshop.acceptance.AcceptanceTest.failResponseSpec;
+import static com.example.growingshop.acceptance.AcceptanceTest.failSpec;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 public class Requester {
@@ -71,7 +71,7 @@ public class Requester {
         }
 
         private static String postfixPath(RequestSpecification spec) {
-            if (spec == failResponseSpec) {
+            if (spec == failSpec) {
                 return "/fail";
             }
 

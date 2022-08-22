@@ -32,7 +32,7 @@ public class AcceptanceTest {
     private DatabaseCleanup databaseCleanup;
 
     public static RequestSpecification defaultSpec;
-    public static RequestSpecification failResponseSpec;
+    public static RequestSpecification failSpec;
 
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
@@ -46,7 +46,7 @@ public class AcceptanceTest {
                 .addFilter(defaultAssuredFilter(restDocumentation))
                 .build();
 
-        failResponseSpec = new RequestSpecBuilder()
+        failSpec = new RequestSpecBuilder()
                 .addFilter(failAssuredFilter(restDocumentation))
                 .build();
 
