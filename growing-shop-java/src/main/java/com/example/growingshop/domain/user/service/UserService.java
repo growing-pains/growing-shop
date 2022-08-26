@@ -34,7 +34,7 @@ public class UserService {
 
         return UserResponse.UserRes.from(
                 userRepository.save(
-                        join.toEntity(passwordEncoder.encode(join.getJoinPassword()), company)
+                        join.toEntity(passwordEncoder.encode(join.getPassword()), company)
                 )
         );
     }

@@ -19,8 +19,6 @@ import static org.springframework.restdocs.cli.CliDocumentation.curlRequest;
 import static org.springframework.restdocs.http.HttpDocumentation.httpRequest;
 import static org.springframework.restdocs.http.HttpDocumentation.httpResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestBody;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseBody;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,7 +32,7 @@ public class AcceptanceTest {
     private DatabaseCleanup databaseCleanup;
 
     public static RequestSpecification defaultSpec;
-    public static RequestSpecification failResponseSpec;
+    public static RequestSpecification failSpec;
 
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
@@ -48,17 +46,21 @@ public class AcceptanceTest {
                 .addFilter(defaultAssuredFilter(restDocumentation))
                 .build();
 
-        failResponseSpec = new RequestSpecBuilder()
+        failSpec = new RequestSpecBuilder()
                 .addFilter(failAssuredFilter(restDocumentation))
                 .build();
+
+        this.setUp();
     }
+
+    protected void setUp() {}
 
     private Filter defaultAssuredFilter(RestDocumentationContextProvider restDocumentation) {
         return prettySnippets(restDocumentation).and()
                 .snippets()
                 .withDefaults(
-                        httpRequest(), requestBody(),
-                        httpResponse(), responseBody(),
+                        httpRequest(),
+                        httpResponse(),
                         curlRequest()
                 );
     }

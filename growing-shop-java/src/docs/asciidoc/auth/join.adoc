@@ -4,14 +4,9 @@
 
 같은 계정으로 중복 회원가입은 불가능하다.
 
-==== Request Body Sample
-include::{snippets}/auth/join/request-body.adoc[]
-
 ==== Http Request Sample
 include::{snippets}/auth/join/http-request.adoc[]
-
-==== Response Body Sample
-include::{snippets}/auth/join/response-body.adoc[]
+include::{snippets}/auth/join/request-fields.adoc[]
 
 ==== Http Response Sample
 정상 응답
