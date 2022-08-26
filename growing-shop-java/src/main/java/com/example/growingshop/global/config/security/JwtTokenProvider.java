@@ -2,7 +2,8 @@ package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.auth.dto.AuthResponse;
-import com.example.growingshop.domain.auth.error.NotFoundUserException;
+import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
+import com.example.growingshop.global.error.exception.NotFoundUserException;
 import com.example.growingshop.domain.auth.service.AuthService;
 import com.example.growingshop.global.util.TimeUtil;
 import io.jsonwebtoken.*;
@@ -50,7 +51,7 @@ public class JwtTokenProvider {
                     .build();
         }
 
-        throw new NotFoundUserException("Invalid account information.");
+        throw new NotFoundUserException("유효하지 않은 계정 정보입니다.");
     }
 
     public static String getUserIdFromJwt(String token) {
@@ -62,19 +63,19 @@ public class JwtTokenProvider {
                     .getSubject();
         } catch (SignatureException e) {
             log.error("Invalid JWT signature.", e);
-            throw new NotFoundUserException("Invalid JWT signature.");
+            throw new InvalidJwtTokenException("JWT 서명이 유효하지 않습니다.");
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token.", e);
-            throw new NotFoundUserException("Invalid JWT token.");
+            throw new InvalidJwtTokenException("JWT 토큰이 유효하지 않습니다.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token.", e);
-            throw new NotFoundUserException("Expired JWT token.");
+            throw new InvalidJwtTokenException("JWT 토큰이 만료되었습니다.");
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token.", e);
-            throw new NotFoundUserException("Unsupported JWT token.");
+            throw new InvalidJwtTokenException("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty.", e);
-            throw new NotFoundUserException("JWT claims string is empty..");
+            throw new InvalidJwtTokenException("JWT claim 값이 없습니다.");
         }
     }
 }

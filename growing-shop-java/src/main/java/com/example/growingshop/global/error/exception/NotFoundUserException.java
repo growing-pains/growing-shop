@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.auth.error;
+package com.example.growingshop.global.error.exception;
 
 public class NotFoundUserException extends RuntimeException {
     public NotFoundUserException(String message) {

@@ -2,12 +2,13 @@ package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
-import com.example.growingshop.domain.auth.error.NotFoundUserException;
 import com.example.growingshop.domain.auth.service.PolicyService;
 import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.repository.UserRepository;
+import com.example.growingshop.global.error.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
+import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -58,9 +59,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            throw new IllegalStateException("요청한 path 에 접근할 권한이 없습니다.");
+            throw new InvalidJwtTokenException("JWT 토큰에서 유저 정보를 찾을 수 없습니다.");
         } catch (Exception ex) {
-            logger.error("Security context 에 유저 권한 정보가 없습니다.", ex);
+            logger.error("인증 도중에 문제가 발생하였습니다.", ex);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
         }
     }
@@ -72,11 +73,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getJwtTokenInRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTH_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX)) {
+        if (validBearerToken(bearerToken)) {
             return bearerToken.substring(AUTH_HEADER_PREFIX.length());
         }
 
-        throw new NotFoundUserException("Bearer 에 JWT 토큰 정보가 없습니다.");
+        throw new InvalidJwtTokenException("헤더에 Bearer JWT 토큰 정보가 없습니다.");
+    }
+
+    private boolean validBearerToken(String bearerToken) {
+        return StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX);
     }
 
     private boolean isAccessiblePath(User user, String path) {
@@ -87,6 +92,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .getGrantedAuthorities()
                 .isAllowAccessPath(path);
     }
-
-    // TODO - 예외 정의하여 정리 필요
 }

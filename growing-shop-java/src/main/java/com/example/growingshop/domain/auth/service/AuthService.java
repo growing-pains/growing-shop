@@ -20,6 +20,7 @@ public class AuthService {
     public boolean matchLoginUser(AuthRequest.LoginReq login) {
         Optional<User> user = userRepository.findUsersByLoginId(login.getLoginId());
 
-        return user.filter(value -> passwordEncoder.matches(login.getPassword(), value.getPassword())).isPresent();
+        return user.filter(value -> passwordEncoder.matches(login.getPassword(), value.getPassword()))
+                .isPresent();
     }
 }

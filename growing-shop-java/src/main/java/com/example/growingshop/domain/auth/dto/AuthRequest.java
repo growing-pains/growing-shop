@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthRequest {
 
     @Getter
@@ -56,10 +57,6 @@ public class AuthRequest {
         private String password;
 
         private Long company;
-
-        public String getJoinPassword() {
-            return this.password;
-        }
 
         public User toEntity(String hashedPassword, Company company) {
             return User.builder()
