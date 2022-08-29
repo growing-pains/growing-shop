@@ -37,6 +37,11 @@ public class Policies {
                 .anyMatch(accessiblePath -> accessiblePath.equals(path));
     }
 
+    public boolean isAllow(String path, HttpMethod method) {
+        return policies.stream()
+                .anyMatch(policy -> policy.isAllow(path, method));
+    }
+
     public List<RoleResponse.PoliciesRes> toResponse() {
         return this.policies.stream()
                 .map(RoleResponse.PoliciesRes::from)
