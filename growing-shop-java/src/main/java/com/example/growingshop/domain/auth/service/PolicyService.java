@@ -20,9 +20,6 @@ public class PolicyService {
 
     @Transactional
     public Policy create(RoleRequest.CreatePolicies req) {
-        Policy policy = policyRepository.save(req.toEntity());
-        policy.changePriority(policy.getId());
-
-        return policy;
+        return policyRepository.save(req.toEntity());
     }
 }

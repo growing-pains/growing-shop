@@ -1,5 +1,7 @@
 package com.example.growingshop.global.config.security;
 
+import com.example.growingshop.domain.auth.authority.Authority;
+import com.example.growingshop.domain.auth.domain.HttpMethod;
 import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.service.PolicyService;
@@ -49,8 +51,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String userId = getUserIdFromRequestInJwt(request);
             User user = userRepository.findUsersByLoginId(userId)
                     .orElseThrow(() -> new NotFoundUserException("유저 정보를 찾을 수 없습니다."));
+            HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
 
-            if (isAccessiblePath(user, request.getRequestURI())) {
+            if (isAccessiblePath(user, request.getRequestURI(), httpMethod)) {
                 UserAuthentication authentication = new UserAuthentication(userId, null, null);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
@@ -84,12 +87,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTH_HEADER_PREFIX);
     }
 
-    private boolean isAccessiblePath(User user, String path) {
+    private boolean isAccessiblePath(User user, String path, HttpMethod httpMethod) {
         Role userTypeRole = roleService.findByName(user.getType().name());
+        Authority authority = new Authority("이름은 생각해보자", userTypeRole, user.getRoles());
 
-        return user.getRoles()
-                .combineWithUserDefaultRole(userTypeRole)
-                .getGrantedAuthorities()
-                .isAllowAccessPath(path);
+        return authority.possibleAccess(path, httpMethod);
     }
 }

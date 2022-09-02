@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.regex.Pattern;
@@ -13,7 +12,6 @@ import java.util.regex.Pattern;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@DynamicUpdate
 public class Policy {
     private static final Pattern PATH_REGEX = Pattern.compile("^[\\/]+[\\w-/]+$", Pattern.DOTALL);
 
@@ -32,9 +30,6 @@ public class Policy {
     @Enumerated(EnumType.STRING)
     private HttpMethod method;
 
-    @Embedded
-    private Priority priority;
-
     private Policy(Long id, String name, String path, String description) {
         validatePath(path);
 
@@ -46,15 +41,6 @@ public class Policy {
 
     public Policy(String name, String path, String description) {
         this(null, name, path, description);
-    }
-
-    public boolean isAllow(String path, HttpMethod method) {
-        return this.path.equals(path) && this.method.equals(method);
-    }
-
-    public void changePriority(long priority) {
-        Long adjustment = this.id != null ? this.id : 0;
-        this.priority = new Priority(priority, adjustment);
     }
 
     private static void validatePath(String path) {
