@@ -3,6 +3,8 @@ package com.example.growingshop.domain.auth.authority;
 import com.example.growingshop.domain.auth.domain.HttpMethod;
 import com.example.growingshop.domain.auth.domain.Role;
 import com.example.growingshop.domain.auth.domain.Roles;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
@@ -38,8 +40,11 @@ public class Authority implements GrantedAuthority {
     }
 
     private void addAccessible(String path, HttpMethod method) {
-        Set<HttpMethod> methods = accessible.getOrDefault(path, Collections.emptySet());
-        methods.addAll(method.getMethod());
-        accessible.put(path, methods);
+        accessible.put(path, ImmutableSet.copyOf(
+                Iterables.concat(
+                        accessible.getOrDefault(path, Collections.emptySet()),
+                        method.getMethod()
+                )
+        ));
     }
 }

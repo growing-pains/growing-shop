@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            throw new InvalidJwtTokenException("JWT 토큰에서 유저 정보를 찾을 수 없습니다.");
+            throw new InvalidJwtTokenException("요청한 Path 에 접근할 권한이 없습니다.");
         } catch (Exception ex) {
             logger.error("인증 도중에 문제가 발생하였습니다.", ex);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());

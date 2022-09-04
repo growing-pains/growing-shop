@@ -30,17 +30,18 @@ public class Policy {
     @Enumerated(EnumType.STRING)
     private HttpMethod method;
 
-    private Policy(Long id, String name, String path, String description) {
+    private Policy(Long id, String name, String path, String description, HttpMethod method) {
         validatePath(path);
 
         this.id = id;
         this.name = name;
         this.path = path;
         this.description = description;
+        this.method = method;
     }
 
-    public Policy(String name, String path, String description) {
-        this(null, name, path, description);
+    public Policy(String name, String path, String description, HttpMethod method) {
+        this(null, name, path, description, method);
     }
 
     private static void validatePath(String path) {
