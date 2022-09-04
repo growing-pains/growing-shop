@@ -89,7 +89,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isAccessiblePath(User user, String path, HttpMethod httpMethod) {
         Role userTypeRole = roleService.findByName(user.getType().name());
-        Authority authority = new Authority("이름은 생각해보자", userTypeRole, user.getRoles());
+        Authority authority = new Authority(user.getLoginId(), userTypeRole, user.getRoles());
 
         return authority.possibleAccess(path, httpMethod);
     }
