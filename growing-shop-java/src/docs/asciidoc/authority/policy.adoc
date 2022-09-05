@@ -1,0 +1,16 @@
+=== 정책
+
+정책과 관련된 api 를 제공한다
+
+==== Http Request Sample
+include::{snippets}/policies/http-request.adoc[]
+include::{snippets}/policies/request-fields.adoc[]
+
+==== Http Response Sample
+정상 응답
+include::{snippets}/policies/http-response.adoc[]
+허용하지 않는 http path 를 입력 시
+include::{snippets}/policies/fail/http-response.adoc[]
+
+==== Curl Test Sample
+include::{snippets}/policies/curl-request.adoc[]

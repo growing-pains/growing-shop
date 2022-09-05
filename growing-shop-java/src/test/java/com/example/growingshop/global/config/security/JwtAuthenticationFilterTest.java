@@ -57,10 +57,10 @@ class JwtAuthenticationFilterTest {
     private static final String userTypeAllowPath = "/default";
     private static final String allAllowPath = "/all";
 
-    private static final Policy adminPolicy = new Policy("admin", adminAllowPath, "", HttpMethod.ALL);
-    private static final Policy sellerPolicy = new Policy("seller", sellerAllowPath, "", HttpMethod.GET);
-    private static final Policy normalPolicy = new Policy("normal", normalAllowPath, "", HttpMethod.GET);
-    private static final Policy userTypePolicy = new Policy("default", userTypeAllowPath, "", HttpMethod.GET);
+    private static final Policy adminPolicy = new Policy("admin", adminAllowPath, HttpMethod.ALL, "");
+    private static final Policy sellerPolicy = new Policy("seller", sellerAllowPath, HttpMethod.GET, "");
+    private static final Policy normalPolicy = new Policy("normal", normalAllowPath, HttpMethod.GET, "");
+    private static final Policy userTypePolicy = new Policy("default", userTypeAllowPath, HttpMethod.GET, "");
 
     private static final Roles adminRole = new Roles(Collections.singletonList(
             new Role("ADMIN", Arrays.asList(adminPolicy, sellerPolicy, normalPolicy))
