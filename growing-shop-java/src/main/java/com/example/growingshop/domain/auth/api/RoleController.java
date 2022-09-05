@@ -29,7 +29,12 @@ public class RoleController {
         );
     }
 
-    @PutMapping("/privileges")
+    @DeleteMapping
+    public void deleteRole(Long id) {
+        roleService.delete(id);
+    }
+
+    @PutMapping("/policies")
     public ResponseEntity changePolicies(@RequestBody RoleRequest.ChangeRolePolicies req) {
         roleService.changePolicies(req);
 

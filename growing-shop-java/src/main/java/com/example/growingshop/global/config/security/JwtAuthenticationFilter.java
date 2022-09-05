@@ -1,6 +1,5 @@
 package com.example.growingshop.global.config.security;
 
-import com.example.growingshop.domain.auth.authority.Authority;
 import com.example.growingshop.domain.auth.domain.HttpMethod;
 import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;

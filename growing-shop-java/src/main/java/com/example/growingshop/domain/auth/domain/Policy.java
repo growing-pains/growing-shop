@@ -25,23 +25,23 @@ public class Policy {
     @Column(nullable = false)
     private String path;
 
-    private String description;
-
     @Enumerated(EnumType.STRING)
     private HttpMethod method;
 
-    private Policy(Long id, String name, String path, String description, HttpMethod method) {
+    private String description;
+
+    private Policy(Long id, String name, String path, HttpMethod method, String description) {
         validatePath(path);
 
         this.id = id;
         this.name = name;
         this.path = path;
-        this.description = description;
         this.method = method;
+        this.description = description;
     }
 
-    public Policy(String name, String path, String description, HttpMethod method) {
-        this(null, name, path, description, method);
+    public Policy(String name, String path, HttpMethod method, String description) {
+        this(null, name, path, method, description);
     }
 
     private static void validatePath(String path) {

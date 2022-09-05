@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.auth.authority;
+package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.domain.HttpMethod;
 import com.example.growingshop.domain.auth.domain.Role;
@@ -36,7 +36,7 @@ public class Authority implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return name;
+        return rolePrefix + name;
     }
 
     private void addAccessible(String path, HttpMethod method) {
