@@ -1,6 +1,6 @@
 package com.example.growingshop.domain.auth.domain;
 
-import com.example.growingshop.domain.auth.dto.Authorities;
+import com.example.growingshop.domain.auth.dto.Authority;
 import com.example.growingshop.domain.auth.dto.RoleResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,12 +28,10 @@ public class Roles {
         this.roles.addAll(roles);
     }
 
-    public Authorities getGrantedAuthorities() {
-        return new Authorities(
-                roles.stream()
-                        .map(Role::getGrantedAuthorities)
-                        .collect(Collectors.toList())
-        );
+    public List<Authority> getGrantedAuthorities() {
+        return roles.stream()
+                .map(Role::getGrantedAuthorities)
+                .collect(Collectors.toList());
     }
 
     public Roles combineWithUserDefaultRole(Role userDefaultRole) {
