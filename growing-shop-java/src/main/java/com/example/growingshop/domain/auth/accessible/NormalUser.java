@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("T(com.example.growingshop.domain.user.domain.UserType).ADMIN == authentication.principal.type")
-public @interface AdminUser {
+@PreAuthorize("T(com.example.growingshop.domain.user.domain.UserType).NORMAL == authentication.principal.type")
+public @interface NormalUser {
 }
