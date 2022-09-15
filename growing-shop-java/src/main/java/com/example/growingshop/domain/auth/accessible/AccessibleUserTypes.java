@@ -1,14 +1,15 @@
 package com.example.growingshop.domain.auth.accessible;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.example.growingshop.domain.user.domain.UserType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("T(com.example.growingshop.domain.user.domain.UserType).ADMIN == authentication.principal.type")
-public @interface AdminUser {
+public @interface AccessibleUserTypes {
+//    AccessibleUserType[] value();
+    UserType[] value();
 }
