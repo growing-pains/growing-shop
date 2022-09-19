@@ -1,6 +1,5 @@
 package com.example.growingshop.domain.auth.domain;
 
-import com.example.growingshop.domain.auth.dto.Authority;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,10 +25,6 @@ public class Role {
     public Role(String name, List<Policy> policies) {
         this.name = name;
         this.policies = new Policies(policies);
-    }
-
-    public Authority getGrantedAuthorities() {
-        return new Authority(name, policies.allAccessiblePath());
     }
 
     public void changePolicies(Policies target) {

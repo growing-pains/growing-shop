@@ -18,7 +18,13 @@ public class PolicyService {
         return new Policies(policyRepository.findAll());
     }
 
-    public Policy create(RoleRequest.CreatePolicies req) {
+    @Transactional
+    public Policy create(RoleRequest.CreatePolicy req) {
         return policyRepository.save(req.toEntity());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        policyRepository.deleteById(id);
     }
 }

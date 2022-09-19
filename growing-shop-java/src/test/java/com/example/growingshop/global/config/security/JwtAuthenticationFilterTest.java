@@ -1,9 +1,6 @@
 package com.example.growingshop.global.config.security;
 
-import com.example.growingshop.domain.auth.domain.Policy;
-import com.example.growingshop.domain.auth.domain.Policies;
-import com.example.growingshop.domain.auth.domain.Role;
-import com.example.growingshop.domain.auth.domain.Roles;
+import com.example.growingshop.domain.auth.domain.*;
 import com.example.growingshop.domain.auth.service.PolicyService;
 import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
@@ -51,7 +48,6 @@ class JwtAuthenticationFilterTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-
     @InjectMocks
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -61,10 +57,10 @@ class JwtAuthenticationFilterTest {
     private static final String userTypeAllowPath = "/default";
     private static final String allAllowPath = "/all";
 
-    private static final Policy adminPolicy = new Policy("admin", adminAllowPath, "");
-    private static final Policy sellerPolicy = new Policy("seller", sellerAllowPath, "");
-    private static final Policy normalPolicy = new Policy("normal", normalAllowPath, "");
-    private static final Policy userTypePolicy = new Policy("default", userTypeAllowPath, "");
+    private static final Policy adminPolicy = new Policy("admin", adminAllowPath, HttpMethod.ALL, "");
+    private static final Policy sellerPolicy = new Policy("seller", sellerAllowPath, HttpMethod.GET, "");
+    private static final Policy normalPolicy = new Policy("normal", normalAllowPath, HttpMethod.GET, "");
+    private static final Policy userTypePolicy = new Policy("default", userTypeAllowPath, HttpMethod.GET, "");
 
     private static final Roles adminRole = new Roles(Collections.singletonList(
             new Role("ADMIN", Arrays.asList(adminPolicy, sellerPolicy, normalPolicy))
@@ -116,12 +112,29 @@ class JwtAuthenticationFilterTest {
     }
 
     @ParameterizedTest
-    @MethodSource("notAllowPathParameterizedTestData")
+    @MethodSource("notAllowParameterizedTestData")
     void path_에_대한_권한이_없는_사용자가_요청하면_접근이_불가능해야_한다(User user) throws ServletException, IOException {
         // given
         when(JwtTokenProvider.getUserIdFromJwt(any())).thenReturn(user.getLoginId());
         when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
         when(request.getRequestURI()).thenReturn(adminAllowPath);
+        when(request.getMethod()).thenReturn("GET");
+
+        // when
+        jwtAuthenticationFilter.doFilterInternal(request, response, new MockFilterChain());
+
+        // then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.SC_UNAUTHORIZED);
+    }
+
+    @ParameterizedTest
+    @MethodSource("notAllowHttpMethodParameterizedTestData")
+    void path_에_대한_허용_http_method_권한이_없는_사용자가_요청하면_접근이_불가능해야_한다(User user, String path) throws ServletException, IOException {
+        // given
+        when(JwtTokenProvider.getUserIdFromJwt(any())).thenReturn(user.getLoginId());
+        when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
+        when(request.getRequestURI()).thenReturn(path);
+        when(request.getMethod()).thenReturn("POST");
 
         // when
         jwtAuthenticationFilter.doFilterInternal(request, response, new MockFilterChain());
@@ -146,10 +159,11 @@ class JwtAuthenticationFilterTest {
     }
 
     @ParameterizedTest
-    @MethodSource("allowPathParameterizedTestData")
+    @MethodSource("allowParameterizedTestData")
     void path_에_권한이_있는_사용자가_요청하면_접근이_가능해야_한다(User user, List<String> paths) throws ServletException, IOException {
         when(JwtTokenProvider.getUserIdFromJwt(any())).thenReturn(user.getLoginId());
         when(userRepository.findUsersByLoginId(any())).thenReturn(Optional.of(user));
+        when(request.getMethod()).thenReturn("GET");
 
         for (String path : paths) {
             when(request.getRequestURI()).thenReturn(path);
@@ -162,10 +176,17 @@ class JwtAuthenticationFilterTest {
         }
     }
 
-    private static Stream<Arguments> notAllowPathParameterizedTestData() {
+    private static Stream<Arguments> notAllowParameterizedTestData() {
         return Stream.of(
                 Arguments.of(seller),
                 Arguments.of(normal)
+        );
+    }
+
+    private static Stream<Arguments> notAllowHttpMethodParameterizedTestData() {
+        return Stream.of(
+                Arguments.of(seller, sellerAllowPath),
+                Arguments.of(normal, normalAllowPath)
         );
     }
 
@@ -177,7 +198,7 @@ class JwtAuthenticationFilterTest {
         );
     }
 
-    private static Stream<Arguments> allowPathParameterizedTestData() {
+    private static Stream<Arguments> allowParameterizedTestData() {
         return Stream.of(
                 Arguments.of(admin, Arrays.asList(adminAllowPath, sellerAllowPath, normalAllowPath, userTypeAllowPath, allAllowPath)),
                 Arguments.of(seller, Arrays.asList(sellerAllowPath, normalAllowPath, userTypeAllowPath, allAllowPath)),

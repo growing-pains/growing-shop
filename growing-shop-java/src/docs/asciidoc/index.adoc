@@ -8,3 +8,4 @@
 
 include::auth/join.adoc[]
 include::auth/login.adoc[]
+include::authority/policy.adoc[]

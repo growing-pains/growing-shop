@@ -25,36 +25,28 @@ public class Policy {
     @Column(nullable = false)
     private String path;
 
+    @Enumerated(EnumType.STRING)
+    private HttpMethod method;
+
     private String description;
 
-    private Policy(Long id, String name, String path, String description) {
+    private Policy(Long id, String name, String path, HttpMethod method, String description) {
         validatePath(path);
 
         this.id = id;
         this.name = name;
         this.path = path;
+        this.method = method;
         this.description = description;
     }
 
-    public Policy(String name, String path, String description) {
-        this(null, name, path, description);
+    public Policy(String name, String path, HttpMethod method, String description) {
+        this(null, name, path, method, description);
     }
 
     private static void validatePath(String path) {
         if (!PATH_REGEX.matcher(path).matches()) {
             throw new IllegalArgumentException("유효하지 않은 url path 입니다.");
-        }
-    }
-
-    public static class PolicyBuilder {
-        private String path;
-
-        public PolicyBuilder path(String path) {
-            validatePath(path);
-
-            this.path = path;
-
-            return this;
         }
     }
 }
