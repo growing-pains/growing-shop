@@ -1,7 +1,7 @@
 package com.example.growingshop.domain.auth.service;
 
-import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.domain.Policies;
+import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.dto.RoleRequest;
 import com.example.growingshop.domain.auth.repository.PolicyRepository;
 import lombok.RequiredArgsConstructor;

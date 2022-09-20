@@ -7,7 +7,10 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Authority implements GrantedAuthority {
     private static final String rolePrefix = "ROLE_";

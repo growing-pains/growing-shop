@@ -3,8 +3,6 @@ package com.example.growingshop.domain.user.service;
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.company.domain.Company;
 import com.example.growingshop.domain.company.repository.CompanyRepo;
-import com.example.growingshop.domain.company.service.CompanyService;
-import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.dto.UserResponse;
 import com.example.growingshop.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

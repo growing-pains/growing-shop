@@ -7,7 +7,8 @@ import io.restassured.http.Method;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
-import static com.example.growingshop.acceptance.AcceptanceTest.*;
+import static com.example.growingshop.acceptance.AcceptanceTest.defaultSpec;
+import static com.example.growingshop.acceptance.AcceptanceTest.failSpec;
 
 public class LoginRequester implements AcceptanceTestDocsRequest {
     private static final String PATH = "/auth/login";

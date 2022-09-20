@@ -1,6 +1,7 @@
 package com.example.growingshop.global.error.config;
 
 import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
+import com.example.growingshop.global.error.exception.NotAllowPathException;
 import com.example.growingshop.global.error.exception.NotFoundUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,6 +34,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidJwtTokenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse invalidJwtTokenException(InvalidJwtTokenException exception) {
+        return new ErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(NotAllowPathException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse notAllowPathException(NotAllowPathException exception) {
         return new ErrorResponse(exception.getMessage());
     }
 }

@@ -1,8 +1,10 @@
 package com.example.growingshop.domain.product.domain;
 
 import com.example.growingshop.domain.company.domain.Company;
+import com.example.growingshop.domain.product.dto.ProductRequest;
 import com.example.growingshop.global.validator.StringChecker;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +44,13 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<ProductCategory> categories = new ArrayList<>();
+
+    public void update(ProductRequest.ProductReq req) {
+        this.name = req.getName();
+        this.price = req.getPrice();
+    }
+
+    public void delete() {
+        this.status = ProductStatus.DELETED;
+    }
 }
