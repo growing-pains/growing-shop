@@ -1,7 +1,7 @@
 package com.example.growingshop.domain.auth.service;
 
-import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.domain.Policies;
+import com.example.growingshop.domain.auth.domain.Policy;
 import com.example.growingshop.domain.auth.dto.RoleRequest;
 import com.example.growingshop.domain.auth.repository.PolicyRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,13 @@ public class PolicyService {
         return new Policies(policyRepository.findAll());
     }
 
-    public Policy create(RoleRequest.CreatePolicies req) {
+    @Transactional
+    public Policy create(RoleRequest.CreatePolicy req) {
         return policyRepository.save(req.toEntity());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        policyRepository.deleteById(id);
     }
 }

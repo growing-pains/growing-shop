@@ -45,4 +45,9 @@ public class RoleService {
 
         role.changePolicies(policies);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        roleRepository.deleteById(id);
+    }
 }

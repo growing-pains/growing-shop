@@ -1,16 +1,16 @@
 package com.example.growingshop.global.config.security;
 
+import com.example.growingshop.domain.auth.domain.HttpMethod;
 import com.example.growingshop.domain.auth.domain.Policies;
 import com.example.growingshop.domain.auth.domain.Role;
-import com.example.growingshop.domain.auth.dto.Authorities;
-import com.example.growingshop.domain.auth.dto.Authority;
 import com.example.growingshop.domain.auth.service.PolicyService;
 import com.example.growingshop.domain.auth.service.RoleService;
 import com.example.growingshop.domain.user.domain.User;
 import com.example.growingshop.domain.user.repository.UserRepository;
+import com.example.growingshop.global.error.exception.NotAllowPathException;
 import com.example.growingshop.global.error.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -42,11 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             setAuthentication(request);
         }
 
-        Policies policies = policyService.findAll();
-
-        if (policies.containPath(request.getRequestURI())) {
-            accessiblePath(request.getRequestURI(), response);
-        }
+        checkAccessiblePath(request, response);
 
         filterChain.doFilter(request, response);
     }
@@ -57,13 +52,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             User user = userRepository.findUsersByLoginId(userId)
                     .orElseThrow(() -> new NotFoundUserException("유저 정보를 찾을 수 없습니다."));
             Role userTypeRole = roleService.findByName(user.getType().name());
-            List<Authority> authorities = user.getRoles()
-                    .combineWithUserDefaultRole(userTypeRole)
-                    .getGrantedAuthorities();
+            Authority authority = new Authority(user.getLoginId(), userTypeRole, user.getRoles());
 
-            UserAuthentication authentication = new UserAuthentication(user, authorities);
+            UserAuthentication authentication = new UserAuthentication(user, authority);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception ex) {
             logger.warn(ex);
@@ -82,14 +74,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return JwtTokenProvider.getUserIdFromJwt(token);
     }
 
-    private void accessiblePath(String path, HttpServletResponse response) throws IOException {
+    private void checkAccessiblePath(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            HttpMethod httpMethod = HttpMethod.valueOf(request.getMethod());
 
-            if (authentication.getPrincipal() == null) {
-                throw new IllegalArgumentException("요청에 대한 유저 정보가 없습니다.");
-            }
-            if (isNotAccessiblePath(authentication, path)) {
+            if (isNotAccessiblePath(request.getRequestURI(), httpMethod)) {
                 throw new IllegalAccessException("요청한 경로에 접근 할 수 없습니다.");
             }
         } catch (Exception ex) {
@@ -98,11 +87,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private boolean isNotAccessiblePath(Authentication authentication, String path) {
-        Authorities authorities = new Authorities((List<Authority>) authentication.getAuthorities());
-        // TODO - authorities 에 대한 타입을 제대로 활용할 수 있게 변경 필요
-        // -> unchecked cast 해결하기
+    private boolean isNotAccessiblePath(String path, HttpMethod method) {
+        Policies policies = policyService.findAll();
 
-        return authorities.isAllowAccessPath(path);
+        if (policies.containPath(path)) {
+            return !getUserAuthority().possibleAccess(path, method);
+        }
+        return false;
+    }
+
+    private Authority getUserAuthority() {
+        Object authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new NotAllowPathException("요청에 대한 인증 정보가 없습니다.");
+        }
+        if (!(authentication instanceof UserAuthentication)) {
+            throw new NotAllowPathException("로그인 된 유저 정보의 데이터가 잘못되었습니다");
+        }
+
+        GrantedAuthority authority = ((UserAuthentication) authentication).getAuthorities().iterator().next();
+
+        if (!(authority instanceof Authority)) {
+            throw new NotAllowPathException("로그인 된 유저의 인증 정보가 잘못되었습니다.");
+        }
+
+        return (Authority) authority;
     }
 }

@@ -2,9 +2,9 @@ package com.example.growingshop.global.config.security;
 
 import com.example.growingshop.domain.auth.dto.AuthRequest;
 import com.example.growingshop.domain.auth.dto.AuthResponse;
+import com.example.growingshop.domain.auth.service.AuthService;
 import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
 import com.example.growingshop.global.error.exception.NotFoundUserException;
-import com.example.growingshop.domain.auth.service.AuthService;
 import com.example.growingshop.global.util.TimeUtil;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;

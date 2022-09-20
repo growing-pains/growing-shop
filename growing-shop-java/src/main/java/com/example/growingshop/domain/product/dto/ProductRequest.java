@@ -1,7 +1,9 @@
 package com.example.growingshop.domain.product.dto;
 
 import com.example.growingshop.domain.product.domain.Product;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 
