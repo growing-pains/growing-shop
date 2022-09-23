@@ -41,6 +41,7 @@ public class AccessibleUserTypeAspect {
     }
 
     private boolean isNotAllowUserType(AccessibleUserTypes types, User user) {
-        return !Arrays.asList(types.value()).stream().anyMatch(type -> type == user.getType());
+        return Arrays.stream(types.value())
+                .noneMatch(type -> type == user.getType());
     }
 }

@@ -10,6 +10,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AccessibleUserTypes {
-//    AccessibleUserType[] value();
     UserType[] value();
 }
