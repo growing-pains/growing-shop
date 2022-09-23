@@ -1,5 +1,6 @@
 package com.example.growingshop.domain.category.domain;
 
+import com.example.growingshop.domain.category.dto.CategoryRequest;
 import com.example.growingshop.global.validator.StringChecker;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,4 +23,28 @@ public class Category {
     @Size(max = 100)
     @StringChecker(includeLowerEn = true, includeUpperEn = true, includeKo = true, includeNumber = true, includeSpecialCharacter = "-.\"'")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status;
+
+    public Category(String name) {
+        this.name = name;
+        this.status = CategoryStatus.UNDER_REVIEW;
+    }
+
+    public void update(CategoryRequest.CategoryReq req) {
+        this.name = req.getName();
+    }
+
+    public void delete() {
+        this.status = CategoryStatus.DELETED;
+    }
+
+    public void reject() {
+        this.status = CategoryStatus.REJECTED;
+    }
+
+    public void confirm() {
+        this.status = CategoryStatus.NORMAL;
+    }
 }
