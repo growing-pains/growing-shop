@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO - 모든 엔티티에 auditing 적용
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -28,19 +29,26 @@ public class Order {
     @Column(name = "user")
     private Long userId;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     @Valid
     @NotEmpty
     @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<OrderLine> orderLines = new ArrayList<>();
 
-    public Long totalAmounts() {
+    @Builder
+    public Order(LocalDateTime orderAt, List<OrderLine> orderLines) {
+        this.orderAt = orderAt;
+        this.orderLines = orderLines;
+        this.status = OrderStatus.WAITING;
+    }
+
+    public Long totalPrice() {
         return orderLines.stream().mapToLong(OrderLine::amounts).sum();
     }
 
-    @Builder
-    public Order(LocalDateTime orderAt, Long userId, List<OrderLine> orderLines) {
-        this.orderAt = orderAt;
-        this.userId = userId;
-        this.orderLines = orderLines;
+    public void delete() {
+        this.status = OrderStatus.DELETED;
     }
 }
