@@ -1,7 +1,9 @@
 package com.example.growingshop.domain.order.domain;
 
-import com.example.growingshop.domain.product.domain.Product;
+import com.example.growingshop.domain.order.dto.OrderRequest;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,18 +11,14 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`order`", nullable = false)
-    private Order order;
-
-    @ManyToOne
     @JoinColumn(name = "product", nullable = false)
-    private Product product;
+    private Long productId;
 
     @Column(nullable = false)
     @NotNull
@@ -32,7 +30,19 @@ public class OrderLine {
     @Min(1)
     private Integer quantity;
 
+    public OrderLine(Long productId, Integer price, Integer quantity) {
+        this.productId = productId;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public Long amounts() {
         return price * quantity.longValue();
+    }
+
+    public void update(OrderRequest.OrderLineReq req) {
+        this.productId = req.getProductId();
+        this.price = req.getPrice();
+        this.quantity = req.getQuantity();
     }
 }
