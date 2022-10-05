@@ -27,8 +27,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponse.ProductRes getByid(Long id) {
-        Product product = getById(id);
+    public ProductResponse.ProductRes getById(Long id) {
+        Product product = getOne(id);
 
         return ProductResponse.ProductRes.from(product);
     }
@@ -44,7 +44,7 @@ public class ProductService {
     @Transactional
     @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public ProductResponse.ProductRes update(Long id, ProductRequest.ProductReq req) {
-        Product product = getById(id);
+        Product product = getOne(id);
         product.update(req);
 
         return ProductResponse.ProductRes
@@ -54,12 +54,12 @@ public class ProductService {
     @Transactional
     @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public void delete(Long id) {
-        Product product = getById(id);
+        Product product = getOne(id);
 
         product.delete();
     }
 
-    private Product getById(Long id) {
+    private Product getOne(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id + " 에 해당하는 상품이 존재하지 않습니다."));
     }
