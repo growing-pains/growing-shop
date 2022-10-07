@@ -8,6 +8,7 @@ import com.example.growingshop.domain.order.dto.OrderResponse;
 import com.example.growingshop.domain.order.repository.OrderLineRepository;
 import com.example.growingshop.domain.order.repository.OrderRepository;
 import com.example.growingshop.domain.user.domain.User;
+import com.example.growingshop.domain.user.domain.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,22 +26,30 @@ public class OrderService {
     private final OrderLineRepository orderLineRepository;
 
     public List<OrderResponse.OrderRes> findAll() {
-        // FIXME - 로그인한 유저에 따라 접근할 수 있는 validation 추가
         User loginUser = LoginUser.getUserInSecurityContext();
 
-        return orderRepository.findAllByUserId(loginUser.getId()).stream()
-                .map(OrderResponse.OrderRes::from)
-                .collect(Collectors.toList());
+//        if (loginUser.getType() == UserType.ADMIN) {
+//            return OrderResponse.OrderRes
+//                    .from(orderRepository.findAllNotDeleted());
+//        }
+
+        return OrderResponse.OrderRes
+                .from(orderRepository.findAllByUserId(loginUser.getId()));
     }
 
     public OrderResponse.OrderRes getById(Long id) {
-        // FIXME - 로그인한 유저에 따라 접근할 수 있는 validation 추가
         User loginUser = LoginUser.getUserInSecurityContext();
 
-        return OrderResponse.OrderRes.from(
-                orderRepository.findById(id)
-                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."))
-        );
+        if (loginUser.getType() == UserType.ADMIN) {
+            return OrderResponse.OrderRes
+                    .from(getOne(id));
+        }
+
+        Order order = orderRepository.findByIdAndUserId(id, loginUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+
+        return OrderResponse.OrderRes
+                .from(order);
     }
 
     @Transactional

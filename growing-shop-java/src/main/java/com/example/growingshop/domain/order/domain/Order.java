@@ -34,7 +34,8 @@ public class Order {
 
     @Valid
     @NotEmpty
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @JoinColumn(name = "`ORDER`")
     private List<OrderLine> orderLines = new ArrayList<>();
 
     @Builder

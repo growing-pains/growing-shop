@@ -3,10 +3,7 @@ package com.example.growingshop.domain.product.domain;
 import com.example.growingshop.domain.company.domain.Company;
 import com.example.growingshop.domain.product.dto.ProductRequest;
 import com.example.growingshop.global.validator.StringChecker;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -17,6 +14,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Builder
 public class Product {
@@ -35,7 +33,7 @@ public class Product {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company", nullable = false)
+    @JoinColumn(name = "COMPANY", nullable = false)
     private Company company;
 
     @Enumerated(EnumType.STRING)

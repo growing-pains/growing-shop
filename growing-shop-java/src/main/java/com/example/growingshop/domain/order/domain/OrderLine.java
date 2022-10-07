@@ -1,6 +1,7 @@
 package com.example.growingshop.domain.order.domain;
 
 import com.example.growingshop.domain.order.dto.OrderRequest;
+import com.example.growingshop.domain.product.domain.Product;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,8 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "product", nullable = false)
+    @ManyToOne(targetEntity = Product.class)
+    @JoinColumn(name="PRODUCT", nullable = false)
     private Long productId;
 
     @Column(nullable = false)
