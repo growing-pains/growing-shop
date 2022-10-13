@@ -19,7 +19,7 @@ public class OrderLine {
     private Long id;
 
     @ManyToOne(targetEntity = Product.class)
-    @JoinColumn(name="PRODUCT", nullable = false)
+    @JoinColumn(name="product", nullable = false)
     private Long productId;
 
     @Column(nullable = false)
@@ -32,10 +32,13 @@ public class OrderLine {
     @Min(1)
     private Integer quantity;
 
+    private Boolean isDeleted;
+
     public OrderLine(Long productId, Integer price, Integer quantity) {
         this.productId = productId;
         this.price = price;
         this.quantity = quantity;
+        this.isDeleted = false;
     }
 
     public Long amounts() {
@@ -46,5 +49,9 @@ public class OrderLine {
         this.productId = req.getProductId();
         this.price = req.getPrice();
         this.quantity = req.getQuantity();
+    }
+
+    public void delete() {
+        this.isDeleted = true;
     }
 }

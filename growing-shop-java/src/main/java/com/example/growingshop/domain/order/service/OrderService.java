@@ -2,7 +2,6 @@ package com.example.growingshop.domain.order.service;
 
 import com.example.growingshop.domain.auth.accessible.LoginUser;
 import com.example.growingshop.domain.order.domain.Order;
-import com.example.growingshop.domain.order.domain.OrderLine;
 import com.example.growingshop.domain.order.dto.OrderRequest;
 import com.example.growingshop.domain.order.dto.OrderResponse;
 import com.example.growingshop.domain.order.repository.OrderLineRepository;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +26,13 @@ public class OrderService {
     public List<OrderResponse.OrderRes> findAll() {
         User loginUser = LoginUser.getUserInSecurityContext();
 
-//        if (loginUser.getType() == UserType.ADMIN) {
-//            return OrderResponse.OrderRes
-//                    .from(orderRepository.findAllNotDeleted());
-//        }
+        if (loginUser.getType() == UserType.ADMIN) {
+            return OrderResponse.OrderRes
+                    .from(orderRepository.findAllNotDeleted());
+        }
 
         return OrderResponse.OrderRes
-                .from(orderRepository.findAllByUserId(loginUser.getId()));
+                .from(orderRepository.findAllNotDeletedByUserId(loginUser.getId()));
     }
 
     public OrderResponse.OrderRes getById(Long id) {
@@ -45,7 +43,7 @@ public class OrderService {
                     .from(getOne(id));
         }
 
-        Order order = orderRepository.findByIdAndUserId(id, loginUser.getId())
+        Order order = orderRepository.findNotDeletedByIdAndUserId(id, loginUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
 
         return OrderResponse.OrderRes
@@ -60,20 +58,11 @@ public class OrderService {
     }
 
     @Transactional
-    public List<OrderResponse.OrderLineRes> upsertOrderLines(List<OrderRequest.OrderLineReq> req) {
-        List<OrderLine> updateOrderLines = req.stream()
-                .filter(orderLineReq -> orderLineReq.getId() != null)
-                .map(OrderRequest.OrderLineReq::toEntity)
-                .collect(Collectors.toList());
-        List<OrderLine> insertOrderLines = req.stream()
-                .filter(orderLineReq -> orderLineReq.getId() == null)
-                .map(OrderRequest.OrderLineReq::toEntity)
-                .collect(Collectors.toList());
+    public List<OrderResponse.OrderLineRes> upsertOrderLines(Long id, List<OrderRequest.OrderLineReq> req) {
+        Order order = getOne(id);
+        order.upsertOrderLines(req);
 
-        orderLineRepository.saveAll(updateOrderLines);
-        orderLineRepository.saveAll(insertOrderLines);
-
-        return Stream.concat(updateOrderLines.stream(), insertOrderLines.stream())
+        return order.getOrderLines().stream()
                 .map(OrderResponse.OrderLineRes::from)
                 .collect(Collectors.toList());
     }

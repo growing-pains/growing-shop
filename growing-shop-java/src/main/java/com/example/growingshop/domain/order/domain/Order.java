@@ -1,9 +1,12 @@
 package com.example.growingshop.domain.order.domain;
 
+import com.example.growingshop.domain.order.dto.OrderRequest;
+import com.example.growingshop.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -26,7 +29,8 @@ public class Order {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderAt;
 
-    @Column(name = "user")
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name="user", nullable = false)
     private Long userId;
 
     @Enumerated(EnumType.STRING)
@@ -35,7 +39,8 @@ public class Order {
     @Valid
     @NotEmpty
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    @JoinColumn(name = "`ORDER`")
+    @JoinColumn(name = "`order`")
+    @Where(clause = "is_deleted = 0")
     private List<OrderLine> orderLines = new ArrayList<>();
 
     @Builder
@@ -51,5 +56,19 @@ public class Order {
 
     public void delete() {
         this.status = OrderStatus.DELETED;
+    }
+
+    public void upsertOrderLines(List<OrderRequest.OrderLineReq> req) {
+        orderLines.forEach(orderLine ->
+                req.stream()
+                        .filter(orderLineReq -> orderLine.getId().equals(orderLineReq.getId())).findFirst()
+                        .ifPresent(orderLine::update)
+        );
+        orderLines.stream()
+                .filter(line -> req.stream().noneMatch(orderLineReq -> orderLineReq.getId().equals(line.getId())))
+                .forEach(OrderLine::delete);
+        req.stream()
+                .filter(orderLineReq -> orderLineReq.getId() == null)
+                .forEach(orderLineReq -> orderLines.add(orderLineReq.toEntity()));
     }
 }
