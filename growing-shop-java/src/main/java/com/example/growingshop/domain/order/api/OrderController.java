@@ -31,9 +31,9 @@ public class OrderController {
         return new ResponseEntity<>(orderService.order(req), HttpStatus.CREATED);
     }
 
-    @PutMapping("/orderLines")
-    public ResponseEntity<List<OrderResponse.OrderLineRes>> upsert(@RequestBody List<OrderRequest.OrderLineReq> req) {
-        return new ResponseEntity<>(orderService.upsertOrderLines(req), HttpStatus.OK);
+    @PutMapping("/{id}/orderLines")
+    public ResponseEntity<List<OrderResponse.OrderLineRes>> upsert(@PathVariable Long id, @RequestBody List<OrderRequest.OrderLineReq> req) {
+        return new ResponseEntity<>(orderService.upsertOrderLines(id, req), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

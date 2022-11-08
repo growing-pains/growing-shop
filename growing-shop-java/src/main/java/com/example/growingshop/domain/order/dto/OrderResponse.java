@@ -38,6 +38,12 @@ public class OrderResponse {
 
             return res;
         }
+
+        public static List<OrderRes> from(List<Order> orders) {
+            return orders.stream()
+                    .map(OrderResponse.OrderRes::from)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Getter

@@ -50,7 +50,7 @@ public class User {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company")
+    @JoinColumn(name = "COMPANY")
     private Company company;
 
     @Enumerated(EnumType.STRING)
