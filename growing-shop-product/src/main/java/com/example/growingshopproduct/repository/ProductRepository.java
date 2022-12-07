@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.product.repository;
+package com.example.growingshopproduct.repository;
 
-import com.example.growingshop.domain.product.domain.Product;
+import com.example.growingshopproduct.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {

@@ -1,11 +1,9 @@
-package com.example.growingshop.domain.product.domain;
+package com.example.growingshopproduct.domain;
 
-import com.example.growingshop.domain.category.domain.Category;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +16,6 @@ public class ProductCategory {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    @ManyToOne
-    private Category category;
+//    @ManyToOne
+//    private Category category;
 }

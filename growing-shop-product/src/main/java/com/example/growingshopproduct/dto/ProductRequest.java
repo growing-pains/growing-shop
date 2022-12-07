@@ -1,11 +1,10 @@
-package com.example.growingshop.domain.product.dto;
+package com.example.growingshopproduct.dto;
 
-import com.example.growingshop.domain.product.domain.Product;
+import com.example.growingshopproduct.domain.Product;
+import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProductRequest {

@@ -1,14 +1,13 @@
-package com.example.growingshop.domain.product.domain;
+package com.example.growingshopproduct.domain;
 
-import com.example.growingshop.domain.company.domain.Company;
-import com.example.growingshop.domain.product.dto.ProductRequest;
-import com.example.growingshop.global.validator.StringChecker;
+import com.example.growingshopcommon.validator.StringChecker;
+import com.example.growingshopproduct.dto.ProductRequest;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,9 @@ public class Product {
     @Min(1)
     private Integer price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMPANY", nullable = false)
-    private Company company;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "COMPANY", nullable = false)
+//    private Company company;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

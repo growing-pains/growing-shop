@@ -1,16 +1,14 @@
-package com.example.growingshop.domain.product.service;
+package com.example.growingshopproduct.service;
 
-import com.example.growingshop.domain.auth.accessible.AccessibleUserTypes;
-import com.example.growingshop.domain.product.domain.Product;
-import com.example.growingshop.domain.product.dto.ProductRequest;
-import com.example.growingshop.domain.product.dto.ProductResponse;
-import com.example.growingshop.domain.product.repository.ProductRepository;
-import com.example.growingshop.domain.user.domain.UserType;
+import com.example.growingshopproduct.domain.Product;
+import com.example.growingshopproduct.dto.ProductRequest;
+import com.example.growingshopproduct.dto.ProductResponse;
+import com.example.growingshopproduct.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +32,7 @@ public class ProductService {
     }
 
     @Transactional
-    @AccessibleUserTypes(UserType.SELLER)
+//    @AccessibleUserTypes(UserType.SELLER)
     public ProductResponse.ProductRes create(ProductRequest.ProductReq req) {
         return ProductResponse.ProductRes.from(
                 productRepository.save(req.toEntity())
@@ -42,7 +40,7 @@ public class ProductService {
     }
 
     @Transactional
-    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public ProductResponse.ProductRes update(Long id, ProductRequest.ProductReq req) {
         Product product = getOne(id);
         product.update(req);
@@ -52,7 +50,7 @@ public class ProductService {
     }
 
     @Transactional
-    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public void delete(Long id) {
         Product product = getOne(id);
 
