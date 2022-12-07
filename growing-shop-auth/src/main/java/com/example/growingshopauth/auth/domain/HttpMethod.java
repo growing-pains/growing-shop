@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.auth.domain;
+package com.example.growingshopauth.domain;
 
 import java.util.Set;
 

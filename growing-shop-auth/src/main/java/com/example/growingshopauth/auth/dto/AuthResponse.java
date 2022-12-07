@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.auth.dto;
+package com.example.growingshopauth.dto;
 
 import lombok.*;
 

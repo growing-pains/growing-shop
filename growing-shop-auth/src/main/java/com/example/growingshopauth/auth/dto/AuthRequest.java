@@ -1,18 +1,11 @@
-package com.example.growingshop.domain.auth.dto;
+package com.example.growingshopauth.dto;
 
-import com.example.growingshop.domain.company.domain.Company;
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.domain.user.domain.UserGrade;
-import com.example.growingshop.domain.user.domain.UserStatus;
-import com.example.growingshop.domain.user.domain.UserType;
-import com.example.growingshop.global.validator.StringChecker;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthRequest {

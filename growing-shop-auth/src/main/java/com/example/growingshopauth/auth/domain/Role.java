@@ -1,8 +1,8 @@
-package com.example.growingshop.domain.auth.domain;
+package com.example.growingshopauth.domain;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

@@ -1,11 +1,11 @@
-package com.example.growingshop.domain.auth.domain;
+package com.example.growingshopauth.domain;
 
-import com.example.growingshop.domain.auth.dto.RoleResponse;
+import com.example.growingshopauth.dto.RoleResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
