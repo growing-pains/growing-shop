@@ -1,7 +1,7 @@
-package com.example.growingshop.domain.company.dto;
+package com.example.growingshopauth.company.dto;
 
-import com.example.growingshop.domain.company.domain.Company;
-import com.example.growingshop.domain.company.domain.CompanyGrade;
+import com.example.growingshopauth.company.domain.Company;
+import com.example.growingshopauth.company.domain.CompanyGrade;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

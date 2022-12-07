@@ -1,8 +1,8 @@
-package com.example.growingshop.global.config.security;
+package com.example.growingshopauth.config.security;
 
-import com.example.growingshop.domain.auth.domain.HttpMethod;
-import com.example.growingshop.domain.auth.domain.Role;
-import com.example.growingshop.domain.auth.domain.Roles;
+import com.example.growingshopauth.auth.domain.HttpMethod;
+import com.example.growingshopauth.auth.domain.Role;
+import com.example.growingshopauth.auth.domain.Roles;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import org.springframework.security.core.GrantedAuthority;

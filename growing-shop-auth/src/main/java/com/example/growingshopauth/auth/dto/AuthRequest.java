@@ -1,5 +1,11 @@
-package com.example.growingshopauth.dto;
+package com.example.growingshopauth.auth.dto;
 
+import com.example.growingshopauth.company.domain.Company;
+import com.example.growingshopauth.user.domain.User;
+import com.example.growingshopauth.user.domain.UserGrade;
+import com.example.growingshopauth.user.domain.UserStatus;
+import com.example.growingshopauth.user.domain.UserType;
+import com.example.growingshopcommon.validator.StringChecker;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

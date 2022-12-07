@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.company.domain;
+package com.example.growingshopauth.company.domain;
 
 public enum CompanyStatus {
     NORMAL, UNDER_REVIEW

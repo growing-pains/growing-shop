@@ -1,4 +1,4 @@
-package com.example.growingshop.global.error.exception;
+package com.example.growingshopauth.config.error.exception;
 
 public class NotAllowPathException extends RuntimeException {
     public NotAllowPathException(String message) {

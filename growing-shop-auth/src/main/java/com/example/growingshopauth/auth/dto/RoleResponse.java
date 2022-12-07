@@ -1,7 +1,7 @@
-package com.example.growingshopauth.dto;
+package com.example.growingshopauth.auth.dto;
 
-import com.example.growingshopauth.domain.Policy;
-import com.example.growingshopauth.domain.Role;
+import com.example.growingshopauth.auth.domain.Policy;
+import com.example.growingshopauth.auth.domain.Role;
 import lombok.*;
 
 import java.util.ArrayList;

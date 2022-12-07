@@ -1,9 +1,9 @@
-package com.example.growingshop.domain.user.dto;
+package com.example.growingshopauth.user.dto;
 
-import com.example.growingshop.domain.company.dto.CompanyResponse;
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.domain.user.domain.UserGrade;
-import com.example.growingshop.domain.user.domain.UserType;
+import com.example.growingshopauth.company.dto.CompanyResponse;
+import com.example.growingshopauth.user.domain.User;
+import com.example.growingshopauth.user.domain.UserGrade;
+import com.example.growingshopauth.user.domain.UserType;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

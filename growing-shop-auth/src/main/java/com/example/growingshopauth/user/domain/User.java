@@ -1,16 +1,15 @@
-package com.example.growingshop.domain.user.domain;
+package com.example.growingshopauth.user.domain;
 
-import com.example.growingshop.domain.auth.domain.Roles;
-import com.example.growingshop.domain.company.domain.Company;
-import com.example.growingshop.global.validator.StringChecker;
+import com.example.growingshopauth.auth.domain.Roles;
+import com.example.growingshopauth.company.domain.Company;
+import com.example.growingshopcommon.validator.StringChecker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Getter

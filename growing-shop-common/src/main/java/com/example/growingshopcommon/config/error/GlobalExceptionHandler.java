@@ -1,4 +1,4 @@
-package com.example.growingshopcommon.error.config;
+package com.example.growingshopcommon.config.error;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

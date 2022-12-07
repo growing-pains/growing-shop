@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.user.domain;
+package com.example.growingshopauth.user.domain;
 
 public enum UserGrade {
     NORMAL, VIP, VVIP, MASTER

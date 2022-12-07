@@ -1,11 +1,11 @@
-package com.example.growingshop.global.config.security;
+package com.example.growingshopauth.config.security;
 
-import com.example.growingshop.domain.auth.dto.AuthRequest;
-import com.example.growingshop.domain.auth.dto.AuthResponse;
-import com.example.growingshop.domain.auth.service.AuthService;
-import com.example.growingshop.global.error.exception.InvalidJwtTokenException;
-import com.example.growingshop.global.error.exception.NotFoundUserException;
-import com.example.growingshop.global.util.TimeUtil;
+import com.example.growingshopauth.auth.dto.AuthRequest;
+import com.example.growingshopauth.auth.dto.AuthResponse;
+import com.example.growingshopauth.auth.service.AuthService;
+import com.example.growingshopauth.config.error.exception.InvalidJwtTokenException;
+import com.example.growingshopauth.config.error.exception.NotFoundUserException;
+import com.example.growingshopcommon.util.TimeUtil;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
-package com.example.growingshop.domain.auth.service;
+package com.example.growingshopauth.auth.service;
 
-import com.example.growingshop.domain.auth.dto.AuthRequest;
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.domain.user.repository.UserRepository;
+import com.example.growingshopauth.auth.dto.AuthRequest;
+import com.example.growingshopauth.user.domain.User;
+import com.example.growingshopauth.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

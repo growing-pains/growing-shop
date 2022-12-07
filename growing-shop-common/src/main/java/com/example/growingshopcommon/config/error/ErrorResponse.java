@@ -1,4 +1,4 @@
-package com.example.growingshopcommon.error.config;
+package com.example.growingshopcommon.config.error;
 
 public class ErrorResponse {
     private final String message;

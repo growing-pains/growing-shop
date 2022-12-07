@@ -1,7 +1,8 @@
-package com.example.growingshop.global.validator;
+package com.example.growingshopcommon.validator;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -13,6 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = StringCheckerValidator.class)
 @Documented
+@Deprecated
 public @interface StringChecker {
     String message() default "";
     Class<?>[] groups() default {};

@@ -1,6 +1,6 @@
-package com.example.growingshopauth.domain;
+package com.example.growingshopauth.auth.domain;
 
-import com.example.growingshopauth.dto.RoleResponse;
+import com.example.growingshopauth.auth.dto.RoleResponse;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

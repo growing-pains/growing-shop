@@ -1,7 +1,7 @@
-package com.example.growingshop.domain.auth.accessible;
+package com.example.growingshopauth.auth.annotation;
 
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.global.error.exception.NotAllowPathException;
+import com.example.growingshopauth.config.error.exception.NotAllowPathException;
+import com.example.growingshopauth.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

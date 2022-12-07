@@ -1,11 +1,11 @@
-package com.example.growingshopauth.domain;
+package com.example.growingshopauth.auth.domain;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
 import java.util.regex.Pattern;
 
 @Entity

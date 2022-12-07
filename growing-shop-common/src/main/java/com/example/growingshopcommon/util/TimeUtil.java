@@ -1,4 +1,4 @@
-package com.example.growingshop.global.util;
+package com.example.growingshopcommon.util;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

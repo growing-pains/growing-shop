@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.auth.repository;
+package com.example.growingshopauth.auth.repository;
 
-import com.example.growingshop.domain.auth.domain.Role;
+import com.example.growingshopauth.auth.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

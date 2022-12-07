@@ -1,13 +1,12 @@
-package com.example.growingshop.domain.company.domain;
+package com.example.growingshopauth.company.domain;
 
-import com.example.growingshop.global.validator.StringChecker;
+import com.example.growingshopcommon.validator.StringChecker;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

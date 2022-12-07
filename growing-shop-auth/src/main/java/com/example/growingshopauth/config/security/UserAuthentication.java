@@ -1,4 +1,4 @@
-package com.example.growingshop.global.config.security;
+package com.example.growingshopauth.config.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

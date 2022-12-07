@@ -1,8 +1,8 @@
-package com.example.growingshop.domain.auth.api;
+package com.example.growingshopauth.auth.api;
 
-import com.example.growingshop.domain.auth.dto.RoleRequest;
-import com.example.growingshop.domain.auth.dto.RoleResponse;
-import com.example.growingshop.domain.auth.service.PolicyService;
+import com.example.growingshopauth.auth.dto.RoleRequest;
+import com.example.growingshopauth.auth.dto.RoleResponse;
+import com.example.growingshopauth.auth.service.PolicyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

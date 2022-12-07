@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.auth.accessible;
+package com.example.growingshopauth.auth.annotation;
 
-import com.example.growingshop.domain.user.domain.UserType;
+import com.example.growingshopauth.user.domain.UserType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

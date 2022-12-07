@@ -1,12 +1,11 @@
-package com.example.growingshop.domain.company.service;
+package com.example.growingshopauth.company.service;
 
-import com.example.growingshop.domain.company.domain.Company;
-import com.example.growingshop.domain.company.dto.CompanyResponse;
-import com.example.growingshop.domain.company.repository.CompanyRepo;
+import com.example.growingshopauth.company.domain.Company;
+import com.example.growingshopauth.company.dto.CompanyResponse;
+import com.example.growingshopauth.company.repository.CompanyRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor

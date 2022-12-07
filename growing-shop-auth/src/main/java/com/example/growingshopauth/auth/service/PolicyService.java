@@ -1,9 +1,9 @@
-package com.example.growingshop.domain.auth.service;
+package com.example.growingshopauth.auth.service;
 
-import com.example.growingshop.domain.auth.domain.Policies;
-import com.example.growingshop.domain.auth.domain.Policy;
-import com.example.growingshop.domain.auth.dto.RoleRequest;
-import com.example.growingshop.domain.auth.repository.PolicyRepository;
+import com.example.growingshopauth.auth.domain.Policies;
+import com.example.growingshopauth.auth.domain.Policy;
+import com.example.growingshopauth.auth.dto.RoleRequest;
+import com.example.growingshopauth.auth.repository.PolicyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,14 +1,18 @@
-package com.example.growingshop.global.config.security;
+package com.example.growingshopauth.config.security;
 
-import com.example.growingshop.domain.auth.domain.HttpMethod;
-import com.example.growingshop.domain.auth.domain.Policies;
-import com.example.growingshop.domain.auth.domain.Role;
-import com.example.growingshop.domain.auth.service.PolicyService;
-import com.example.growingshop.domain.auth.service.RoleService;
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.domain.user.repository.UserRepository;
-import com.example.growingshop.global.error.exception.NotAllowPathException;
-import com.example.growingshop.global.error.exception.NotFoundUserException;
+import com.example.growingshopauth.auth.domain.HttpMethod;
+import com.example.growingshopauth.auth.domain.Policies;
+import com.example.growingshopauth.auth.domain.Role;
+import com.example.growingshopauth.auth.service.PolicyService;
+import com.example.growingshopauth.auth.service.RoleService;
+import com.example.growingshopauth.config.error.exception.NotAllowPathException;
+import com.example.growingshopauth.config.error.exception.NotFoundUserException;
+import com.example.growingshopauth.user.domain.User;
+import com.example.growingshopauth.user.repository.UserRepository;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +21,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component

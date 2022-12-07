@@ -1,9 +1,9 @@
-package com.example.growingshop.domain.auth.api;
+package com.example.growingshopauth.auth.api;
 
-import com.example.growingshop.domain.auth.dto.AuthRequest;
-import com.example.growingshop.domain.auth.dto.AuthResponse;
-import com.example.growingshop.domain.user.service.UserService;
-import com.example.growingshop.global.config.security.JwtTokenProvider;
+import com.example.growingshopauth.auth.dto.AuthRequest;
+import com.example.growingshopauth.auth.dto.AuthResponse;
+import com.example.growingshopauth.config.security.JwtTokenProvider;
+import com.example.growingshopauth.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
