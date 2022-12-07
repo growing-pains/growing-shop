@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.category.repository;
+package com.example.growingshopaudience.category.repository;
 
-import com.example.growingshop.domain.category.domain.Category;
+import com.example.growingshopaudience.category.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,17 +1,15 @@
-package com.example.growingshop.domain.category.service;
+package com.example.growingshopaudience.category.service;
 
-import com.example.growingshop.domain.auth.accessible.AccessibleUserTypes;
-import com.example.growingshop.domain.category.domain.Category;
-import com.example.growingshop.domain.category.domain.CategoryStatus;
-import com.example.growingshop.domain.category.dto.CategoryRequest;
-import com.example.growingshop.domain.category.dto.CategoryResponse;
-import com.example.growingshop.domain.category.repository.CategoryRepository;
-import com.example.growingshop.domain.user.domain.UserType;
+import com.example.growingshopaudience.category.domain.Category;
+import com.example.growingshopaudience.category.domain.CategoryStatus;
+import com.example.growingshopaudience.category.dto.CategoryRequest;
+import com.example.growingshopaudience.category.dto.CategoryResponse;
+import com.example.growingshopaudience.category.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,8 @@ public class CategoryService {
     }
 
     @Transactional
-    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+    // TODO - 기존 AccessibleUserTypes 을 auth 모듈에서 처리할 수 있는 방법 찾기
     public CategoryResponse.CategoryRes create(CategoryRequest.CategoryReq req) {
         Category category = categoryRepository.save(req.toEntity());
 
@@ -37,13 +36,13 @@ public class CategoryService {
     }
 
     @Transactional
-    @AccessibleUserTypes(UserType.ADMIN)
+//    @AccessibleUserTypes(UserType.ADMIN)
     public void delete(Long id) {
         getOne(id).delete();
     }
 
     @Transactional
-    @AccessibleUserTypes(UserType.ADMIN)
+//    @AccessibleUserTypes(UserType.ADMIN)
     public void inspect(Long id, CategoryStatus status) {
         Category category = getOne(id);
 

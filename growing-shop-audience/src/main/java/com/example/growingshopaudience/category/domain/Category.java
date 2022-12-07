@@ -1,14 +1,13 @@
-package com.example.growingshop.domain.category.domain;
+package com.example.growingshopaudience.category.domain;
 
-import com.example.growingshop.domain.category.dto.CategoryRequest;
-import com.example.growingshop.global.validator.StringChecker;
+import com.example.growingshopaudience.category.dto.CategoryRequest;
+import com.example.growingshopcommon.validator.StringChecker;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

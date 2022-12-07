@@ -1,9 +1,9 @@
-package com.example.growingshop.domain.category.api;
+package com.example.growingshopaudience.category.api;
 
-import com.example.growingshop.domain.category.domain.CategoryStatus;
-import com.example.growingshop.domain.category.dto.CategoryRequest;
-import com.example.growingshop.domain.category.dto.CategoryResponse;
-import com.example.growingshop.domain.category.service.CategoryService;
+import com.example.growingshopaudience.category.domain.CategoryStatus;
+import com.example.growingshopaudience.category.dto.CategoryRequest;
+import com.example.growingshopaudience.category.dto.CategoryResponse;
+import com.example.growingshopaudience.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

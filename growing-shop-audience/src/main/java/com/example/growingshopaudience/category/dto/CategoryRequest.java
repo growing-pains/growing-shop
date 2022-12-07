@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.category.dto;
+package com.example.growingshopaudience.category.dto;
 
-import com.example.growingshop.domain.category.domain.Category;
+import com.example.growingshopaudience.category.domain.Category;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

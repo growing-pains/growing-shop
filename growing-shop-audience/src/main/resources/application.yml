@@ -1,4 +1,4 @@
-server.port: 8081
+server.port: 8082
 
 ---
 
@@ -16,13 +16,9 @@ spring:
   h2.console:
     enabled: true
     path: /h2-console
-  sql.init:
-    mode: always
-    schema-locations: classpath:local/*_init.sql
-
-jwt:
-  secret-key: local-secret
-  expiration: 86400
+#  sql.init:
+#    mode: always
+#    schema-locations: classpath:local/*_init.sql
 
 ---
 
@@ -37,3 +33,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
     defer-datasource-initialization: true
+
+jwt:
+  secret-key: acceptance-secret
+  expiration: 600
