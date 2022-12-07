@@ -1,7 +1,9 @@
-package com.example.growingshop.domain.order.domain;
+package com.example.growingshoporder.domain;
 
-import com.example.growingshop.domain.order.dto.OrderRequest;
-import com.example.growingshop.domain.user.domain.User;
+import com.example.growingshoporder.dto.OrderRequest;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,9 +11,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,9 @@ public class Order {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime orderAt;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="user", nullable = false)
+    //    @ManyToOne(targetEntity = User.class)
+//    @JoinColumn(name="user", nullable = false)
+    // TODO - 단순 관계 표현을 위해 다른 모듈을 import 해야 할지, 아니면 엔티티 전체를 별도로 관리할지 등 고민 필요
     private Long userId;
 
     @Enumerated(EnumType.STRING)

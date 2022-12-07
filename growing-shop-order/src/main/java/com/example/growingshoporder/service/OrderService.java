@@ -1,18 +1,15 @@
-package com.example.growingshop.domain.order.service;
+package com.example.growingshoporder.service;
 
-import com.example.growingshop.domain.auth.accessible.LoginUser;
-import com.example.growingshop.domain.order.domain.Order;
-import com.example.growingshop.domain.order.dto.OrderRequest;
-import com.example.growingshop.domain.order.dto.OrderResponse;
-import com.example.growingshop.domain.order.repository.OrderLineRepository;
-import com.example.growingshop.domain.order.repository.OrderRepository;
-import com.example.growingshop.domain.user.domain.User;
-import com.example.growingshop.domain.user.domain.UserType;
+import com.example.growingshoporder.domain.Order;
+import com.example.growingshoporder.dto.OrderRequest;
+import com.example.growingshoporder.dto.OrderResponse;
+import com.example.growingshoporder.repository.OrderLineRepository;
+import com.example.growingshoporder.repository.OrderRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,30 +21,32 @@ public class OrderService {
     private final OrderLineRepository orderLineRepository;
 
     public List<OrderResponse.OrderRes> findAll() {
-        User loginUser = LoginUser.getUserInSecurityContext();
-
-        if (loginUser.getType() == UserType.ADMIN) {
-            return OrderResponse.OrderRes
-                    .from(orderRepository.findAllNotDeleted());
-        }
-
-        return OrderResponse.OrderRes
-                .from(orderRepository.findAllNotDeletedByUserId(loginUser.getId()));
+//        User loginUser = LoginUser.getUserInSecurityContext();
+//
+//        if (loginUser.getType() == UserType.ADMIN) {
+//            return OrderResponse.OrderRes
+//                    .from(orderRepository.findAllNotDeleted());
+//        }
+//
+//        return OrderResponse.OrderRes
+//                .from(orderRepository.findAllNotDeletedByUserId(loginUser.getId()));
+        return null;
     }
 
     public OrderResponse.OrderRes getById(Long id) {
-        User loginUser = LoginUser.getUserInSecurityContext();
-
-        if (loginUser.getType() == UserType.ADMIN) {
-            return OrderResponse.OrderRes
-                    .from(getOne(id));
-        }
-
-        Order order = orderRepository.findNotDeletedByIdAndUserId(id, loginUser.getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
-
-        return OrderResponse.OrderRes
-                .from(order);
+//        User loginUser = LoginUser.getUserInSecurityContext();
+//
+//        if (loginUser.getType() == UserType.ADMIN) {
+//            return OrderResponse.OrderRes
+//                    .from(getOne(id));
+//        }
+//
+//        Order order = orderRepository.findNotDeletedByIdAndUserId(id, loginUser.getId())
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+//
+//        return OrderResponse.OrderRes
+//                .from(order);
+        return null;
     }
 
     @Transactional

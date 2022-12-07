@@ -1,14 +1,13 @@
-package com.example.growingshop.domain.order.domain;
+package com.example.growingshoporder.domain;
 
-import com.example.growingshop.domain.order.dto.OrderRequest;
-import com.example.growingshop.domain.product.domain.Product;
+import com.example.growingshoporder.dto.OrderRequest;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
@@ -18,8 +17,8 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = Product.class)
-    @JoinColumn(name="product", nullable = false)
+    //    @ManyToOne(targetEntity = Product.class)
+//    @JoinColumn(name="product", nullable = false)
     private Long productId;
 
     @Column(nullable = false)

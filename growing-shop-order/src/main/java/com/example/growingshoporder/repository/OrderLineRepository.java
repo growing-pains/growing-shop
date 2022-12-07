@@ -1,6 +1,6 @@
-package com.example.growingshop.domain.order.repository;
+package com.example.growingshoporder.repository;
 
-import com.example.growingshop.domain.order.domain.OrderLine;
+import com.example.growingshoporder.domain.OrderLine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

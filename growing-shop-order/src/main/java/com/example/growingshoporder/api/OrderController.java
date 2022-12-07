@@ -1,8 +1,8 @@
-package com.example.growingshop.domain.order.api;
+package com.example.growingshoporder.api;
 
-import com.example.growingshop.domain.order.dto.OrderRequest;
-import com.example.growingshop.domain.order.dto.OrderResponse;
-import com.example.growingshop.domain.order.service.OrderService;
+import com.example.growingshoporder.dto.OrderRequest;
+import com.example.growingshoporder.dto.OrderResponse;
+import com.example.growingshoporder.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.example.growingshop.domain.order.dto;
+package com.example.growingshoporder.dto;
 
-import com.example.growingshop.domain.order.domain.Order;
-import com.example.growingshop.domain.order.domain.OrderLine;
+import com.example.growingshoporder.domain.Order;
+import com.example.growingshoporder.domain.OrderLine;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

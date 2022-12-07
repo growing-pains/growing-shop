@@ -1,4 +1,4 @@
-package com.example.growingshop.domain.order.domain;
+package com.example.growingshoporder.domain;
 
 public enum OrderStatus {
     WAITING, NORMAL, DELETED
