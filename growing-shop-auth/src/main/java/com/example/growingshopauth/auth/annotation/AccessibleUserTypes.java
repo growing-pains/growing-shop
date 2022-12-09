@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@Deprecated
+// TODO 모듈화 하면서 각 모듈에서 활용할 수 있는 방안 찾기
 public @interface AccessibleUserTypes {
     UserType[] value();
 }

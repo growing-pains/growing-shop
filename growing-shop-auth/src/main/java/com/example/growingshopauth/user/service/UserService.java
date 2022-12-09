@@ -1,8 +1,10 @@
 package com.example.growingshopauth.user.service;
 
+import com.example.growingshopauth.auth.annotation.LoginUser;
 import com.example.growingshopauth.auth.dto.AuthRequest;
 import com.example.growingshopauth.company.domain.Company;
 import com.example.growingshopauth.company.repository.CompanyRepo;
+import com.example.growingshopauth.user.domain.User;
 import com.example.growingshopauth.user.dto.UserResponse;
 import com.example.growingshopauth.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +37,9 @@ public class UserService {
                         join.toEntity(passwordEncoder.encode(join.getPassword()), company)
                 )
         );
+    }
+
+    public User getLoginUser() {
+        return LoginUser.getUserInSecurityContext();
     }
 }

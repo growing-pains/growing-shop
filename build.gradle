@@ -69,4 +69,10 @@ subprojects {
 		testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 		testImplementation 'org.mockito:mockito-inline'
 	}
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
 }

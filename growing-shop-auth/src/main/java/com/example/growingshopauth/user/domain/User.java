@@ -25,13 +25,13 @@ public class User {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 30)
-    @StringChecker(includeLowerEn = true, includeUpperEn = true, includeKo = true, includeSpecialCharacter = "'-.")
+    @Pattern(regexp = "^[a-zA-Z가-힣'-.]+$")
     private String name;
 
     @Column(nullable = false)
     @Size(max = 13, min = 9)
     @NotBlank
-    @Pattern(regexp = "^[0-9]{2,3}-?[0-9]{3,4}-?[0-9]{4}$")
+    @Pattern(regexp = "^\\d{2,3}-?\\d{3,4}-?\\d{4}$")
     private String mobile;
 
     @Column(nullable = false)
