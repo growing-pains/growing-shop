@@ -2,6 +2,7 @@ package com.example.growingshopauth.user.service
 
 import com.example.growingshopauth.auth.dto.AuthRequest
 import com.example.growingshopauth.company.repository.CompanyRepository
+import com.example.growingshopauth.config.error.exception.NotFoundUserException
 import com.example.growingshopauth.user.domain.User
 import com.example.growingshopauth.user.dto.UserResponse
 import com.example.growingshopauth.user.repository.UserRepository
@@ -35,6 +36,9 @@ class UserService(
             )
         )
     }
+
+    fun getUserByLoginId(loginId: String): User = userRepository.findUsersByLoginId(loginId)
+        .orElseThrow { NotFoundUserException("$loginId 에 해당하는 유저 정보를 찾을 수 없습니다.") }
 
     fun getLoginUser(): User {
         TODO("security 컨버팅 후 context 에서 뽑아오는 로직 추가")
