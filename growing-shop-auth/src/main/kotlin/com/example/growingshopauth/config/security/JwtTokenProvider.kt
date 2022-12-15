@@ -14,8 +14,17 @@ import java.util.*
 
 @Component
 class JwtTokenProvider(
+    @Value("\${jwt.secret-key}")
+    private val jwtSecret: String,
+    @Value("\${jwt.expiration}")
+    private val jwtExpiration: String,
     private val authService: AuthService
 ) {
+
+    init {
+        JWT_SECRET = jwtSecret
+        JWT_EXPIRATION = jwtExpiration
+    }
 
     fun generateToken(login: AuthRequest.LoginReq): AuthResponse.TokenRes {
         if (authService.matchLoginUser(login)) {
@@ -38,13 +47,8 @@ class JwtTokenProvider(
     }
 
     companion object: KLogging() {
-        @JvmStatic
         lateinit var JWT_SECRET: String
-        @Value("\${jwt.secret-key}") set
-
-        @JvmStatic
         lateinit var JWT_EXPIRATION: String
-        @Value("\${jwt.expiration}") set
 
         fun getUserIdFromJwt(token: String): String {
             return try {

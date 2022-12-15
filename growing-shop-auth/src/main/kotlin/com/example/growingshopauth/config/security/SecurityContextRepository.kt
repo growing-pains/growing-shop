@@ -4,7 +4,6 @@ import com.example.growingshopauth.auth.domain.HttpMethod
 import com.example.growingshopauth.auth.domain.Role
 import com.example.growingshopauth.auth.service.PolicyService
 import com.example.growingshopauth.auth.service.RoleService
-import com.example.growingshopauth.config.error.exception.NotAllowPathException
 import com.example.growingshopauth.user.domain.User
 import com.example.growingshopauth.user.domain.UserType
 import com.example.growingshopauth.user.service.UserService
@@ -12,9 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import mu.KLogging
+import org.springframework.http.HttpHeaders
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.web.server.context.ServerSecurityContextRepository
 import org.springframework.stereotype.Component
@@ -29,37 +28,42 @@ class SecurityContextRepository(
     private val roleService: RoleService
 ): ServerSecurityContextRepository {
     override fun save(exchange: ServerWebExchange, context: SecurityContext): Mono<Void> {
-        TODO("Not yet implemented")
+        return Mono.empty()
     }
 
     override fun load(exchange: ServerWebExchange): Mono<SecurityContext> {
-        return Mono.justOrEmpty(exchange.request.headers.getFirst(AUTH_HEADER))
-            .filter { it.startsWith(AUTH_HEADER_PREFIX) }
+        return Mono.justOrEmpty(exchange.request)
+            .filter {
+                it.headers.getFirst(HttpHeaders.AUTHORIZATION)?.startsWith(AUTH_HEADER_PREFIX)
+                    ?: throw IllegalAccessException("인증 정보가 없습니다.")
+            }
             .flatMap {
                 try {
-                    val context = SecurityContextImpl(
-                        runBlocking { setAuthenticate(it) }
-                    )
-                    checkAccessiblePath(
-                        exchange.request.uri.path,
-                        HttpMethod.valueOf(exchange.request.method.name())
-                    )
-
-                    context.toMono()
+                    SecurityContextImpl(
+                        runBlocking {
+                            setAuthenticate(
+                                it.headers.getFirst(HttpHeaders.AUTHORIZATION)!!,
+                                it.uri.path,
+                                HttpMethod.valueOf(it.method.name())
+                            )
+                        }
+                    ).toMono()
                 } catch (e: Exception) {
                     logger.warn("유저 인증도중 에러가 발생하였습니다.", e)
-                    Mono.empty()
+                    Mono.error { throw IllegalAccessException(e.message) }
                 }
             }
     }
 
-    private suspend fun setAuthenticate(authorization: String): Authentication {
+    private suspend fun setAuthenticate(authorization: String, uri: String, method: HttpMethod): Authentication {
         val user = getUserByAuthorization(authorization)
         val authority = Authority(
             user.loginId,
             getUserTypeRole(user.type),
             user.roles
         )
+
+        checkAccessiblePath(authority, uri, method)
 
         return UserAuthentication(user, authority)
     }
@@ -79,33 +83,17 @@ class SecurityContextRepository(
         }
     }
 
-    private fun checkAccessiblePath(uri: String, method: HttpMethod) {
-        if (isNotAccessiblePath(uri, method)) {
-            throw IllegalAccessException("요청한 경로에 접근 할 수 없습니다.")
+    private suspend fun checkAccessiblePath(authority: Authority, uri: String, method: HttpMethod) {
+        val policies = withContext(Dispatchers.IO) {
+            policyService.findAll()
+        }
+
+        if (policies.containPath(uri) && !authority.possibleAccess(uri, method)) {
+            throw IllegalAccessException("[$method] $uri 경로에 접근 할 수 없습니다.")
         }
     }
 
-    private fun isNotAccessiblePath(path: String, method: HttpMethod): Boolean {
-        return if (policyService.findAll().containPath(path)) {
-            return !getUserAuthority().possibleAccess(path, method)
-        } else false
-    }
-
-    private fun getUserAuthority(): Authority {
-        val authentication = SecurityContextHolder.getContext().authentication
-            ?: throw NotAllowPathException("요청에 대한 인증 정보가 없습니다.")
-
-        if (authentication !is UserAuthentication) throw NotAllowPathException("로그인 된 유저 정보의 데이터가 잘못되었습니다")
-
-        val authority = authentication.authorities.first()
-
-        if (authority !is Authority) throw NotAllowPathException("로그인 된 유저의 인증 정보가 잘못되었습니다.")
-
-        return authority
-    }
-
-    companion object: KLogging() {
-        private const val AUTH_HEADER = "Authorization"
+    companion object : KLogging() {
         private const val AUTH_HEADER_PREFIX = "Bearer "
     }
 }

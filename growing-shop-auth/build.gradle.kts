@@ -33,6 +33,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("javax.xml.bind:jaxb-api:2.3.1")
 
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 

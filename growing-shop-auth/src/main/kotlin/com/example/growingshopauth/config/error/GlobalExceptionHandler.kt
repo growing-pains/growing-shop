@@ -29,4 +29,10 @@ class GlobalExceptionHandler {
     fun notAllowPathException(exception: NotAllowPathException): ErrorResponse {
         return ErrorResponse(exception.message)
     }
+
+    @ExceptionHandler(IllegalAccessException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun illegalAccessException(exception: IllegalAccessException): ErrorResponse {
+        return ErrorResponse(exception.message)
+    }
 }

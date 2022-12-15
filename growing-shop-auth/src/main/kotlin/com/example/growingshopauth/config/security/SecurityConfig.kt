@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.server.SecurityWebFilterChain
 import reactor.core.publisher.Mono
 
@@ -30,7 +29,7 @@ class SecurityConfig(
             .authorizeExchange()
 
             .pathMatchers(HttpMethod.OPTIONS).permitAll()
-            .pathMatchers(HttpMethod.POST, "/auth/login").permitAll()
+            .pathMatchers(HttpMethod.POST, "/auth/login", "/auth/join").permitAll()
             .anyExchange().authenticated()
             .and()
 
