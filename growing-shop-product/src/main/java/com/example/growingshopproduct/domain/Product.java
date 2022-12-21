@@ -1,10 +1,10 @@
 package com.example.growingshopproduct.domain;
 
-import com.example.growingshopcommon.validator.StringChecker;
 import com.example.growingshopproduct.dto.ProductRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -24,7 +24,7 @@ public class Product {
     @Column(nullable = false)
     @NotBlank
     @Size(max = 100)
-    @StringChecker(includeLowerEn = true, includeUpperEn = true, includeKo = true, includeNumber = true, includeSpecialCharacter = "!@#$%^&*\"'-,.<>?:[]()")
+    @Pattern(regexp = "^[a-zA-Z가-힣!@#$%^&*\"'-,.<>?:\\[\\]()]+$")
     private String name;
 
     @Column(nullable = false)
