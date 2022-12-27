@@ -1,3 +1,5 @@
 rootProject.name = 'growing-shop'
 
 include 'growing-shop-audience', 'growing-shop-auth', 'growing-shop-order', 'growing-shop-product', 'growing-shop-common'
+
+include 'growing-shop-domain'
