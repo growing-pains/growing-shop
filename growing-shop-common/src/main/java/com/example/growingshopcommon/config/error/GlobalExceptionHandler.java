@@ -20,22 +20,4 @@ public class GlobalExceptionHandler {
     public ErrorResponse entityNotFoundException(EntityNotFoundException exception) {
         return new ErrorResponse(exception.getMessage());
     }
-
-//    @ExceptionHandler(NotFoundUserException.class)
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    public ErrorResponse notFoundUserException(NotFoundUserException exception) {
-//        return new ErrorResponse(exception.getMessage());
-//    }
-
-//    @ExceptionHandler(InvalidJwtTokenException.class)
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    public ErrorResponse invalidJwtTokenException(InvalidJwtTokenException exception) {
-//        return new ErrorResponse(exception.getMessage());
-//    }
-
-//    @ExceptionHandler(NotAllowPathException.class)
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    public ErrorResponse notAllowPathException(NotAllowPathException exception) {
-//        return new ErrorResponse(exception.getMessage());
-//    }
 }

@@ -1,33 +1,31 @@
 server.port: 8081
 
-spring:
-  main:
-    allow-bean-definition-overriding: true
-  cloud:
-    gateway:
-      routes:
-        - id: growing-shop-auth
-          uri: ${growing-shop.endpoints.auth}
-          predicates:
-            - Host=auth.**
-        - id: growing-shop-audience
-          uri: ${growing-shop.endpoints.audience}
-          predicates:
-            - Host=audience.**
-        - id: growing-shop-order
-          uri: ${growing-shop.endpoints.order}
-          predicates:
-            - Host=order.**
-        - id: growing-shop-product
-          uri: ${growing-shop.endpoints.product}
-          predicates:
-            - Host=product.**
-
-growing-shop.endpoints:
-  audience: http://localhost:8082
-  auth: http://localhost:${server.port}
-  order: http://localhost:8083
-  product: http://localhost:8084
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: growing-shop-auth
+#          uri: ${growing-shop.endpoints.auth}
+#          predicates:
+#            - Host=auth.**
+#        - id: growing-shop-audience
+#          uri: ${growing-shop.endpoints.audience}
+#          predicates:
+#            - Host=audience.**
+#        - id: growing-shop-order
+#          uri: ${growing-shop.endpoints.order}
+#          predicates:
+#            - Host=order.**
+#        - id: growing-shop-product
+#          uri: ${growing-shop.endpoints.product}
+#          predicates:
+#            - Host=product.**
+#
+#growing-shop.endpoints:
+#  audience: http://localhost:8082
+#  auth: http://localhost:${server.port}
+#  order: http://localhost:8083
+#  product: http://localhost:8084
 
 # 추후 환경별 도메인 추가 시, 해당 도메인으로 설정 변경 필요
 
@@ -37,9 +35,12 @@ spring:
   config.activate.on-profile: local
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway GlobalFilter
+            preLogger: true
+            postLogger: true
       routes:
         - id: growing-shop-audience
           uri: ${growing-shop.endpoints.audience}
@@ -69,7 +70,8 @@ spring:
     hibernate.ddl-auto: create-drop
     defer-datasource-initialization: true
   h2.console:
-    port: 8090
+    enabled: true
+    path: /h2-console
   sql.init:
     mode: always
     schema-locations: classpath:local/*_init.sql

@@ -7,3 +7,10 @@ bootJar {
 jar {
     enabled = true
 }
+
+dependencies {
+//    implementation (project(':growing-shop-common')) {
+//        exclude module: 'growing-shop-common'
+//    }
+//    exclude(project(':growing-shop-common'))
+}
