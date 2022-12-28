@@ -9,8 +9,6 @@ jar {
 }
 
 dependencies {
-//    implementation (project(':growing-shop-common')) {
-//        exclude module: 'growing-shop-common'
-//    }
-//    exclude(project(':growing-shop-common'))
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }

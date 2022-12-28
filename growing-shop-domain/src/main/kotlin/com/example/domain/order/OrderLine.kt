@@ -25,18 +25,14 @@ class OrderLine(
     @Min(1)
     val quantity: Int,
 
-    var isDeleted: Boolean
+    isDeleted: Boolean
 ) : BaseEntity() {
+    var isDeleted: Boolean = isDeleted
+        protected set
 
     fun amounts(): Long {
         return price * quantity.toLong()
     }
-
-//    public void update(OrderRequest.OrderLineReq req) {
-//        this.productId = req.getProductId();
-//        this.price = req.getPrice();
-//        this.quantity = req.getQuantity();
-//    }
 
     fun delete() {
         isDeleted = true

@@ -1,8 +1,8 @@
 package com.example.growingshopauth.config.security
 
-import com.example.growingshopauth.auth.domain.HttpMethod
-import com.example.growingshopauth.auth.domain.Role
-import com.example.growingshopauth.auth.domain.Roles
+import com.example.domain.auth.HttpMethod
+import com.example.domain.auth.Role
+import com.example.domain.auth.Roles
 import org.springframework.security.core.GrantedAuthority
 
 class Authority(

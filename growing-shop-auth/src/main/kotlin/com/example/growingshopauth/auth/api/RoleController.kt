@@ -1,5 +1,6 @@
 package com.example.growingshopauth.auth.api
 
+import com.example.growingshopauth.auth.domain.toResponse
 import com.example.growingshopauth.auth.dto.RoleRequest
 import com.example.growingshopauth.auth.dto.RoleResponse
 import com.example.growingshopauth.auth.service.RoleService

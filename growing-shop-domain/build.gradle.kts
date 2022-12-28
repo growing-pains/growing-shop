@@ -7,16 +7,14 @@ plugins {
     kotlin("plugin.jpa") version "1.7.22"
 }
 
-subprojects {
-    dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-        implementation(project(":growing-shop-domain:common"))
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.1")
 
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
-    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 allOpen {

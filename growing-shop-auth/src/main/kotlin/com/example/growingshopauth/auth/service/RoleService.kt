@@ -1,18 +1,18 @@
 package com.example.growingshopauth.auth.service
 
-import com.example.growingshopauth.auth.domain.Policies
-import com.example.growingshopauth.auth.domain.Role
-import com.example.growingshopauth.auth.domain.Roles
+import com.example.domain.auth.Policies
+import com.example.domain.auth.Role
+import com.example.domain.auth.Roles
 import com.example.growingshopauth.auth.dto.RoleRequest
-import com.example.growingshopauth.auth.repository.PolicyRepository
-import com.example.growingshopauth.auth.repository.RoleRepository
+import com.example.growingshopauth.auth.repository.ExpandRoleRepository
+import com.example.repository.auth.PolicyRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
 class RoleService(
-    private val roleRepository: RoleRepository,
+    private val roleRepository: ExpandRoleRepository,
     private val policyRepository: PolicyRepository
 ) {
 

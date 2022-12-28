@@ -17,12 +17,11 @@ class Category(
     @Pattern(regexp = "^[a-zA-Z가-힣-.\"']+$")
     val name: String,
 
-    @Enumerated(EnumType.STRING)
-    var status: CategoryStatus
+    status: CategoryStatus
 ) : BaseEntity() {
-//    fun update(req: CategoryRequest.CategoryReq) {
-//        this.name = req.name
-//    }
+    @Enumerated(EnumType.STRING)
+    var status: CategoryStatus = status
+        protected set
 
     fun delete() {
         status = CategoryStatus.DELETED

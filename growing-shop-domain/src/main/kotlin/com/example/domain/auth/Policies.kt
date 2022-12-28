@@ -16,10 +16,6 @@ class Policies(
         return allAccessiblePath().any { it == path }
     }
 
-//    fun toResponse(): List<RoleResponse.PoliciesRes> {
-//        return value.map(RoleResponse.PoliciesRes::from)
-//    }
-
     private fun allAccessiblePath(): List<String> {
         return value.map(Policy::path)
     }

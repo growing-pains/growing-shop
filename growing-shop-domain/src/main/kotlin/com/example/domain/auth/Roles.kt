@@ -21,8 +21,4 @@ class Roles(
     fun getAllPolicies(): List<Policy> {
         return value.flatMap { it.policies.value }
     }
-
-//    fun toResponse(): List<RoleResponse.RoleRes> {
-//        return value.map(RoleResponse.RoleRes::from)
-//    }
 }

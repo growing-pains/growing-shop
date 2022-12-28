@@ -14,8 +14,7 @@ class Order(
     @JoinColumn(nullable = false)
     val user: User,
 
-    @Enumerated(EnumType.STRING)
-    var status: OrderStatus,
+    status: OrderStatus,
 
     @Valid
     @NotEmpty
@@ -24,6 +23,9 @@ class Order(
     @Where(clause = "is_deleted = 0")
     val orderLines: List<OrderLine> = listOf()
 ) : BaseEntity() {
+    @Enumerated(EnumType.STRING)
+    var status: OrderStatus = status
+        protected set
 
     fun totalPrice(): Long {
         return orderLines.sumOf { it.amounts() }
