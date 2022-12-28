@@ -26,20 +26,21 @@ allprojects {
 
 	repositories {
 		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
 	}
 }
 
-subprojects {
-	apply plugin: 'java'
+subprojects { project ->
+    apply plugin: 'java'
 
-	asciidoctor {
-		inputs.dir snippetsDir
-		dependsOn test
-	}
+    asciidoctor {
+        inputs.dir snippetsDir
+        dependsOn test
+    }
 
-	bootJar {
-		dependsOn asciidoctor
-		from("${asciidoctor.outputDir}/html5") {
+    bootJar {
+        dependsOn asciidoctor
+        from("${asciidoctor.outputDir}/html5") {
 			into 'static/docs'
 		}
 	}
@@ -52,21 +53,37 @@ subprojects {
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-		implementation 'org.springframework.boot:spring-boot-starter-web'
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
 		implementation 'com.google.guava:guava:31.0.1-jre'
 
-		implementation project(':growing-shop-common')
-
 		runtimeOnly 'com.h2database:h2'
-		compileOnly 'org.projectlombok:lombok'
-		annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
 
-		asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+        asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-		testImplementation 'io.rest-assured:rest-assured'
-		testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
-		testImplementation 'org.mockito:mockito-inline'
-	}
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'io.rest-assured:rest-assured'
+        testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+        testImplementation 'org.mockito:mockito-inline'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    if (project.name != 'growing-shop-common') {
+        dependencies {
+            implementation(this.project(':growing-shop-common')) {
+                exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+            }
+        }
+    }
+    if (project.name != 'growing-shop-auth') {
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-web'
+        }
+    }
 }
