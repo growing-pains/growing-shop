@@ -1,1 +1,16 @@
 version = '0.0.1-SNAPSHOT'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+//    implementation (project(':growing-shop-common')) {
+//        exclude module: 'growing-shop-common'
+//    }
+//    exclude(project(':growing-shop-common'))
+}

@@ -1,9 +1,64 @@
 server.port: 8081
 
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        - id: growing-shop-auth
+          uri: ${growing-shop.endpoints.auth}
+          predicates:
+            - Host=auth.**
+        - id: growing-shop-audience
+          uri: ${growing-shop.endpoints.audience}
+          predicates:
+            - Host=audience.**
+        - id: growing-shop-order
+          uri: ${growing-shop.endpoints.order}
+          predicates:
+            - Host=order.**
+        - id: growing-shop-product
+          uri: ${growing-shop.endpoints.product}
+          predicates:
+            - Host=product.**
+
+growing-shop.endpoints:
+  audience: http://localhost:8082
+  auth: http://localhost:${server.port}
+  order: http://localhost:8083
+  product: http://localhost:8084
+
+# 추후 환경별 도메인 추가 시, 해당 도메인으로 설정 변경 필요
+
 ---
 
 spring:
   config.activate.on-profile: local
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: growing-shop-audience
+          uri: ${growing-shop.endpoints.audience}
+          predicates:
+            - Path=/audience/**
+          filters:
+            - RewritePath=/audience,/
+        - id: growing-shop-order
+          uri: ${growing-shop.endpoints.order}
+          predicates:
+            - Path=/order/**
+          filters:
+            - RewritePath=/order,/
+        - id: growing-shop-product
+          uri: ${growing-shop.endpoints.product}
+          predicates:
+            - Path=/product/**
+          filters:
+            - RewritePath=/product,/
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -14,8 +69,7 @@ spring:
     hibernate.ddl-auto: create-drop
     defer-datasource-initialization: true
   h2.console:
-    enabled: true
-    path: /h2-console
+    port: 8090
   sql.init:
     mode: always
     schema-locations: classpath:local/*_init.sql
@@ -23,6 +77,12 @@ spring:
 jwt:
   secret-key: local-secret
   expiration: 86400
+
+growing-shop.endpoints:
+  audience: http://localhost:8082
+  auth: http://localhost:${server.port}
+  order: http://localhost:8083
+  product: http://localhost:8084
 
 ---
 
