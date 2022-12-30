@@ -1,15 +1,15 @@
 package com.example.growingshopauth.config.security
 
-import com.example.growingshopauth.auth.domain.HttpMethod
-import com.example.growingshopauth.auth.domain.Role
-import com.example.growingshopauth.auth.domain.Roles
+import com.example.domain.auth.HttpMethod
+import com.example.domain.auth.Role
+import com.example.domain.auth.Roles
 import org.springframework.security.core.GrantedAuthority
 
 class Authority(
     private val name: String,
     private val userTypeRole: Role,
     private val userRoles: Roles
-): GrantedAuthority {
+) : GrantedAuthority {
     private val accessible: Map<String, Set<HttpMethod>> = userRoles.addRoles(userTypeRole).getAllPolicies()
         .groupBy { it.path }
         .map { (path, policies) ->

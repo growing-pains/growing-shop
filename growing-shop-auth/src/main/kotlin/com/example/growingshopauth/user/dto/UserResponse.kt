@@ -1,9 +1,9 @@
 package com.example.growingshopauth.user.dto
 
+import com.example.domain.user.User
+import com.example.domain.user.UserGrade
+import com.example.domain.user.UserType
 import com.example.growingshopauth.company.dto.CompanyResponse
-import com.example.growingshopauth.user.domain.User
-import com.example.growingshopauth.user.domain.UserGrade
-import com.example.growingshopauth.user.domain.UserType
 
 class UserResponse {
 
@@ -20,7 +20,7 @@ class UserResponse {
         companion object {
             fun from(user: User): UserRes {
                 return UserRes(
-                    user.id,
+                    user.id!!,
                     user.name,
                     user.mobile,
                     user.email,

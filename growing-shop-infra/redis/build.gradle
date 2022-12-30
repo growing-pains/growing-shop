@@ -1,0 +1,16 @@
+version = '0.0.1-SNAPSHOT'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.redisson:redisson:3.19.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

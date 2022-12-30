@@ -46,7 +46,7 @@ class JwtTokenProvider(
         throw NotFoundUserException("유효하지 않은 계정 정보입니다.");
     }
 
-    companion object: KLogging() {
+    companion object : KLogging() {
         lateinit var JWT_SECRET: String
         lateinit var JWT_EXPIRATION: String
 

@@ -1,7 +1,7 @@
 package com.example.growingshopauth.company.service
 
 import com.example.growingshopauth.company.dto.CompanyResponse
-import com.example.growingshopauth.company.repository.CompanyRepository
+import com.example.repository.company.CompanyRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -1,11 +1,11 @@
 package com.example.growingshopauth.config.security
 
-import com.example.growingshopauth.auth.domain.HttpMethod
-import com.example.growingshopauth.auth.domain.Role
+import com.example.domain.auth.HttpMethod
+import com.example.domain.auth.Role
+import com.example.domain.user.User
+import com.example.domain.user.UserType
 import com.example.growingshopauth.auth.service.PolicyService
 import com.example.growingshopauth.auth.service.RoleService
-import com.example.growingshopauth.user.domain.User
-import com.example.growingshopauth.user.domain.UserType
 import com.example.growingshopauth.user.service.UserService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -26,7 +26,7 @@ class SecurityContextRepository(
     private val userService: UserService,
     private val policyService: PolicyService,
     private val roleService: RoleService
-): ServerSecurityContextRepository {
+) : ServerSecurityContextRepository {
     override fun save(exchange: ServerWebExchange, context: SecurityContext): Mono<Void> {
         return Mono.empty()
     }

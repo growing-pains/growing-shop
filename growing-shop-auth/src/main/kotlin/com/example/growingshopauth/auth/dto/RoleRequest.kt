@@ -1,9 +1,9 @@
 package com.example.growingshopauth.auth.dto
 
-import com.example.growingshopauth.auth.domain.HttpMethod
-import com.example.growingshopauth.auth.domain.Policies
-import com.example.growingshopauth.auth.domain.Policy
-import com.example.growingshopauth.auth.domain.Role
+import com.example.domain.auth.HttpMethod
+import com.example.domain.auth.Policies
+import com.example.domain.auth.Policy
+import com.example.domain.auth.Role
 
 class RoleRequest {
 
