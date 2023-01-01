@@ -1,4 +1,5 @@
 server.port: 8084
+spring.profiles.include: security, redis
 
 ---
 
@@ -22,7 +23,7 @@ spring:
     path: /h2-console
   sql.init:
     mode: always
-    schema-locations: classpath:local/*_init.sql
+    schema-locations: classpath:local/product_init.sql
 
 ---
 
