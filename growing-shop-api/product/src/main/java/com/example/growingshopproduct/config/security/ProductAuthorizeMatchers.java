@@ -15,8 +15,7 @@ public class ProductAuthorizeMatchers implements AuthorizeMatchers {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry
     ) {
         return registry
-//                .requestMatchers(HttpMethod.GET, "/products").permitAll()
-                .requestMatchers("/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products").permitAll()
                 .anyRequest().authenticated();
     }
 }
