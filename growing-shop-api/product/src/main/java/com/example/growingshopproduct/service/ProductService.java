@@ -1,9 +1,9 @@
 package com.example.growingshopproduct.service;
 
-import com.example.growingshopproduct.domain.Product;
+import com.example.growingshopproduct.domain.ProductProxy;
 import com.example.growingshopproduct.dto.ProductRequest;
 import com.example.growingshopproduct.dto.ProductResponse;
-import com.example.growingshopproduct.repository.ProductRepository;
+import com.example.repository.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,10 @@ public class ProductService {
     }
 
     public ProductResponse.ProductRes getById(Long id) {
-        Product product = getOne(id);
+        ProductProxy proxy = getProxy(id);
 
-        return ProductResponse.ProductRes.from(product);
+        return ProductResponse.ProductRes
+                .from(proxy.getProduct());
     }
 
     @Transactional
@@ -42,23 +43,25 @@ public class ProductService {
     @Transactional
 //    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public ProductResponse.ProductRes update(Long id, ProductRequest.ProductReq req) {
-        Product product = getOne(id);
-        product.update(req);
+        ProductProxy proxy = getProxy(id);
+        proxy.update(req);
 
         return ProductResponse.ProductRes
-                .from(product);
+                .from(proxy.getProduct());
     }
 
     @Transactional
 //    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public void delete(Long id) {
-        Product product = getOne(id);
+        ProductProxy proxy = getProxy(id);
 
-        product.delete();
+        proxy.delete();
     }
 
-    private Product getOne(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id + " 에 해당하는 상품이 존재하지 않습니다."));
+    private ProductProxy getProxy(Long id) {
+        return new ProductProxy(
+                productRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(id + " 에 해당하는 상품이 존재하지 않습니다."))
+        );
     }
 }

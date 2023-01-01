@@ -1,6 +1,6 @@
 package com.example.growingshopproduct.dto;
 
-import com.example.growingshopproduct.domain.Product;
+import com.example.domain.product.Product;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -6,22 +6,25 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
+import java.time.LocalDateTime
 
 @Entity
 class Product(
+
+
     @Column(nullable = false)
     @NotBlank
     @Size(max = 100)
     @Pattern(regexp = "^[a-zA-Z가-힣!@#$%^&*\"'-,.<>?:\\[\\]()]+$")
-    val name: String,
+    var name: String,
 
     @Column(nullable = false)
     @Min(0)
-    val price: Int,
+    var price: Int,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val status: ProductStatus,
+    var status: ProductStatus,
 
     @OneToMany(mappedBy = "product", cascade = [CascadeType.MERGE, CascadeType.PERSIST], orphanRemoval = true)
     val categories: List<ProductCategory> = listOf()
