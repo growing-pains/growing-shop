@@ -10,13 +10,6 @@ class Role(
     @Column(nullable = false, unique = true)
     val name: String,
 
-    policies: Policies = Policies()
-) : BaseEntity() {
     @Embedded
-    var policies: Policies = policies
-        protected set
-
-    fun changePolicies(target: Policies) {
-        this.policies = target
-    }
-}
+    var policies: Policies = Policies()
+) : BaseEntity()

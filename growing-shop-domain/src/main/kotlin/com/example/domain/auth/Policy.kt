@@ -19,12 +19,4 @@ class Policy(
     val method: HttpMethod,
 
     var description: String = ""
-) : BaseEntity() {
-    companion object {
-        private val PATH_REGEX = Pattern.compile("^[\\/]+[\\w-/]+$", Pattern.DOTALL)
-
-        fun validatePath(path: String) {
-            if (!PATH_REGEX.matcher(path).matches()) throw IllegalArgumentException("유효하지 않은 url path 입니다.")
-        }
-    }
-}
+) : BaseEntity()
