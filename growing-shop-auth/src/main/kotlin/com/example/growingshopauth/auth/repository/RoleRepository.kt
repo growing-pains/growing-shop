@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.Optional
 
 @Repository
-interface RoleRepository : JpaRepository<Role, Long> {
+interface RoleRepository: JpaRepository<Role, Long> {
 
     fun getByName(name: String): Optional<Role>
 }

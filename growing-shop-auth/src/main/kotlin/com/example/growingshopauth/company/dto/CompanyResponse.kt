@@ -1,7 +1,7 @@
 package com.example.growingshopauth.company.dto
 
-import com.example.growingshopauth.company.domain.Company
-import com.example.growingshopauth.company.domain.CompanyGrade
+import com.example.domain.company.Company
+import com.example.domain.company.CompanyGrade
 
 class CompanyResponse {
 
@@ -14,7 +14,7 @@ class CompanyResponse {
         companion object {
             fun from(company: Company): CompanyRes {
                 return CompanyRes(
-                    company.id,
+                    company.id!!,
                     company.name,
                     company.businessRegistrationNumber,
                     company.grade

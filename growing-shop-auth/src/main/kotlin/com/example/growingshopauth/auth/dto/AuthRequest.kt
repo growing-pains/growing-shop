@@ -1,10 +1,10 @@
 package com.example.growingshopauth.auth.dto
 
-import com.example.growingshopauth.company.domain.Company
-import com.example.growingshopauth.user.domain.User
-import com.example.growingshopauth.user.domain.UserGrade
-import com.example.growingshopauth.user.domain.UserStatus
-import com.example.growingshopauth.user.domain.UserType
+import com.example.domain.company.Company
+import com.example.domain.user.User
+import com.example.domain.user.UserGrade
+import com.example.domain.user.UserStatus
+import com.example.domain.user.UserType
 import jakarta.persistence.Column
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank

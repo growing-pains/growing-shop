@@ -1,9 +1,9 @@
 package com.example.growingshopauth.auth.service
 
-import com.example.growingshopauth.auth.domain.Policies
-import com.example.growingshopauth.auth.domain.Policy
+import com.example.domain.auth.Policies
+import com.example.domain.auth.Policy
 import com.example.growingshopauth.auth.dto.RoleRequest
-import com.example.growingshopauth.auth.repository.PolicyRepository
+import com.example.repository.auth.PolicyRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

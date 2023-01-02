@@ -1,7 +1,8 @@
 package com.example.growingshopauth.auth.dto
 
-import com.example.growingshopauth.auth.domain.Policy
-import com.example.growingshopauth.auth.domain.Role
+import com.example.domain.auth.Policy
+import com.example.domain.auth.Role
+import com.example.growingshopauth.auth.domain.toResponse
 
 class RoleResponse {
 
@@ -13,7 +14,7 @@ class RoleResponse {
         companion object {
             fun from(role: Role): RoleRes {
                 return RoleRes(
-                    role.id,
+                    role.id!!,
                     role.name,
                     role.policies.toResponse()
                 )
@@ -30,7 +31,7 @@ class RoleResponse {
         companion object {
             fun from(policy: Policy): PoliciesRes {
                 return PoliciesRes(
-                    policy.id,
+                    policy.id!!,
                     policy.name,
                     policy.path,
                     policy.description

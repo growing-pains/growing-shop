@@ -1,11 +1,13 @@
 package com.example.growingshopauth.user.service
 
+import com.example.domain.user.User
 import com.example.growingshopauth.auth.dto.AuthRequest
-import com.example.growingshopauth.company.repository.CompanyRepository
 import com.example.growingshopauth.config.error.exception.NotFoundUserException
-import com.example.growingshopauth.user.domain.User
 import com.example.growingshopauth.user.dto.UserResponse
-import com.example.growingshopauth.user.repository.UserRepository
+import com.example.growingshopauth.user.repository.ExpandUserRepository
+import com.example.repository.company.CompanyRepository
+import kotlinx.coroutines.reactive.awaitSingle
+import org.springframework.security.core.context.ReactiveSecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class UserService(
-    private val userRepository: UserRepository,
+    private val userRepository: ExpandUserRepository,
     private val passwordEncoder: PasswordEncoder,
     private val companyRepository: CompanyRepository
 ) {
@@ -40,7 +42,10 @@ class UserService(
     fun getUserByLoginId(loginId: String): User = userRepository.findUsersByLoginId(loginId)
         .orElseThrow { NotFoundUserException("$loginId 에 해당하는 유저 정보를 찾을 수 없습니다.") }
 
-    fun getLoginUser(): User {
-        TODO("security 컨버팅 후 context 에서 뽑아오는 로직 추가")
+    suspend fun getLoginUser(): User {
+        val authentication = ReactiveSecurityContextHolder.getContext().awaitSingle()
+            ?: throw IllegalAccessException("로그인된 유저 정보가 없습니다")
+
+        return authentication.authentication.principal as User
     }
 }
