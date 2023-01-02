@@ -16,7 +16,7 @@ import java.io.IOException;
 public class RedisConfig {
 
     @Bean
-    public RedissonClient redissonClient(@Value("classpath:/\\${redis.config}") Resource configFile) throws IOException {
+    public RedissonClient redissonClient(@Value("classpath:/${redis.config}") Resource configFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonJacksonCodec codec = new JsonJacksonCodec(mapper);
         Config config = Config.fromYAML(configFile.getInputStream())

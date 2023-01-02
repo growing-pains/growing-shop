@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.example.domain.user.User;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,12 +24,18 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
     private static final Pattern UUID_REGEX = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+
     private final RedissonClient redissonClient;
 
     @Value("${redis.auth-key}")
-    private final String redisKey;
+    private String redisKey;
 
-    private final RMapCache<String, User> userSession = redissonClient.getMapCache(redisKey);
+    private RMapCache<String, User> userSession;
+
+    @PostConstruct
+    public void init() {
+        userSession = redissonClient.getMapCache(redisKey);
+    }
 
     @Override
     protected void doFilterInternal(
