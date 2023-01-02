@@ -1,0 +1,29 @@
+spring:
+  config.activate.on-profile: local
+
+redis:
+  config: redisson-local.yml
+
+---
+
+spring:
+  config.activate.on-profile: dev
+
+redis:
+  config: redisson-dev.yml
+
+---
+
+spring:
+  config.activate.on-profile: stage
+
+redis:
+  config: redisson-stage.yml
+
+---
+
+spring:
+  config.activate.on-profile: prod
+
+redis:
+  config: redisson-prod.yml
