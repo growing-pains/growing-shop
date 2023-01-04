@@ -30,8 +30,10 @@ class JwtTokenProvider(
         if (authService.matchLoginUser(login)) {
             val now = Date()
             val expiredTime = Date(now.time + JWT_EXPIRATION.toLong() * 1_000)
+            val uuid = UUID.randomUUID().toString()
             val token = Jwts.builder()
                 .setSubject(login.loginId)
+                .setId(uuid)
                 .setIssuedAt(now)
                 .setExpiration(expiredTime)
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
@@ -52,6 +54,10 @@ class JwtTokenProvider(
 
         fun getUserIdFromJwt(token: String): String {
             return getJwtBody(token).subject
+        }
+
+        fun getUUIDFromJwt(token: String): String {
+            return getJwtBody(token).id
         }
 
         fun getJwtRemainExpirationMillis(token: String): Long {
