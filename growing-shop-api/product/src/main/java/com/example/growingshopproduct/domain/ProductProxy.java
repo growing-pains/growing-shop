@@ -3,9 +3,6 @@ package com.example.growingshopproduct.domain;
 import com.example.domain.product.Product;
 import com.example.domain.product.ProductStatus;
 import com.example.growingshopproduct.dto.ProductRequest;
-import lombok.AllArgsConstructor;
-
-import java.util.Collections;
 
 public class ProductProxy {
 

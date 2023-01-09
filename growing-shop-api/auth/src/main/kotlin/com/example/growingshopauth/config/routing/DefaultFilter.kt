@@ -6,7 +6,6 @@ import com.example.domain.user.User
 import com.example.domain.user.UserType
 import com.example.growingshopauth.auth.service.PolicyService
 import com.example.growingshopauth.auth.service.RoleService
-import com.example.growingshopauth.config.security.Authority
 import com.example.growingshopauth.config.security.JwtTokenProvider
 import com.example.growingshopauth.user.service.UserService
 import org.redisson.api.RMapCache
@@ -15,12 +14,8 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.Ordered
 import org.springframework.http.HttpHeaders
 import org.springframework.http.server.reactive.ServerHttpRequest
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.context.ReactiveSecurityContextHolder
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 import java.util.concurrent.TimeUnit
@@ -33,19 +28,20 @@ class DefaultFilter(
     private val roleService: RoleService,
     private val policyService: PolicyService,
     private val redissonClient: RedissonClient
-) : GlobalFilter, Ordered {
+) : GlobalFilter {
 
     private val userSession: RMapCache<String, User> = redissonClient.getMapCache(redisKey)
 
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
         return chain.filter(
             exchange.mutate().request(
-                setUserSessionInRedis(exchange.request)
+                setUserSessionInRedis(exchange)
             ).build()
         )
     }
 
-    fun setUserSessionInRedis(req: ServerHttpRequest): ServerHttpRequest {
+    fun setUserSessionInRedis(exchange: ServerWebExchange): ServerHttpRequest {
+        val req = exchange.request
         val token = req.headers
             .getFirst(HttpHeaders.AUTHORIZATION)
             ?.substring(AUTH_HEADER_PREFIX.length)
@@ -54,13 +50,8 @@ class DefaultFilter(
         val uri = req.uri.path
         val method = HttpMethod.valueOf(req.method.name())
         val user = getUserByAuthorization(token)
-        val authority = Authority(
-            user.loginId,
-            getUserTypeRole(user.type),
-            user.roles
-        )
 
-        checkAccessiblePath(authority, uri, method)
+        checkAccessiblePath(user, uri, method)
 
         userSession.put(
             uuid,
@@ -68,11 +59,7 @@ class DefaultFilter(
             JwtTokenProvider.getJwtRemainExpirationMillis(token),
             TimeUnit.MILLISECONDS
         )
-        ReactiveSecurityContextHolder.withAuthentication(
-            UsernamePasswordAuthenticationToken(user, null)
-        )
-
-        SecurityContextHolder.getContext().authentication = UsernamePasswordAuthenticationToken(user, null)
+        GlobalUserContext.setUserContext(user)
 
         return req.mutate()
             .header(HttpHeaders.AUTHORIZATION, uuid)
@@ -85,20 +72,22 @@ class DefaultFilter(
         return userService.getUserByLoginId(userId)
     }
 
-    private fun getUserTypeRole(userType: UserType): Role {
-        return roleService.findByName(userType.name)
-    }
-
-    private fun checkAccessiblePath(authority: Authority, uri: String, method: HttpMethod) {
+    private fun checkAccessiblePath(user: User, uri: String, method: HttpMethod) {
         val policies = policyService.findAll()
+        val accessible = user.roles.addRoles(getUserTypeRole(user.type))
+            .getAllPolicies()
+            .groupBy { it.path }
+            .map { (path, policies) ->
+                path to policies.flatMap { it.method.getMethod() }.toSet()
+            }.toMap()[uri]?.contains(method) == true
 
-        if (policies.containPath(uri) && !authority.possibleAccess(uri, method)) {
+        if (policies.containPath(uri) && !accessible) {
             throw IllegalAccessException("[$method] $uri 경로에 접근 할 수 없습니다.")
         }
     }
 
-    override fun getOrder(): Int {
-        return Integer.MAX_VALUE
+    private fun getUserTypeRole(userType: UserType): Role {
+        return roleService.findByName(userType.name)
     }
 
     companion object {
