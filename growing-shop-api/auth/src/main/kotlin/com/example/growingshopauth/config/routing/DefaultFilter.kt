@@ -15,7 +15,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
-import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 import java.util.concurrent.TimeUnit
@@ -34,13 +33,11 @@ class DefaultFilter(
 
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
         return chain.filter(
-            exchange.mutate().request(
-                setUserSessionInRedis(exchange)
-            ).build()
+            setUserSessionInRedis(exchange)
         )
     }
 
-    fun setUserSessionInRedis(exchange: ServerWebExchange): ServerHttpRequest {
+    fun setUserSessionInRedis(exchange: ServerWebExchange): ServerWebExchange {
         val req = exchange.request
         val token = req.headers
             .getFirst(HttpHeaders.AUTHORIZATION)
@@ -59,11 +56,12 @@ class DefaultFilter(
             JwtTokenProvider.getJwtRemainExpirationMillis(token),
             TimeUnit.MILLISECONDS
         )
-        GlobalUserContext.setUserContext(user)
 
-        return req.mutate()
-            .header(HttpHeaders.AUTHORIZATION, uuid)
-            .build()
+        return exchange.mutate().request(
+            req.mutate()
+                .header(HttpHeaders.AUTHORIZATION, uuid)
+                .build()
+        ).build()
     }
 
     private fun getUserByAuthorization(token: String): User {

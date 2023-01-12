@@ -14,17 +14,16 @@ class AuthRoutingConfig(
     private val uri: String,
     @Value("\${growing-shop.cloud-gateway-predicate.auth}")
     private val predicate: String
-): AllowRoutingConfig(
-    mapOf(
-        HttpMethod.POST to listOf("/auth/login", "/auth/join"),
-        HttpMethod.GET to listOf("/auth/test"), // for webflux test. will be deleted
-    )
 ) {
+    private val allowPath: Map<HttpMethod?, List<String>> = mapOf(
+        HttpMethod.POST to listOf("/auth/login", "/auth/join")
+    )
+
     @Bean
     @Profile("local")
     fun localAuthRoute(builder: RouteLocatorBuilder): RouteLocator {
         return builder.routes().route("auth") {
-            allowPathPredicate(it).header(LOCAL_PREDICATE_BY, predicate)
+            it.allowPathPredicate(allowPath).header(LOCAL_PREDICATE_BY, predicate)
                 .filters { filterSpec ->
                     filterSpec.removeRequestHeader("Proxy-To")
                 }.uri(uri)

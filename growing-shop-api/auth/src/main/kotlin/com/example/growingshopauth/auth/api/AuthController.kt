@@ -1,16 +1,13 @@
 package com.example.growingshopauth.auth.api
 
-import com.example.domain.user.User
 import com.example.growingshopauth.auth.dto.AuthRequest
 import com.example.growingshopauth.auth.dto.AuthResponse
-import com.example.growingshopauth.config.routing.GlobalUserContext
 import com.example.growingshopauth.config.security.JwtTokenProvider
 import com.example.growingshopauth.user.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import reactor.core.publisher.Mono
 
 @RestController
 @RequestMapping("/auth")
@@ -29,15 +26,5 @@ class AuthController(
         userService.joinUser(join)
 
         return ResponseEntity(HttpStatus.CREATED)
-    }
-
-    @GetMapping("/foo")
-    suspend fun test(@RequestHeader headers: Map<String, String>): Mono<User> {
-        return GlobalUserContext.getUserContext()
-    }
-
-    @GetMapping("/test")
-    suspend fun test(): Mono<User> {
-        return GlobalUserContext.getUserContext()
     }
 }
