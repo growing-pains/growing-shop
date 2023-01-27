@@ -1,5 +1,7 @@
 package com.example.growingshopproduct.service;
 
+import com.example.auth.AccessibleUserTypes;
+import com.example.domain.user.UserType;
 import com.example.growingshopproduct.domain.ProductProxy;
 import com.example.growingshopproduct.dto.ProductRequest;
 import com.example.growingshopproduct.dto.ProductResponse;
@@ -33,7 +35,7 @@ public class ProductService {
     }
 
     @Transactional
-//    @AccessibleUserTypes(UserType.SELLER)
+    @AccessibleUserTypes(UserType.SELLER)
     public ProductResponse.ProductRes create(ProductRequest.ProductReq req) {
         return ProductResponse.ProductRes.from(
                 productRepository.save(req.toEntity())
@@ -41,7 +43,7 @@ public class ProductService {
     }
 
     @Transactional
-//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public ProductResponse.ProductRes update(Long id, ProductRequest.ProductReq req) {
         ProductProxy proxy = getProxy(id);
         proxy.update(req);
@@ -51,7 +53,7 @@ public class ProductService {
     }
 
     @Transactional
-//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
+    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public void delete(Long id) {
         ProductProxy proxy = getProxy(id);
 

@@ -4,14 +4,26 @@ import com.example.growingshopauth.config.error.exception.InvalidJwtTokenExcepti
 import com.example.growingshopauth.config.error.exception.NotAllowPathException
 import com.example.growingshopauth.config.error.exception.NotFoundUserException
 import com.example.growingshopcommon.config.error.ErrorResponse
-import com.example.growingshopcommon.config.error.GlobalExceptionHandler
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class ExceptionHandler : GlobalExceptionHandler() {
+class ExceptionHandler {
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun illegalArgumentException(exception: IllegalArgumentException): ErrorResponse {
+        return ErrorResponse(exception.message)
+    }
+
+    @ExceptionHandler(EntityNotFoundException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun entityNotFoundException(exception: EntityNotFoundException): ErrorResponse {
+        return ErrorResponse(exception.message)
+    }
 
     @ExceptionHandler(NotFoundUserException::class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

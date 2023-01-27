@@ -7,4 +7,5 @@ dependencies {
 
     implementation(project(":growing-shop-infra:security"))
     implementation(project(":growing-shop-domain"))
+    implementation(project(":growing-shop-common"))
 }

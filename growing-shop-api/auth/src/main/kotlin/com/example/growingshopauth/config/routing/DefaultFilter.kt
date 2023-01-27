@@ -1,13 +1,12 @@
 package com.example.growingshopauth.config.routing
 
 import com.example.domain.auth.HttpMethod
-import com.example.domain.auth.Role
+import com.example.domain.auth.Policies
 import com.example.domain.user.User
-import com.example.domain.user.UserType
-import com.example.growingshopauth.auth.service.PolicyService
-import com.example.growingshopauth.auth.service.RoleService
+import com.example.growingshopauth.auth.repository.ExpandRoleRepository
 import com.example.growingshopauth.config.security.JwtTokenProvider
 import com.example.growingshopauth.user.service.UserService
+import com.example.repository.auth.PolicyRepository
 import org.redisson.api.RMapCache
 import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Value
@@ -24,8 +23,8 @@ class DefaultFilter(
     @Value("\${redis.auth-key}")
     private val redisKey: String,
     private val userService: UserService,
-    private val roleService: RoleService,
-    private val policyService: PolicyService,
+    private val roleRepository: ExpandRoleRepository,
+    private val policyRepository: PolicyRepository,
     private val redissonClient: RedissonClient
 ) : GlobalFilter {
 
@@ -71,9 +70,10 @@ class DefaultFilter(
     }
 
     private fun checkAccessiblePath(user: User, uri: String, method: HttpMethod) {
-        val policies = policyService.findAll()
-        val accessible = user.roles.addRoles(getUserTypeRole(user.type))
-            .getAllPolicies()
+        val policies = Policies(policyRepository.findAll())
+        val accessible = user.roles.addRoles(
+            roleRepository.getByName(user.type.name).get()
+        ).getAllPolicies()
             .groupBy { it.path }
             .map { (path, policies) ->
                 path to policies.flatMap { it.method.getMethod() }.toSet()
@@ -82,10 +82,6 @@ class DefaultFilter(
         if (policies.containPath(uri) && !accessible) {
             throw IllegalAccessException("[$method] $uri 경로에 접근 할 수 없습니다.")
         }
-    }
-
-    private fun getUserTypeRole(userType: UserType): Role {
-        return roleService.findByName(userType.name)
     }
 
     companion object {

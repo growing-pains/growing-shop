@@ -1,5 +1,5 @@
-insert into company(name, business_registration_number, status, grade)
-values ('성장하는 상점', '0000000000', 'NORMAL', 'DIAMOND');
+insert into company(name, business_registration_number, status, grade, created_at, modified_at)
+values ('성장하는 상점', '0000000000', 'NORMAL', 'DIAMOND', now(), now());
 
 insert into "user"(name, mobile, email, login_id, password, company, status, type, grade)
 values ('관리자', '01000000000', 'admin@growing.shop', 'admin',
