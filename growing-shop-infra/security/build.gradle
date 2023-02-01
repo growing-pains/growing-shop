@@ -12,6 +12,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     implementation 'org.redisson:redisson:3.19.0'
+    implementation 'org.aspectj:aspectjweaver:1.9.19'
 
     implementation project(':growing-shop-domain')
     implementation project(':growing-shop-infra:redis')

@@ -2,7 +2,6 @@ package com.example.growingshopproduct.dto;
 
 import com.example.domain.product.Product;
 import com.example.domain.product.ProductStatus;
-import com.example.growingshopproduct.domain.ProductProxy;
 import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.Getter;
