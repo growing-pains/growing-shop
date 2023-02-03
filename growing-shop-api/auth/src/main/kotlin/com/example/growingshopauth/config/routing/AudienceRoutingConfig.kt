@@ -9,24 +9,24 @@ import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 
 @Component
-class ProductRoutingConfig(
-    @Value("\${growing-shop.endpoints.product}")
+class AudienceRoutingConfig(
+    @Value("\${growing-shop.endpoints.audience}")
     private val uri: String,
-    @Value("\${growing-shop.cloud-gateway-predicate.product}")
+    @Value("\${growing-shop.cloud-gateway-predicate.audience}")
     private val predicate: String
 ) {
 
     private val allowPath: Map<HttpMethod?, List<String>> = mapOf(
-        HttpMethod.GET to listOf("/products")
+        HttpMethod.GET to listOf("/categories")
     )
 
     @Bean
     @Profile("local")
-    fun localProductRoute(builder: RouteLocatorBuilder): RouteLocator {
-        return builder.routes().route("product") {
+    fun localAudienceRoute(builder: RouteLocatorBuilder): RouteLocator {
+        return builder.routes().route("audience") {
             it.allowPathPredicate(allowPath, uri).header(predicate)
                 .filters { filterSpec ->
-                    filterSpec.removeRequestHeader(predicate)
+                    filterSpec.removeRequestHeader("Proxy-To")
                 }.uri(uri)
         }.build()
     }

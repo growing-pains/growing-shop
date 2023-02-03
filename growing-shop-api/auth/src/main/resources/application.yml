@@ -39,10 +39,10 @@ growing-shop:
     order: http://localhost:8083
     product: http://localhost:8084
   cloud-gateway-predicate:
-    audience: audience
-    auth: auth
-    order: order
-    product: product
+    audience: AUDIENCE
+    auth: AUTH
+    order: ORDER
+    product: PRODUCT
 
 ---
 

@@ -27,11 +27,11 @@ class Category(
         status = CategoryStatus.DELETED
     }
 
-    fun reject() {
-        status = CategoryStatus.REJECTED
-    }
-
-    fun confirm() {
-        status = CategoryStatus.NORMAL
+    fun inspect(status: CategoryStatus) {
+        when (status) {
+            CategoryStatus.REJECTED -> this.status = CategoryStatus.REJECTED
+            CategoryStatus.NORMAL -> this.status = CategoryStatus.NORMAL
+            else -> throw IllegalArgumentException("잘못된 검수 요청입니다.")
+        }
     }
 }

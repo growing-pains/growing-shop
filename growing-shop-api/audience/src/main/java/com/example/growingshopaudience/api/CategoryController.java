@@ -1,9 +1,9 @@
-package com.example.growingshopaudience.category.api;
+package com.example.growingshopaudience.api;
 
-import com.example.growingshopaudience.category.domain.CategoryStatus;
-import com.example.growingshopaudience.category.dto.CategoryRequest;
-import com.example.growingshopaudience.category.dto.CategoryResponse;
-import com.example.growingshopaudience.category.service.CategoryService;
+import com.example.domain.category.CategoryStatus;
+import com.example.growingshopaudience.dto.CategoryRequest;
+import com.example.growingshopaudience.dto.CategoryResponse;
+import com.example.growingshopaudience.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +28,14 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         categoryService.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}/inspect")
-    public ResponseEntity inspect(@PathVariable Long id, @RequestParam CategoryStatus status) {
+    public ResponseEntity<Object> inspect(@PathVariable Long id, @RequestParam CategoryStatus status) {
         categoryService.inspect(id, status);
 
         return new ResponseEntity<>(HttpStatus.OK);

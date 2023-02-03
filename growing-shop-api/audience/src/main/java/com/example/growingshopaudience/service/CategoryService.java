@@ -1,10 +1,12 @@
-package com.example.growingshopaudience.category.service;
+package com.example.growingshopaudience.service;
 
-import com.example.growingshopaudience.category.domain.Category;
-import com.example.growingshopaudience.category.domain.CategoryStatus;
-import com.example.growingshopaudience.category.dto.CategoryRequest;
-import com.example.growingshopaudience.category.dto.CategoryResponse;
-import com.example.growingshopaudience.category.repository.CategoryRepository;
+import com.example.auth.AccessibleUserTypes;
+import com.example.domain.category.Category;
+import com.example.domain.category.CategoryStatus;
+import com.example.domain.user.UserType;
+import com.example.growingshopaudience.dto.CategoryRequest;
+import com.example.growingshopaudience.dto.CategoryResponse;
+import com.example.repository.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,7 @@ public class CategoryService {
     }
 
     @Transactional
-//    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
-    // TODO - 기존 AccessibleUserTypes 을 auth 모듈에서 처리할 수 있는 방법 찾기
+    @AccessibleUserTypes({UserType.ADMIN, UserType.SELLER})
     public CategoryResponse.CategoryRes create(CategoryRequest.CategoryReq req) {
         Category category = categoryRepository.save(req.toEntity());
 
@@ -36,22 +37,17 @@ public class CategoryService {
     }
 
     @Transactional
-//    @AccessibleUserTypes(UserType.ADMIN)
+    @AccessibleUserTypes(UserType.ADMIN)
     public void delete(Long id) {
         getOne(id).delete();
     }
 
     @Transactional
-//    @AccessibleUserTypes(UserType.ADMIN)
+    @AccessibleUserTypes(UserType.ADMIN)
     public void inspect(Long id, CategoryStatus status) {
         Category category = getOne(id);
 
-        if (status == CategoryStatus.NORMAL) {
-            category.confirm();
-        }
-        if (status == CategoryStatus.REJECTED) {
-            category.reject();
-        }
+        category.inspect(status);
     }
 
     private Category getOne(Long id) {

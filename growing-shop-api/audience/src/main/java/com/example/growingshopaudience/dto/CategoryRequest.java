@@ -1,6 +1,7 @@
-package com.example.growingshopaudience.category.dto;
+package com.example.growingshopaudience.dto;
 
-import com.example.growingshopaudience.category.domain.Category;
+import com.example.domain.category.Category;
+import com.example.domain.category.CategoryStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class CategoryRequest {
         private String name;
 
         public Category toEntity() {
-            return new Category(name);
+            return new Category(name, CategoryStatus.UNDER_REVIEW);
         }
     }
 }

@@ -31,6 +31,9 @@ class DefaultFilter(
     private val userSession: RMapCache<String, User> = redissonClient.getMapCache(redisKey)
 
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
+        val skipAuth = exchange.request.headers.getFirst(SKIP_CHECK_AUTH_KEY)?.toBoolean()
+
+        if (skipAuth == true) return Mono.empty()
         return chain.filter(
             setUserSessionInRedis(exchange)
         )
@@ -86,5 +89,6 @@ class DefaultFilter(
 
     companion object {
         private const val AUTH_HEADER_PREFIX = "Bearer "
+        const val SKIP_CHECK_AUTH_KEY = "SKIP_AUTH"
     }
 }
