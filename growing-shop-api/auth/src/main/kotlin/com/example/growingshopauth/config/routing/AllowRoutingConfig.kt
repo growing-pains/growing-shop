@@ -23,7 +23,7 @@ fun PredicateSpec.allowPathPredicate(
             if (methodPredicate && pathPredicate) {
                 this.alwaysTrue().filters { filterSpec ->
                     filterSpec.addRequestHeader(SKIP_CHECK_AUTH_KEY, "true")
-                }.uri(uri)
+                }
 
                 return@predicate true
             }

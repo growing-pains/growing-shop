@@ -33,7 +33,7 @@ class DefaultFilter(
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
         val skipAuth = exchange.request.headers.getFirst(SKIP_CHECK_AUTH_KEY)?.toBoolean()
 
-        if (skipAuth == true) return Mono.empty()
+        if (skipAuth == true) return chain.filter(exchange)
         return chain.filter(
             setUserSessionInRedis(exchange)
         )

@@ -26,7 +26,7 @@ class AudienceRoutingConfig(
         return builder.routes().route("audience") {
             it.allowPathPredicate(allowPath, uri).header(predicate)
                 .filters { filterSpec ->
-                    filterSpec.removeRequestHeader("Proxy-To")
+                    filterSpec.removeRequestHeader(predicate)
                 }.uri(uri)
         }.build()
     }
