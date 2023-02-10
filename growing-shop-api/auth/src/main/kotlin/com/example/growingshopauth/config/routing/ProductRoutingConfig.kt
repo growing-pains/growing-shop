@@ -24,7 +24,7 @@ class ProductRoutingConfig(
     @Profile("local")
     fun localProductRoute(builder: RouteLocatorBuilder): RouteLocator {
         return builder.routes().route("product") {
-            it.allowPathPredicate(allowPath, uri).header(predicate)
+            it.allowPathPredicate(allowPath).header(predicate)
                 .filters { filterSpec ->
                     filterSpec.removeRequestHeader(predicate)
                 }.uri(uri)

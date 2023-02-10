@@ -6,6 +6,8 @@ import jakarta.persistence.*
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
 import org.hibernate.annotations.Where
+import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "`order`")
@@ -15,6 +17,9 @@ class Order(
     val user: User,
 
     status: OrderStatus,
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    val orderAt: LocalDateTime = LocalDateTime.now(),
 
     @Valid
     @NotEmpty

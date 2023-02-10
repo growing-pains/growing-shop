@@ -1,7 +1,8 @@
 package com.example.growingshoporder.dto;
 
-import com.example.growingshoporder.domain.Order;
-import com.example.growingshoporder.domain.OrderLine;
+import com.example.domain.order.Order;
+import com.example.domain.order.OrderLine;
+import com.example.domain.order.OrderStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,7 @@ public class OrderRequest {
                     .map(OrderLineReq::toEntity)
                     .collect(Collectors.toList());
 
-            return Order.builder()
-                    .orderAt(LocalDateTime.now())
-                    .orderLines(orderLines)
-                    .build();
+            return new Order(null, OrderStatus.WAITING, LocalDateTime.now(), orderLines);
         }
     }
 
@@ -40,7 +38,9 @@ public class OrderRequest {
         private Integer quantity;
 
         public OrderLine toEntity() {
-            return new OrderLine(productId, price, quantity);
+//            TODO - 도메인 모듈의 orderLine 은 Product 엔티티를 직접 연동되어 있음. 이러한 형태를 풀어낼 수 있는 방법 찾기
+//            return new OrderLine(productId, price, quantity);
+            return new OrderLine();
         }
     }
 }

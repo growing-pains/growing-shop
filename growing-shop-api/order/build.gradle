@@ -1,0 +1,11 @@
+version = '0.0.1-SNAPSHOT'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation(project(":growing-shop-infra:security"))
+    implementation(project(":growing-shop-domain"))
+    implementation(project(":growing-shop-common"))
+}
