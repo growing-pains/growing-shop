@@ -1,12 +1,10 @@
 package com.example.growingshopauth.config.routing
 
 import com.example.domain.auth.HttpMethod
-import com.example.domain.auth.Policies
 import com.example.domain.user.User
-import com.example.growingshopauth.auth.repository.ExpandRoleRepository
+import com.example.growingshopauth.auth.service.PolicyService
 import com.example.growingshopauth.config.security.JwtTokenProvider
 import com.example.growingshopauth.user.service.UserService
-import com.example.repository.auth.PolicyRepository
 import org.redisson.api.RMapCache
 import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Value
@@ -23,8 +21,7 @@ class DefaultFilter(
     @Value("\${redis.auth-key}")
     private val redisKey: String,
     private val userService: UserService,
-    private val roleRepository: ExpandRoleRepository,
-    private val policyRepository: PolicyRepository,
+    private val policyService: PolicyService,
     private val redissonClient: RedissonClient
 ) : GlobalFilter {
 
@@ -50,7 +47,7 @@ class DefaultFilter(
         val method = HttpMethod.valueOf(req.method.name())
         val user = getUserByAuthorization(token)
 
-        checkAccessiblePath(user, uri, method)
+        policyService.checkAccessiblePath(user, uri, method)
 
         userSession.put(
             uuid,
@@ -70,21 +67,6 @@ class DefaultFilter(
         val userId = JwtTokenProvider.getUserIdFromJwt(token)
 
         return userService.getUserByLoginId(userId)
-    }
-
-    private fun checkAccessiblePath(user: User, uri: String, method: HttpMethod) {
-        val policies = Policies(policyRepository.findAll())
-        val accessible = user.roles.addRoles(
-            roleRepository.getByName(user.type.name).get()
-        ).getAllPolicies()
-            .groupBy { it.path }
-            .map { (path, policies) ->
-                path to policies.flatMap { it.method.getMethod() }.toSet()
-            }.toMap()[uri]?.contains(method) == true
-
-        if (policies.containPath(uri) && !accessible) {
-            throw IllegalAccessException("[$method] $uri 경로에 접근 할 수 없습니다.")
-        }
     }
 
     companion object {

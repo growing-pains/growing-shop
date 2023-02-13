@@ -1,7 +1,7 @@
 package com.example.growingshoporder.dto;
 
-import com.example.growingshoporder.domain.Order;
-import com.example.growingshoporder.domain.OrderLine;
+import com.example.domain.order.Order;
+import com.example.domain.order.OrderLine;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ public class OrderResponse {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class OrderRes {
-        private long id;
+        private Long id;
         private LocalDateTime orderAt;
         private List<OrderLineRes> orderLines = new ArrayList<>();
         private long totalPrice;
@@ -48,7 +48,7 @@ public class OrderResponse {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class OrderLineRes {
-        private long id;
+        private Long id;
         //        private ProductResponse.ProductRes product;
         private int price;
         private int quantity;

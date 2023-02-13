@@ -35,12 +35,10 @@ jwt:
 growing-shop:
   endpoints:
     audience: http://localhost:8082
-    auth: http://localhost:${server.port}
     order: http://localhost:8083
     product: http://localhost:8084
   cloud-gateway-predicate:
     audience: AUDIENCE
-    auth: AUTH
     order: ORDER
     product: PRODUCT
 
