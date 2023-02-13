@@ -30,6 +30,6 @@ class RoleController(
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         roleService.delete(id)
 
-        return ResponseEntity(HttpStatus.OK)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }

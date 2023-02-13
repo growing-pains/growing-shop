@@ -23,6 +23,6 @@ class PolicyController(
     fun delete(@PathVariable id: Long): ResponseEntity<Any> {
         policyService.delete(id)
 
-        return ResponseEntity(HttpStatus.OK)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }

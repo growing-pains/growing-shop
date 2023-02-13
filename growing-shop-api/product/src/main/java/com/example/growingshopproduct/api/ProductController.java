@@ -40,6 +40,6 @@ public class ProductController {
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         productService.delete(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

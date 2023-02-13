@@ -31,7 +31,7 @@ public class CategoryController {
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         categoryService.delete(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}/inspect")

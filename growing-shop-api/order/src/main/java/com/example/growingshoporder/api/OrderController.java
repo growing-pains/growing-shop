@@ -37,16 +37,16 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         orderService.delete(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/orderLines")
-    public ResponseEntity deleteOrderLines(List<Long> orderLineIds) {
+    public ResponseEntity<Object> deleteOrderLines(List<Long> orderLineIds) {
         orderService.deleteOrderLines(orderLineIds);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
