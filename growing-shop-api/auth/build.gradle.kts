@@ -4,6 +4,8 @@ plugins {
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0"
     kotlin("plugin.jpa") version "1.8.0"
+
+//    id("java-test-fixtures")
 }
 
 allOpen {
@@ -48,6 +50,8 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+
+//    testImplementation(testFixtures(project(":growing-shop-infra:util"))) -- TODO: 다른 모듈의 테스트 파일을 사용할 수 있는 방안 찾아서 해결
 }
 
 tasks.withType<KotlinCompile> {
