@@ -39,10 +39,7 @@ dependencies {
     implementation("org.redisson:redisson:3.19.0")
 
     implementation(project(":growing-shop-domain"))
-    implementation(project(":growing-shop-common")) {
-        exclude("org.springframework.boot", "spring-boot-starter-web")
-//        TODO - common 의 모든 의존을 제거한 뒤 해당 exclude 제거
-    }
+    implementation(project(":growing-shop-common:util"))
     implementation(project(":growing-shop-infra:redis"))
 
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
@@ -50,7 +47,6 @@ dependencies {
     api("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-//    testImplementation("org.springframework.boot:spring-security-test")
     testImplementation("io.projectreactor:reactor-test")
 }
 

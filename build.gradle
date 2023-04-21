@@ -13,14 +13,9 @@ buildscript {
 	}
 }
 
-plugins {
-	id 'org.asciidoctor.convert' version '2.4.0'
-}
-
 allprojects {
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
-	apply plugin: 'org.asciidoctor.convert'
 
 	group = 'com.example'
 
@@ -33,42 +28,34 @@ allprojects {
 subprojects { project ->
     apply plugin: 'java'
 
-    asciidoctor {
-        inputs.dir snippetsDir
-        dependsOn test
+    test {
+        outputs.dir snippetsDir
+        useJUnitPlatform()
     }
 
-    bootJar {
-        dependsOn asciidoctor
-        from("${asciidoctor.outputDir}/html5") {
-			into 'static/docs'
-		}
-	}
+    if (project.path.startsWith(":growing-shop-api:")) {
+        dependencies {
+            implementation 'com.google.guava:guava:31.0.1-jre'
+            implementation 'org.springframework.boot:spring-boot-starter-security'
+            implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	test {
-		outputs.dir snippetsDir
-		useJUnitPlatform()
-	}
+            runtimeOnly 'com.h2database:h2'
 
-	dependencies {
-		implementation 'org.springframework.boot:spring-boot-starter-validation'
-		implementation 'com.google.guava:guava:31.0.1-jre'
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+            testImplementation 'io.rest-assured:rest-assured'
+            testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+            testImplementation 'org.mockito:mockito-inline'
+        }
 
-		runtimeOnly 'com.h2database:h2'
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            }
+        }
+    }
+
+    dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-
-        asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'io.rest-assured:rest-assured'
-        testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
-        testImplementation 'org.mockito:mockito-inline'
-    }
-
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        }
     }
 }

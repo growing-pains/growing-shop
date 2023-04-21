@@ -1,6 +1,6 @@
 package com.example.growingshopaudience.config.error;
 
-import com.example.growingshopcommon.config.error.ErrorResponse;
+import com.example.config.error.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

@@ -1,6 +1,12 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+    }
+}
+
 rootProject.name = 'growing-shop'
 
-include 'growing-shop-common'
+include 'growing-shop-common:util', 'growing-shop-common:docs'
 include 'growing-shop-domain'
 include 'growing-shop-infra:security', 'growing-shop-infra:redis'
 include 'growing-shop-api:auth', 'growing-shop-api:audience', 'growing-shop-api:product', 'growing-shop-api:order'

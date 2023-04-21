@@ -5,7 +5,7 @@ import com.example.growingshopauth.auth.dto.AuthResponse
 import com.example.growingshopauth.auth.service.AuthService
 import com.example.growingshopauth.config.error.exception.InvalidJwtTokenException
 import com.example.growingshopauth.config.error.exception.NotFoundUserException
-import com.example.growingshopcommon.util.TimeUtil
+import com.example.util.TimeUtil
 import io.jsonwebtoken.*
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Value
