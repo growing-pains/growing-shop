@@ -1,4 +1,4 @@
-package com.example.growingshopproduct.config.security;
+package com.example.growingshopaudience.config.security;
 
 import com.example.config.AuthorizeMatchers;
 import org.springframework.context.annotation.Primary;

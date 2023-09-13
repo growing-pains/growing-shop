@@ -9,6 +9,20 @@ spring:
 
 redis.auth-key: 'auth'
 
+jwt:
+  secret-key: default-secret
+  expiration: 86400
+
+growing-shop:
+  endpoints:
+    audience: http://localhost:8082
+    order: http://localhost:8083
+    product: http://localhost:8084
+  cloud-gateway-predicate:
+    audience: AUDIENCE
+    order: ORDER
+    product: PRODUCT
+
 ---
 
 spring:
@@ -27,20 +41,6 @@ spring:
   sql.init:
     mode: always
     schema-locations: classpath:local/*_init.sql
-
-jwt:
-  secret-key: local-secret
-  expiration: 86400
-
-growing-shop:
-  endpoints:
-    audience: http://localhost:8082
-    order: http://localhost:8083
-    product: http://localhost:8084
-  cloud-gateway-predicate:
-    audience: AUDIENCE
-    order: ORDER
-    product: PRODUCT
 
 ---
 

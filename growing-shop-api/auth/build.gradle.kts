@@ -4,8 +4,6 @@ plugins {
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0"
     kotlin("plugin.jpa") version "1.8.0"
-
-//    id("java-test-fixtures")
 }
 
 allOpen {
@@ -21,10 +19,8 @@ noArg {
 }
 
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -47,11 +43,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 
     api("com.h2database:h2")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
-
-//    testImplementation(testFixtures(project(":growing-shop-infra:util"))) -- TODO: 다른 모듈의 테스트 파일을 사용할 수 있는 방안 찾아서 해결
+    testImplementation(testFixtures(project(path = ":growing-shop-common:docs")))
 }
 
 tasks.withType<KotlinCompile> {
@@ -59,4 +51,11 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "17"
     }
+}
+
+configurations.all {
+//    exclude("org.springframework.boot", "spring-boot-starter-logging")
+//    exclude("ch.qos.logback", "logback-classic")
+//    exclude("org.apache.logging.log4j", "log4j-to-slf4j")
+//    exclude("org.slf4j", "slf4j-log4j12")
 }

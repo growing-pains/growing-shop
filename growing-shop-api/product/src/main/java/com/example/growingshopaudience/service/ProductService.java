@@ -1,10 +1,10 @@
-package com.example.growingshopproduct.service;
+package com.example.growingshopaudience.service;
 
 import com.example.auth.AccessibleUserTypes;
 import com.example.domain.user.UserType;
-import com.example.growingshopproduct.domain.ProductProxy;
-import com.example.growingshopproduct.dto.ProductRequest;
-import com.example.growingshopproduct.dto.ProductResponse;
+import com.example.growingshopaudience.domain.ProductProxy;
+import com.example.growingshopaudience.dto.ProductRequest;
+import com.example.growingshopaudience.dto.ProductResponse;
 import com.example.repository.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

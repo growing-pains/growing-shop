@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '3.0.1'
+		springBootVersion = '3.0.9'
 		snippetsDir = file("${rootDir.path}/build/generated-snippets")
 	}
 
@@ -14,10 +14,12 @@ buildscript {
 }
 
 allprojects {
+    apply plugin: 'java'
 	apply plugin: 'org.springframework.boot'
 	apply plugin: 'io.spring.dependency-management'
 
 	group = 'com.example'
+    sourceCompatibility = JavaVersion.VERSION_17
 
 	repositories {
 		mavenCentral()
@@ -26,8 +28,6 @@ allprojects {
 }
 
 subprojects { project ->
-    apply plugin: 'java'
-
     test {
         outputs.dir snippetsDir
         useJUnitPlatform()
@@ -42,9 +42,7 @@ subprojects { project ->
             runtimeOnly 'com.h2database:h2'
 
             testImplementation 'org.springframework.boot:spring-boot-starter-test'
-            testImplementation 'io.rest-assured:rest-assured'
-            testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
-            testImplementation 'org.mockito:mockito-inline'
+            testImplementation 'org.mockito:mockito-core'
         }
 
         dependencyManagement {

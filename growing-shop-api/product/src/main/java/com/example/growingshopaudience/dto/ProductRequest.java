@@ -1,4 +1,4 @@
-package com.example.growingshopproduct.dto;
+package com.example.growingshopaudience.dto;
 
 import com.example.domain.product.Product;
 import com.example.domain.product.ProductStatus;

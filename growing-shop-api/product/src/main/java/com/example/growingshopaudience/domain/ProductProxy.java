@@ -1,8 +1,8 @@
-package com.example.growingshopproduct.domain;
+package com.example.growingshopaudience.domain;
 
 import com.example.domain.product.Product;
 import com.example.domain.product.ProductStatus;
-import com.example.growingshopproduct.dto.ProductRequest;
+import com.example.growingshopaudience.dto.ProductRequest;
 
 public class ProductProxy {
 

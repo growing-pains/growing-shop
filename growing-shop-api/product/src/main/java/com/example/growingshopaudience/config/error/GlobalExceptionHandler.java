@@ -1,4 +1,4 @@
-package com.example.growingshopproduct.config.error;
+package com.example.growingshopaudience.config.error;
 
 import com.example.config.error.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;

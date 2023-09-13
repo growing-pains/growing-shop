@@ -47,15 +47,9 @@ class SecurityContextRepository(
                         )
                     }
 
-                    val test = SecurityContextImpl(
+                    SecurityContextImpl(
                         authentication
-                    )
-
-                    test.toMono()
-
-//                    SecurityContextImpl(
-//                        authentication
-//                    ).toMono()
+                    ).toMono()
                 } catch (e: Exception) {
                     logger.warn("유저 인증도중 에러가 발생하였습니다.", e)
                     Mono.error { throw IllegalAccessException(e.message) }

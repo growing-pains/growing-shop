@@ -7,6 +7,14 @@ redis:
 ---
 
 spring:
+  config.activate.on-profile: acceptance
+
+redis:
+  config: redisson-local.yml
+
+---
+
+spring:
   config.activate.on-profile: dev
 
 redis:
